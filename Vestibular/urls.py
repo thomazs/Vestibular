@@ -16,6 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from processo_seletivo.views import index, cadastro, painel, sair
+
+admin.site.site_header = 'Vestibular U:Verse'
+admin.site.site_title = 'VestU:Verse'
+admin.site.index_title = 'Sistema de Vestibular'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('cadastro/', cadastro, name="cadastro"),
+    path('painel/', painel, name="painel"),
+    path('sair/', sair, name="sair"),
+    path('', index, name="index"),
 ]

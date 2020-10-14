@@ -9,6 +9,8 @@ UserModel = get_user_model()
 class Edicao(models.Model):
     class Meta:
         db_table = 'edicao'
+        verbose_name = 'edição'
+        verbose_name_plural = 'edições'
 
     nome = models.CharField('Edição', max_length=80)
     info = models.TextField('Informações', null=True, blank=True)
@@ -22,6 +24,8 @@ class Edicao(models.Model):
 class EdicaoCurso(models.Model):
     class Meta:
         db_table = 'edicaocurso'
+        verbose_name = 'curso/edição'
+        verbose_name_plural = 'cursos/Edição'
 
     def __str__(self):
         return f'({self.edicao.nome}) {self.curso.nome} - Vagas: {self.qtd_vagas}'
@@ -60,6 +64,8 @@ def comprovante_esc_upload_to(instance, filename):
 class Inscricao(models.Model):
     class Meta:
         db_table = 'inscricao'
+        verbose_name = 'inscrição'
+        verbose_name_plural = 'inscrições'
 
     def __str__(self):
         return self.pessoa.nome
@@ -128,9 +134,11 @@ TIPO_QUESTAO = (
 class QuestaoProva(models.Model):
     class Meta:
         db_table = 'questaoprova'
+        verbose_name = 'questão da prova'
+        verbose_name_plural = 'questões da prova'
 
     def __str__(self):
-        return self.texto
+        return self.texto_curto
 
     edicao = models.ForeignKey(Edicao, on_delete=models.RESTRICT)
     disciplina = models.ForeignKey(Disciplina, on_delete=models.RESTRICT)
@@ -138,17 +146,25 @@ class QuestaoProva(models.Model):
     tipoquestao = models.IntegerField(default=1, choices=TIPO_QUESTAO)
     pontos = models.DecimalField(default='1', max_digits=10, decimal_places=1)
 
+    @property
+    def texto_curto(self):
+        return self.texto[:50]
+
 
 class RespostaQuestao(models.Model):
     class Meta:
         db_table = 'respostaquestao'
 
     def __str__(self):
-        return self.texto
+        return self.texto_curto
 
     questao = models.ForeignKey(QuestaoProva, on_delete=models.RESTRICT)
     texto = models.TextField('Texto Resposta')
     correta = models.BooleanField(default=False)
+
+    @property
+    def texto_curto(self):
+        return self.texto[:50]
 
 
 class RespostaInscricao(models.Model):
@@ -158,3 +174,7 @@ class RespostaInscricao(models.Model):
     inscricao = models.ForeignKey(Inscricao, on_delete=models.RESTRICT)
     questao = models.ForeignKey(QuestaoProva, on_delete=models.RESTRICT)
     resposta = models.ForeignKey(RespostaQuestao, on_delete=models.RESTRICT)
+
+    @property
+    def correta(self):
+        return self.resposta.correta

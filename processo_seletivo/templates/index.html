@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vestibular Uverse</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/animation.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+</head>
+<body>
+<div class="sep-uverse"></div>
+
+<section>
+    <div class="container" style="position: absolute; bottom: 0;">
+        <div class="row">
+
+          <div class="col-sm space-extra"></div>
+          <div class="col-sm space-extra"></div>
+
+          <div class="col-sm poster flip-top">
+            <h1 class="titulo">Vestibular U:verse</h1>
+            <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                {% if form.errors %}
+                    {% for e in form.non_field_errors %}
+                        <div class="alert alert-danger">{{ e }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="form-group">
+                  <input type="email" placeholder="e-mail" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" required autofocus>
+                </div>
+                
+                <div class="form-group">
+                  <input type="password" class="form-control" name="senha" id="exampleInputPassword1" placeholder="Senha" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-lg btn-uverse flash-bang">Fazer login</button>
+
+                <hr>
+                <p><strong><a href="{% url 'cadastro' %}">Não tem conta? Faça seu cadastro!</a></strong></p>
+              </form>
+              
+                <h4 class="hastag">#souUverse</h4>
+              
+            
+          </div>
+
+
+          
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+</body>
+</html>
