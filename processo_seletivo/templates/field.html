@@ -1,0 +1,4 @@
+<div class="form-group {% if field.errors %}form-error{% endif %}">
+  <input type="{{ tipo }}" placeholder="{{ label }}" class="form-control" id="{{ nome }}" name="{{ nome }}" aria-describedby="{{ nome }}" {{ extra }} value="{{ field.value|default_if_none:"" }}">
+  {% if field.errors %}<small>{% for e in field.errors %}{{ e }}{% endfor %}</small>{% endif %}
+</div>

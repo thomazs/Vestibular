@@ -21,20 +21,19 @@
 
           <div class="col-sm poster flip-top">
             <h1 class="titulo">Vestibular U:verse</h1>
-            <p style="text-align: left;">Preencha os dados abaixo e dê o <strong>primeiro passo para o seu futuro!</strong></p>
-            <form>
-                <div class="form-group">
-                  <input type="email" placeholder="e-mail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                </div>
 
-                <div class="form-group">
-                    <input type="text" placeholder="Celular" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                </div>
-                
-                <div class="form-group">
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha">
-                </div>
-                
+            {% if form.errors %}
+                {% for e in form.non_field_errors %}
+                    <div class="alert alert-danger">{{ e }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <p style="text-align: left;">Preencha os dados abaixo e dê o <strong>primeiro passo para o seu futuro!</strong></p>
+            <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                {% with tipo="text" label="Nome Completo" nome="nome" field=form.nome extra="required" %}{% include 'field.html' %}{% endwith %}
+                {% with tipo="email" label="E-mail" nome="email" field=form.email extra="required" %}{% include 'field.html' %}{% endwith %}
+                {% with tipo="text" label="Celular" nome="fone" field=form.fone extra="required" %}{% include 'field.html' %}{% endwith %}
+
                 <button type="submit" class="btn btn-primary btn-lg btn-uverse flash-bang">Cadastrar</button>
 
                 <hr>
