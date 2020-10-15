@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vestibular U:verse</title>
+</head>
+<body>
+<h1>Olá {{ pessoa.primeiro_nome }}!</h1>
+Você deu o primeiro passo em direção a um futuro melhor! Agora falta pouco para concluir.
+Clique no link abaixo para validar seu cadastro e gerar um acesso!
+<hr>
+{% url 'validar_email' token %}
+</body>
+</html>

@@ -42,3 +42,25 @@ class FormCadastro(forms.ModelForm):
         if email and Pessoa.objects.only('id', 'email').filter(email=email).exists():
             raise forms.ValidationError('Email já cadastrado!')
         return data
+
+
+class FormCompletaCadastro(forms.ModelForm):
+
+    senha = forms.CharField(label='Senha de Acesso', required=True, widget=forms.PasswordInput)
+    confsenha = forms.CharField(label='Confiração de Senha', required=True, widget=forms.PasswordInput)
+
+    class Meta:
+        model = Pessoa
+        fields = ('id', 'rg', 'cpf', 'dt_nasc')
+
+    def clean(self):
+        data = super(FormCompletaCadastro, self).clean()
+        senha = data.get('senha', '').strip()
+        confsenha = data.get('confsenha', '').strip()
+
+        if senha and confsenha and senha != confsenha:
+            raise forms.ValidationError('Senha não confere com sua confirmação!')
+        elif senha == '' or confsenha == '':
+            raise forms.ValidationError('É necessário informar a senha e sua confirmação')
+
+        return data

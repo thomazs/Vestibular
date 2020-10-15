@@ -28,6 +28,7 @@ class Pessoa(models.Model):
     email = models.EmailField('Email', max_length=200)
     rg = models.CharField('RG', max_length=20, null=True, blank=True)
     cpf = models.CharField('CPF', max_length=20, null=True, blank=True)
+    dt_nasc = models.DateField('Data Nascimento', null=True, blank=True)
     ativo = models.BooleanField('Ativo', default=True)
     usuario = models.ForeignKey(UserModel, null=True, blank=True, on_delete=models.RESTRICT)
     email_valido = models.BooleanField(default=False)

@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from processo_seletivo.views import index, cadastro, painel, sair
+from processo_seletivo.views import index, cadastro, painel, sair, emailenviado, validar_email, concluir_cadastro, \
+    mensagem
 
 admin.site.site_header = 'Vestibular U:Verse'
 admin.site.site_title = 'VestU:Verse'
@@ -27,5 +28,10 @@ urlpatterns = [
     path('cadastro/', cadastro, name="cadastro"),
     path('painel/', painel, name="painel"),
     path('sair/', sair, name="sair"),
+    path('mensagem/', mensagem, name="mensagem"),
+    path('emailenviado/?token=<token>', emailenviado, name="emailenviado"),
+    path('validar_email/<token>/', validar_email, name="validar_email"),
+    path('concluir_cadastro/<token>/', concluir_cadastro, name="concluir_cadastro"),
+
     path('', index, name="index"),
 ]
