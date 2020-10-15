@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -12,6 +13,9 @@ class Edicao(models.Model):
         verbose_name = 'edição'
         verbose_name_plural = 'edições'
 
+    def __str__(self):
+        return self.nome
+
     nome = models.CharField('Edição', max_length=80)
     info = models.TextField('Informações', null=True, blank=True)
     dt_ini_insc = models.DateTimeField(null=True, blank=True)
@@ -19,6 +23,12 @@ class Edicao(models.Model):
     dt_venc_boleto = models.DateField()
     ano = models.IntegerField('Ano')
     edital = models.FileField('Edital', upload_to='editais')
+    prova_liberada = models.BooleanField(default=False)
+    pagamento_liberado = models.BooleanField(default=False)
+
+    @property
+    def ativo(self):
+        return self.dt_ini_insc <= datetime.now() <= self.dt_fim_insc
 
 
 class EdicaoCurso(models.Model):
@@ -95,6 +105,17 @@ class Inscricao(models.Model):
     nec_prova_presencial = models.BooleanField(default=False)
     dt_agendamento = models.DateTimeField(null=True, blank=True)
     conf_agendamento = models.BooleanField(default=False)
+    dt_conf_agendamento = models.DateField(null=True, blank=True)
+    quem_confirmou = models.ForeignKey(UserModel, on_delete=models.RESTRICT, null=True, blank=True,
+                                       related_name='confagendamento_user_set')
+
+    fez_prova = models.BooleanField(default=False)
+    dt_ini_prova = models.DateTimeField(null=True, blank=True)
+    dt_fim_prova = models.DateTimeField(null=True, blank=True)
+
+    fez_redacao = models.BooleanField(default=False)
+    dt_ini_redacao = models.DateTimeField(null=True, blank=True)
+    dt_fim_redacao = models.DateTimeField(null=True, blank=True)
 
     nota_geral = models.DecimalField('Nota Geral', null=True, blank=True, max_digits=13, decimal_places=3)
     nota_redacao = models.DecimalField('Nota Redação', null=True, blank=True, max_digits=13, decimal_places=3)
@@ -114,6 +135,7 @@ class Inscricao(models.Model):
     data_inclusao = models.DateTimeField(auto_now_add=True)
     data_alteracao = models.DateTimeField(auto_now=True)
     situacao = models.IntegerField(default=1, choices=SITUACAO_INSCRICAO)
+    # todo Adicionar opção de controle de pagamento
 
 
 class Disciplina(models.Model):
@@ -173,7 +195,8 @@ class RespostaInscricao(models.Model):
 
     inscricao = models.ForeignKey(Inscricao, on_delete=models.RESTRICT)
     questao = models.ForeignKey(QuestaoProva, on_delete=models.RESTRICT)
-    resposta = models.ForeignKey(RespostaQuestao, on_delete=models.RESTRICT)
+    resposta = models.ForeignKey(RespostaQuestao, on_delete=models.RESTRICT, null=True, blank=True)
+    ordem = models.IntegerField(default=1)
 
     @property
     def correta(self):

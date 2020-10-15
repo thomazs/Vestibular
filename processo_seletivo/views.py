@@ -1,13 +1,16 @@
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 
 from instituicao.models import Pessoa
-from processo_seletivo.forms import LoginForm, FormCadastro, FormCompletaCadastro
+from processo_seletivo.forms import LoginForm, FormCadastro, FormCompletaCadastro, FormInscricao
+from processo_seletivo.models import Inscricao
 from processo_seletivo.services import tag_segura_valida, cria_tag_segura, gera_cod_validacao, \
-    envia_email_cadastro, valida_email, ativa_pessoa, loga_pessoa, envia_email_cadastroconcluido
+    envia_email_cadastro, valida_email, ativa_pessoa, loga_pessoa, envia_email_cadastroconcluido, pega_edicao_ativa, \
+    envia_email_inscricaofeita, cria_perguntas_inscricao
 
 
 def index(request):
@@ -31,6 +34,7 @@ def index(request):
 def painel(request):
     if not request.user.is_authenticated:
         return redirect('index')
+    edicao = pega_edicao_ativa()
     return render(request, 'painel.html', locals())
 
 
@@ -86,7 +90,8 @@ def validar_email(request, token=''):
         else:
             messages.success(request, 'Ativação do email realizada com sucesso!')
             valida_email(pessoa)
-            return redirect(str(reverse_lazy('mensagem')) + '?_next=' + str(reverse_lazy('concluir_cadastro', args=[token])))
+            return redirect(
+                str(reverse_lazy('mensagem')) + '?_next=' + str(reverse_lazy('concluir_cadastro', args=[token])))
 
     return redirect('mensagem')
 
@@ -112,13 +117,39 @@ def concluir_cadastro(request, token):
         messages.warning(request, 'Email ainda não foi validado! Tente fazer o login!')
         return redirect('mensagem')
 
-    form = FormCompletaCadastro(instance=Pessoa)
+    form = FormCompletaCadastro(instance=pessoa)
     if request.method == 'POST':
-        form = FormCompletaCadastro(request.POST, instance=Pessoa)
+        form = FormCompletaCadastro(request.POST, instance=pessoa)
         if form.is_valid():
             pessoa = form.save()
             ativa_pessoa(pessoa, form.cleaned_data['senha'])
-            loga_pessoa(pessoa, form.cleaned_data['senha'])
+            loga_pessoa(request, pessoa, form.cleaned_data['senha'])
             envia_email_cadastroconcluido(pessoa, form.cleaned_data['senha'])
-            return redirect('index')
+            return redirect('faz_inscricao')
     return render(request, 'completa_cadastro.html', locals())
+
+
+@login_required(login_url=reverse_lazy('index'))
+@transaction.atomic()
+def faz_inscricao(request, id=None):
+    pessoa = request.user.get_pessoa()
+    inscricao = get_object_or_404(Inscricao, id=id) if id else None
+    if inscricao and inscricao.pessoa_id != pessoa:
+        messages.error(request, 'Inscrição não pertence a este candidato!')
+        return redirect('painel')
+    edicao = pega_edicao_ativa()
+    form = FormInscricao(instance=inscricao, edicao=edicao)
+    if request.method == 'POST':
+        form = FormInscricao(request.POST, instance=inscricao, edicao=edicao)
+        if form.is_valid():
+            pinscricao = form.save(commit=False)
+            pinscricao.curso_final = pinscricao.curso
+            pinscricao.edicao = edicao
+            pinscricao.pessoa = pessoa
+            pinscricao.save()
+            cria_perguntas_inscricao(pinscricao)
+            envia_email_inscricaofeita(pessoa, pinscricao)
+            messages.success(request, 'Inscrição efetuada com sucesso!')
+            return redirect('painel')
+
+    return render(request, 'inscricao.html', locals())

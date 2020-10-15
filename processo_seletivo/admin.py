@@ -8,8 +8,13 @@ from .models import RespostaQuestao
 from .models import RespostaInscricao
 
 
+class EdicaoCursoAdminTabular(admin.TabularInline):
+    model = EdicaoCurso
+
+
 class EdicaoAdmin(admin.ModelAdmin):
     list_display = ('nome', 'dt_venc_boleto')
+    inlines = [EdicaoCursoAdminTabular, ]
 
 
 admin.site.register(Edicao, EdicaoAdmin)

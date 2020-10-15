@@ -31,8 +31,9 @@
 
                 <p style="text-align: left;">Estamos quase lá! Complete os dados para continuar</p>
                 <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <h5 style="font-family: carnas-bold;">{{ pessoa.nome }}</h5>
                     {% for f in form %}
-                        {% with tipo="text" label=f.label nome=f.name field=f extra="" %}
+                        {% with tipo=f.field.widget.input_type label=f.label nome=f.name field=f extra="" %}
                             {% include 'field.html' %}{% endwith %}
                     {% endfor %}
 

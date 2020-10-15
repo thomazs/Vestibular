@@ -7,6 +7,8 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
 
+from processo_seletivo.models import Edicao, RespostaInscricao
+
 UserModel = get_user_model()
 
 
@@ -99,6 +101,7 @@ def valida_email(pessoa):
 
 def ativa_pessoa(pessoa, senha):
     user = UserModel(username=pessoa.email, is_active=True)
+    user.first_name = pessoa.primeiro_nome()
     user.set_password(senha)
     user.save()
 
@@ -124,3 +127,33 @@ def loga_pessoa(request, pessoa, senha):
         login(request, user=user)
         return True
     return False
+
+
+def pega_edicao_ativa():
+    agora = datetime.now()
+    ed = Edicao.objects.filter(dt_ini_insc__lte=agora, dt_fim_insc__gte=agora)
+    if ed.exists():
+        return ed.first()
+    return None
+
+
+def envia_email_inscricaofeita(pessoa, inscricao):
+    assunto = 'Vestibular U:verse - Inscrição Efetuada'
+    destinatarios = [pessoa.email]
+    template = 'email_inscricaofeita.html'
+    contexto = {'pessoa': pessoa, 'inscricao': inscricao, 'host': settings.HOST_CURRENT}
+    enviar_email(assunto, destinatarios, template, contexto=contexto)
+
+
+def cria_perguntas_inscricao(inscricao):
+    edicao = inscricao.edicao
+    questoes = [q for q in edicao.questaoprova_set.all()]
+    ordem = 0
+    while len(questoes) > 0:
+        ordem += 1
+        opcao = random.randint(0, len(questoes) - 1)
+        questao = questoes[opcao]
+        del questoes[opcao]
+        RespostaInscricao.objects.create(inscricao=inscricao, questao=questao, ordem=ordem)
+
+    return True

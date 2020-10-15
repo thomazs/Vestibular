@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vestibular Uverse - Primeiro Passo</title>
+    <title>Vestibular Uverse</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/animation.css' %}">
@@ -22,17 +22,28 @@
 
             <div class="col-sm poster flip-top">
                 <h1 class="titulo">Vestibular U:verse</h1>
-                <p>
-                    Olá {{ pessoa.primeiro_nome }}, em breve você receberá em seu email ({{ pessoa.email }}) uma
-                    mensagem contendo a
-                    confirmação de seu cadastro. Na mensagem conterá um link para confirmar seu email e continuar a
-                    inscrição.
-                </p>
-                <p>&nbsp;</p>
-                <a class="btn btn-primary btn-lg btn-uverse flash-bang" href="{% url 'index' %}">Ir para login</a>
-                <hr>
+
+                {% if form.errors %}
+                    {% for e in form.non_field_errors %}
+                        <div class="alert alert-danger">{{ e }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                <p style="text-align: left;">Estamos quase lá! Complete os dados para continuar</p>
+                <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <h5 style="font-family: carnas-bold;">{{ pessoa.nome }}</h5>
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary btn-lg btn-uverse flash-bang">Salvar</button>
+                    <a class="btn btn-danger btn-lg btn-uverse flash-bang" href="{% url 'painel' %}">Voltar</a>
+
+                </form>
+
                 <h4 class="hastag">#souUverse</h4>
+
+
             </div>
+
+
         </div>
     </div>
 </section>

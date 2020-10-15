@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from processo_seletivo.views import index, cadastro, painel, sair, emailenviado, validar_email, concluir_cadastro, \
-    mensagem
+    mensagem, faz_inscricao
 
 admin.site.site_header = 'Vestibular U:Verse'
 admin.site.site_title = 'VestU:Verse'
@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('cadastro/', cadastro, name="cadastro"),
     path('painel/', painel, name="painel"),
+    path('faz_inscricao/', faz_inscricao, name="faz_inscricao"),
     path('sair/', sair, name="sair"),
     path('mensagem/', mensagem, name="mensagem"),
     path('emailenviado/<token>/', emailenviado, name="emailenviado"),

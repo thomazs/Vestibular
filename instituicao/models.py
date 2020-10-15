@@ -47,3 +47,29 @@ class Pessoa(models.Model):
 
     def primeiro_nome(self):
         return self.nome.split(' ')[0]
+
+
+def get_inscricoes(self):
+    lista = []
+    for p in self.pessoa_set.all():
+        for i in p.inscricao_set.all():
+            lista.append(i)
+    return lista
+
+
+def get_inscricao_ativa(self):
+    for p in self.pessoa_set.all():
+        for i in p.inscricao_set.all():
+            if i.edicao.ativo:
+                return i
+    return None
+
+
+def get_pessoa(self):
+    pessoa = self.pessoa_set.all()
+    return pessoa.first() if pessoa.exists() else None
+
+
+UserModel.get_inscricoes = get_inscricoes
+UserModel.get_inscricao_ativa = get_inscricao_ativa
+UserModel.get_pessoa = get_pessoa

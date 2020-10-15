@@ -61,18 +61,13 @@
 <h1 class="titulo" style="text-align: center;font-weight: bold;font-family: 'Staatliches', cursive;color: rgb(2, 107, 29) !important;">Olá, {{pessoa.primeiro_nome}}</h1>
 
 <div class="texto" style="font-family: 'Roboto', sans-serif;text-align: center;font-weight: bold;">
-    Você está a um passo em relação ao seu futuro, por favor confirme seu endereço de email clicando no link abaixo,
-    este é um passo importante para que possamos prosseguir com sua inscrição.
+    Você fez uma inscrição para o curso de {{ inscricao.curso }}. Conte conosco para o que precisar! Estamos torcendo por você!
 
 </div>
 
 <div class="confimacao" style="text-align: center;padding-top: 30px;">
-    <a class="btn-cadastro" href="{{ host }}{% url 'validar_email' token %}" style="padding: 10px 40px;border-radius: 25px;border: 3px solid #FFF;text-decoration: none;color: #111;font-family: 'Roboto', sans-serif;font-weight: bold;background: #F6B201;margin: auto;">Confirmar inscrição</a>
-    <br>
-
-
-    <p style="padding-top: 20px;font-size: 10px;">Caso nao consigar clicar no botão, cole o link a seguir na url do seu navegador:
-        <strong>{{ host }}{% url 'validar_email' token %}</strong>
+    <p style="padding-top: 20px;font-size: 10px;">
+        Mensagem automática enviada quando você realizou inscrição em algum curso do Centro Universitário U:verse.
     </p>
 </div>
 
