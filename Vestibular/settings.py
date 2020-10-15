@@ -122,3 +122,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "alertas@uverse.com.vc"
 EMAIL_HOST_PASSWORD = "AlertaFAAO2019!"
+
+HOST_CURRENT = 'http://localhost:8000'

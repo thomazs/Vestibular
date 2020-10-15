@@ -9,6 +9,6 @@
 Você deu o primeiro passo em direção a um futuro melhor! Agora falta pouco para concluir.
 Clique no link abaixo para validar seu cadastro e gerar um acesso!
 <hr>
-{% url 'validar_email' token %}
+<a href="{{ host }}{% url 'validar_email' token %}">{{ host }}{% url 'validar_email' token %}</a>
 </body>
 </html>

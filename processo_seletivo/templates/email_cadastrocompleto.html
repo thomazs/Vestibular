@@ -8,6 +8,6 @@
 <h1>Olá {{ pessoa.primeiro_nome }}!</h1>
 Você completou seu cadastro com sucesso. Sua senha inicial de acesso é <strong>{{ senha }}</strong>
 <hr>
-Para visualizar seu ambiente de inscrição acesse <a href="{% url 'index' %}">{% url 'index' %}</a>
+Para visualizar seu ambiente de inscrição acesse <a href="{{ host }}{% url 'index' %}">{{ host }}{% url 'index' %}</a>
 </body>
 </html>

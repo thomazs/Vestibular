@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.db import transaction
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 
@@ -33,6 +34,7 @@ def painel(request):
     return render(request, 'painel.html', locals())
 
 
+@transaction.atomic
 def cadastro(request):
     form = FormCadastro()
     if request.method == 'POST':
@@ -42,14 +44,15 @@ def cadastro(request):
             pessoa = form.save(commit=False)
             pessoa.codvalidacao = gera_cod_validacao()
             pessoa.save()
-            envia_email_cadastro(pessoa)
-            return redirect('emailenviado', token=cria_tag_segura(pessoa.id))
+            token = cria_tag_segura(pessoa.id)
+            envia_email_cadastro(pessoa, token)
+            return redirect('emailenviado', token=token)
 
     return render(request, 'cadastro.html', locals())
 
 
 def emailenviado(request, token=None):
-    segura, valor = tag_segura_valida(request.GET.get('token', ''))
+    segura, valor = tag_segura_valida(token)
     if not segura:
         return redirect('index')
 
@@ -62,6 +65,7 @@ def sair(request):
     return redirect('index')
 
 
+@transaction.atomic
 def validar_email(request, token=''):
     if token == '':
         return redirect('index')
@@ -82,7 +86,7 @@ def validar_email(request, token=''):
         else:
             messages.success(request, 'Ativação do email realizada com sucesso!')
             valida_email(pessoa)
-            return redirect(reverse_lazy('mensagem') + '?_next=' + reverse_lazy('concluir_cadastro', args=[token]))
+            return redirect(str(reverse_lazy('mensagem')) + '?_next=' + str(reverse_lazy('concluir_cadastro', args=[token])))
 
     return redirect('mensagem')
 
@@ -92,6 +96,7 @@ def mensagem(request, time_to_redirect=0):
     return render(request, 'mensagem.html', {'next': next, 'time_to_redirect': time_to_redirect})
 
 
+@transaction.atomic
 def concluir_cadastro(request, token):
     segura, valor = tag_segura_valida(token)
     if not segura:
@@ -111,7 +116,7 @@ def concluir_cadastro(request, token):
     if request.method == 'POST':
         form = FormCompletaCadastro(request.POST, instance=Pessoa)
         if form.is_valid():
-            pessoa = form.save(commit=False)
+            pessoa = form.save()
             ativa_pessoa(pessoa, form.cleaned_data['senha'])
             loga_pessoa(pessoa, form.cleaned_data['senha'])
             envia_email_cadastroconcluido(pessoa, form.cleaned_data['senha'])

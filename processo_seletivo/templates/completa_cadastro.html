@@ -31,7 +31,7 @@
 
                 <p style="text-align: left;">Estamos quase lá! Complete os dados para continuar</p>
                 <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-                    {% for f in forms %}
+                    {% for f in form %}
                         {% with tipo="text" label=f.label nome=f.name field=f extra="" %}
                             {% include 'field.html' %}{% endwith %}
                     {% endfor %}

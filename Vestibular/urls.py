@@ -29,7 +29,7 @@ urlpatterns = [
     path('painel/', painel, name="painel"),
     path('sair/', sair, name="sair"),
     path('mensagem/', mensagem, name="mensagem"),
-    path('emailenviado/?token=<token>', emailenviado, name="emailenviado"),
+    path('emailenviado/<token>/', emailenviado, name="emailenviado"),
     path('validar_email/<token>/', validar_email, name="validar_email"),
     path('concluir_cadastro/<token>/', concluir_cadastro, name="concluir_cadastro"),
 
