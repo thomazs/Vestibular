@@ -1,0 +1,10 @@
+ .idea/
+Vestibular/__pycache__/
+db.sqlite3
+editais/
+instituicao/__pycache__/
+instituicao/migrations/__pycache__/
+processo_seletivo/__pycache__/
+processo_seletivo/migrations/__pycache__/
+processo_seletivo/static/js/
+processo_seletivo/templatetags/__pycache__/

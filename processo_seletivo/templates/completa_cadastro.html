@@ -9,6 +9,17 @@
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/animation.css' %}">
     <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+    <script type="text/javascript" src="{% static 'js/1.5.2.js'%}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.maskedinput-1.3.min.js'%}"></script>
+	<script>
+		jQuery(function($){
+		       $("#cpf").mask("999.999.999-99");
+		       $("#dt_nasc").mask("99/99/9999");
+		});
+	</script>
+
+
+
 </head>
 <body>
 <div class="sep-uverse"></div>
@@ -18,7 +29,7 @@
         <div class="row">
 
             <div class="col-sm space-extra"></div>
-            <div class="col-sm space-extra"></div>
+{#            <div class="col-sm space-extra"></div>#}
 
             <div class="col-sm poster flip-top">
                 <h1 class="titulo">Vestibular U:verse</h1>
@@ -31,7 +42,7 @@
 
                 <p style="text-align: left;">Estamos quase lá! Complete os dados para continuar</p>
                 <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-                    <h5 style="font-family: carnas-bold;">{{ pessoa.nome }}</h5>
+                    <h6 style="font-family: carnas-bold; color:rgb(2, 107, 29) !important">{{ pessoa.nome }}</h6>
                     {% for f in form %}
                         {% with tipo=f.field.widget.input_type label=f.label nome=f.name field=f extra="" %}
                             {% include 'field.html' %}{% endwith %}
