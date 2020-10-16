@@ -18,18 +18,25 @@
         <div class="row">
 
             <div class="col-sm space-extra"></div>
-            <div class="col-sm space-extra"></div>
+{#            <div class="col-sm space-extra"></div>#}
 
-            <div class="col-sm poster flip-top">
-                <h1 class="titulo">Vestibular U:verse</h1>
-                <p>
-                    Olá {{ pessoa.primeiro_nome }}, em breve você receberá em seu email ({{ pessoa.email }}) uma
-                    mensagem contendo a
-                    confirmação de seu cadastro. Na mensagem conterá um link para confirmar seu email e continuar a
-                    inscrição.
+            <div class="col-sm poster" style="text-align: center">
+                <h1 class="titulo">Verifique seu email</h1>
+                <hr>
+                <div class="icone-grande">
+                    <svg width="40" height="40" viewBox="0 0 16 16" class="bi bi-envelope-fill enter-left-bounce" fill="currentColor"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
+                    </svg>
+                </div>
+                <p class="texto-informativo">
+                    Olá <strong>{{ pessoa.primeiro_nome }}</strong>, acabamos de enviar no email: <strong>{{ pessoa.email }}</strong>
+                    uma mensagem contendo a confirmação de seu cadastro. Na mensagem conterá um link para confirmar seu
+                    email e continuar a inscrição no vestibular U:verse.
                 </p>
                 <p>&nbsp;</p>
-                <a class="btn btn-primary btn-lg btn-uverse flash-bang" href="{% url 'index' %}">Ir para login</a>
+                <a class="btn btn-primary btn-lg btn-uverse-verde flash-bang" href="{% url 'index' %}">Ir para login</a>
                 <hr>
                 <h4 class="hastag">#souUverse</h4>
             </div>

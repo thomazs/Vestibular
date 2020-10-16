@@ -1,84 +1,179 @@
-
 @font-face {
     font-family: carnas-bold;
     src: url(fonts/carnas_black-webfont.woff2);
 }
 
 
-body{
-    background: url(../img/intro-person.png) no-repeat left bottom #eee  fixed !important ;
+body {
+    background: url(../img/intro-person.png) no-repeat left bottom #eee fixed !important;
     height: 100%;
     background: #eee;
 }
-.poster{
+
+.poster {
     /* background: rgba(255, 255, 255, 0.9); */
     background: linear-gradient(90deg, #9cd116, #0AF6AE) !important;
     padding: 4% 2%;
     bottom: 20px;
     border-radius: 15px;
 }
-.sep-uverse{
+
+.poster2 {
+    /* background: rgba(255, 255, 255, 0.9); */
+    background: linear-gradient(90deg, #9cd116, #0AF6AE) !important;
+    padding: 4% 2%;
+    border-radius: 15px;
+    top: 0;
+}
+
+.card-uverse {
+    background-color: #fff !important;
+    color: #111 !important;
+    padding: 20px 10px;
+    border-radius: 10px;
+    width: 100%;
+    text-transform: uppercase;
+    font-family: carnas-bold;
+}
+
+.card-uverse > img {
+    width: 60px;
+    fill: #20c997;
+}
+
+.sep-uverse {
     width: 100%;
     height: 2px;
     background: linear-gradient(90deg, #9cd116, #0AF6AE) !important;
 }
-.poster p{
+
+.poster p {
     color: #FFF1DD;
     text-align: center;
 }
-.poster a{
+
+.poster a {
     color: #fff;
 }
-.poster h1{
-    color:  rgb(2, 107, 29) !important;
+
+.poster h1 {
+    color: rgb(2, 107, 29) !important;
 }
 
-.poster h6{
-    color:  rgb(2, 107, 29);;
+.poster h6 {
+    color: rgb(2, 107, 29);;
 }
-.btn-uverse{
+
+.btn-uverse {
     border-radius: 20px;
     /* background: linear-gradient(90deg, #9cd116, #0AF6AE) !important; */
     background: transparent;
     border: 3px solid #FFF;
     font-weight: bold;
-    color:#fff;
+    color: #fff;
     font-size: 14px;
 }
-.titulo{
+
+.btn-uverse-verde {
+    border-radius: 20px;
+    /*background: linear-gradient(90deg, #9cd116, #0AF6AE) !important;*/
+    background: transparent;
+    border: 3px solid #FFF;
+    font-weight: bold;
+    color: #fff;
+    font-size: 14px;
+}
+
+.btn-uverse-perigo {
+    border-radius: 20px;
+    /*background: linear-gradient(90deg, #9cd116, #0AF6AE) !important;*/
+    background: transparent;
+    border: 1px solid #dc3545;
+    font-weight: bold;
+    color: #dc3545;
+    font-size: 14px;
+}
+
+a.btn-uverse-perigo {
+    color: #dc3545 !important;
+}
+
+a.btn-uverse-perigo:hover {
+    color: #FFF !important;
+}
+
+.titulo {
     font-family: carnas-bold;
     text-transform: uppercase;
     color: #FFF;
 }
-.hastag{
+
+.hastag {
     padding: 20px 0;
     color: #D4FC0D;
     text-align: center;
     font-weight: bold;
 }
-.avatar{
+
+.avatar {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    border:3px solid #fff;
+    border: 3px solid #fff;
     overflow: hidden;
 }
+
 .avatar > img {
     width: 110%;
 }
-.poster-central{
+
+.poster-central {
     /* background: rgba(255, 255, 255, 0.9); */
     background: linear-gradient(90deg, #9cd116, #0AF6AE) !important;
     bottom: 20px;
     border-radius: 15px;
     overflow: hidden;
 }
-.item-menu{
-    background: #20c997;
+
+.item-menu {
+    background: #66d04c;
     border-radius: 5px;
     margin: 2px;
     text-align: center;
     padding: 0;
+    padding-top: 10px;
+    color: rgb(2, 107, 29) !important;
+    transition: 0.5s linear;
+}
+.item-menu:hover{
+    transition: 0.5s linear;
+    background: #45b12b;
+    color: #FFF !important;
+}
+a.item-menu{
+    color: #FFF;
+}
+
+.item-menu-sair {
+    background: transparent;
+    border: 1px solid #FFF;
+    border-radius: 5px;
+    margin: 2px;
+    text-align: center;
+    padding: 0;
+}
+
+.icone-grande img {
+}
+
+.icone-grande {
+    width: 100% !important;
+    text-align: center;
+    color: rgb(2, 107, 29) !important;
+}
+
+.texto-informativo {
+    color: rgb(2, 107, 29) !important;
 }
 
 /* css em telas de pequeno porte  */
@@ -87,16 +182,18 @@ body{
 /* css em telas de pequeno porte  */
 @media (max-width: 576px) {
 
-    body{
+    body {
         /* background-image: none !important; */
         background-position: center top !important;
         background-size: 100% !important;
 
     }
-    .poster{
+
+    .poster {
         text-align: center !important;
     }
-    .space-extra{
+
+    .space-extra {
         display: none !important;
     }
 
