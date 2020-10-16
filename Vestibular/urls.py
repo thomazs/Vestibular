@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
 
 from processo_seletivo.views import index, cadastro, painel, sair, emailenviado, validar_email, concluir_cadastro, \
     mensagem, faz_inscricao, prova_online
@@ -36,4 +38,4 @@ urlpatterns = [
     path('prova_online/', prova_online, name="prova_online"),
 
     path('', index, name="index"),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static('media/', document_root=settings.MEDIA_ROOT)

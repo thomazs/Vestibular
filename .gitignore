@@ -1,3 +1,4 @@
+<<<<<<< HEAD
  .idea/
 Vestibular/__pycache__/
 db.sqlite3
@@ -8,3 +9,7 @@ processo_seletivo/__pycache__/
 processo_seletivo/migrations/__pycache__/
 processo_seletivo/templatetags/__pycache__/
 /.idea/
+=======
+/db.sqlite3
+/editais/Escaner_preto03_0001.jpg
+>>>>>>> b60cdef8895551b5704dccc234be1625f427b348
