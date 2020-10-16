@@ -155,5 +155,24 @@ def faz_inscricao(request, id=None):
     return render(request, 'inscricao.html', locals())
 
 
+@login_required(login_url=reverse_lazy('index'))
 def prova_online(request):
+    edicao = pega_edicao_ativa()
+    if (not edicao) or (not edicao.prova_liberada):
+        return redirect('index')
+
+    inscricao = request.user.get_inscricao_ativa()
+    if inscricao.fez_prova:
+        messages.info(request, 'Você já fez a prova!')
+        return redirect('painel')
+
+    opcoes = inscricao.respostainscricao_set
+    ultima_respondida = opcoes.filter(
+        resposta__isnull=False
+    ).order_by('-ordem')
+    if ultima_respondida.exists():
+        questao = ultima_respondida.first()
+    else:
+        questao = opcoes.filter(ordem=1).first()
+
     return render(request, 'prova_online.html', locals())
