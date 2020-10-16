@@ -81,6 +81,23 @@ class FormInscricao(forms.ModelForm):
             'nec_outros_desc', 'nec_prova_presencial', 'curso'
         )
 
+    def formata(self):
+        tipos_input = ['nota_enem', 'ano_enem', 'curso']
+        tipos_file = ['comprovante_enem', 'comprovante_escolaridade', ]
+        tipos_checkbox = [
+            'treineiro', 'nec_prova_presencial', 'nec_outros', 'nec_localfacilacesso', 'nec_transcritor',
+            'nec_ledor', 'nec_intlibras']
+        tipos = {
+            'form-control': tipos_input,
+            'form-control-file': tipos_file,
+            'form-check-input': tipos_checkbox,
+        }
+        for cn, lf in tipos.items():
+            for nf in lf:
+                self.fields[nf].widget.attrs['placeholder'] = self.fields[nf].label
+                self.fields[nf].widget.attrs['title'] = self.fields[nf].label
+                self.fields[nf].widget.attrs['class'] = cn
+
     def __init__(self, *args, **kwargs):
         edicao = kwargs.pop('edicao', None)
         super(FormInscricao, self).__init__(*args, **kwargs)
@@ -89,3 +106,5 @@ class FormInscricao(forms.ModelForm):
             self.fields['curso'].queryset = self.fields['curso'].queryset.filter(id__in=cursos_id)
         else:
             self.fields['curso'].queryset = Curso.objects.none()
+
+        self.formata()

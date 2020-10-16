@@ -102,6 +102,7 @@ def valida_email(pessoa):
 def ativa_pessoa(pessoa, senha):
     user = UserModel(username=pessoa.email, is_active=True)
     user.first_name = pessoa.primeiro_nome()
+    user.email = pessoa.email
     user.set_password(senha)
     user.save()
 

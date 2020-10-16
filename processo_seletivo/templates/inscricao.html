@@ -22,23 +22,33 @@
 
             document.getElementById('bloco-enem').style.display = "none";
             document.getElementById('comprovante_esc').style.display = "none";
-
+            $('.only-local').hide();
 
             var tipoSelecao = document.getElementById('id_tipo_selecao');
             tipoSelecao.addEventListener('change', function () {
-                alert(this.value);
-
                 if (this.value == 1) {
                     document.getElementById('bloco-enem').style.display = "none";
                     document.getElementById('comprovante_esc').style.display = "none";
-
+                    document.getElementById('bloco-necessidades').style.display = "block";
                 } else if (this.value == 2) {
                     document.getElementById('comprovante_esc').style.display = "block";
+                    document.getElementById('bloco-necessidades').style.display = "none";
                 } else if (this.value == 3) {
                     document.getElementById('bloco-enem').style.display = "block";
+                    document.getElementById('bloco-necessidades').style.display = "none";
                     document.getElementById('comprovante_esc').style.display = "none";
                 }
 
+            });
+
+            var prova_presencial = document.getElementById('id_nec_prova_presencial');
+            prova_presencial.addEventListener('click', function () {
+                if (this.checked){
+                    $('.only-local').show();
+                }else{
+                    $('.only-local').hide();
+                    $('.only-local').find('input[type=checkbox]').attr('checked', false);
+                }
             });
         };
     </script>
@@ -64,175 +74,159 @@
                     {% endfor %}
                 {% endif %}
 
+                <h5 style="font-family: carnas-bold;">{{ pessoa.nome }}</h5>
+
                 <p style="text-align: left;">Estamos quase lá! Agora só falta você escolher as informações sobre seu
                     curso e prova</p>
 
                 {#                formulário estático#}
-
-                <div class="row">
-                    <div class="col">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Tipo de ingresso</label>
+                <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="inputGroupSelect01">Tipo de ingresso</label>
+                                </div>
+                                <select name="tipo_selecao" id="id_tipo_selecao" class="form-control">
+                                    <option value="1" selected="">Processo Seletivo Comum (Prova)</option>
+                                    <option value="2">Portador de Diploma (já possui outro curso de nível superior)
+                                    </option>
+                                    <option value="3">Utilizando nota do ENEM</option>
+                                </select>
                             </div>
-                            <select name="tipo_selecao" id="id_tipo_selecao" class="form-control">
-                                <option value="1" selected="">Processo Seletivo Comum (Prova)</option>
-                                <option value="2">Portador de Diploma (já possui outro curso de nível superior)</option>
-                                <option value="3">Utilizando nota do ENEM</option>
-                            </select>
                         </div>
                     </div>
-                    <hr>
-                </div>
 
 
-                {#                caso seja enem#}
+                    {#                caso seja enem#}
 
-                <div id="bloco-enem">
-                    <div class="row">
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="Nota do enem">
+                    <div id="bloco-enem">
+                        <hr>
+                        <div class="row">
+                            <div class="col">
+                                {{ form.nota_enem }}
+                            </div>
+                            <div class="col">
+                                {{ form.ano_enem }}
+                            </div>
                         </div>
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="Ano do enem">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="exampleFormControlFile1">Selecione o comprovante do enem</label>
+                                    {{ form.comprovante_enem }}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
+
+                    {#                caso seja enem#}
+
+
+                    <div class="row" id="comprovante_esc">
+                        <hr>
                         <div class="col">
                             <div class="form-group">
-                                <label for="exampleFormControlFile1">Selecione o comprovante do enem</label>
-                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                <label for="exampleFormControlFile1">Comprovante de escolaridade</label>
+                                {{ form.comprovante_escolaridade }}
                             </div>
                         </div>
                     </div>
-                    <hr>
-                </div>
-
-                {#                caso seja enem#}
 
 
-                <div class="row">
-                    <div class="col" id="comprovante_esc">
-                        <div class="form-group">
-                            <label for="exampleFormControlFile1">Comprovante de escolaridade</label>
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                        </div>
-                    </div>
-                    <hr>
-                </div>
+                    <div id="bloco-necessidades">
 
-
-                <div id="bloco-necessidades">
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Sou treinero
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col">
-                            <h6 style="color: #FFF">NECESSITA DE ALGUM ATENDIMENTO ESPECIAL?</h6>
-                        </div>
-                    </div>
-
-                    <div class="row">
-
-
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Necessito de interprete em Líbras
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Necessito de Ledor
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Necessito de Transcritor
-                                </label>
+                        <hr>
+                        <div class="row">
+                            <div class="col">
+                                <h6 style="color: #FFF">NECESSITA DE ALGUM ATENDIMENTO ESPECIAL?</h6>
                             </div>
                         </div>
 
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Local de fácil acesso
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Prova presencial
-                                </label>
-                            </div>
-                        </div>
+                        <div class="row" id="bloco-comum">
 
-
-                        <div class="col-12">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <input type="checkbox" aria-label="Checkbox for following text input">
-                                        <label class="form-check-label" for="defaultCheck1">
-                                            &nbsp Outros
-                                        </label>
-                                    </div>
+                            <div class="col-6">
+                                <div class="form-check">
+                                    {{ form.treineiro }}
+                                    {{ form.treineiro.label_tag }}
                                 </div>
-                                <input type="text" class="form-control" aria-label="Text input checkbox"
-                                       placeholder="Especifique">
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-check">
+                                    {{ form.nec_prova_presencial }}
+                                    {{ form.nec_prova_presencial.label_tag }}
+                                </div>
+                            </div>
+
+                            <div class="col-6 only-local">
+                                <div class="form-check">
+                                    {{ form.nec_intlibras }}
+                                    <label class="form-check-label" for="id_nec_intlibras">
+                                        Necessito de interprete em Líbras
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-6 only-local">
+                                <div class="form-check">
+                                    {{ form.nec_ledor }}
+                                    <label class="form-check-label" for="id_nec_ledor">
+                                        Necessito de Ledor
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-6 only-local">
+                                <div class="form-check">
+                                    {{ form.nec_transcritor }}
+                                    <label class="form-check-label" for="id_nec_transcritor">
+                                        Necessito de Transcritor
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-6 only-local">
+                                <div class="form-check">
+                                    {{ form.nec_localfacilacesso }}
+                                    <label class="form-check-label" for="id_nec_localfacilacesso">
+                                        Local de fácil acesso
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-12 only-local">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" name="nec_outros" id="id_nec_outros" aria-label="Checkbox for following text input">
+                                            <label class="form-check-label" for="id_nec_outros">
+                                                &nbsp Outros
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control"  name="nec_outros_desc" aria-label="Text input checkbox"
+                                           placeholder="Especifique">
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                        <hr>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="inputGroupSelect01">Selecione o curso</label>
+                                </div>
+                                {{ form.curso }}
                             </div>
                         </div>
-
-
                     </div>
-                </div>
-                <hr>
 
-                <div class="row">
-                    <div class="col">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Selecione o curso</label>
-                            </div>
-                            <select name="tipo_selecao" id="id_tipo_selecao" class="form-control">
-                                <option value="1" selected="">Administração</option>
-                                <option value="2">ADS</option>
-                                <option value="3">Contábeis</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-
-                {#                formulário estático#}
-
-
-                <h1>#######################</h1>
-
-                <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-                    <h5 style="font-family: carnas-bold;">{{ pessoa.nome }}</h5>
-                    {{ form.as_p }}
                     <button type="submit" class="btn btn-primary btn-lg btn-uverse flash-bang">Salvar</button>
-                    {#                    <a class="btn btn-danger btn-lg btn-uverse flash-bang" href="{% url 'painel' %}">Voltar</a>#}
+                    <a class="btn btn-danger btn-lg btn-uverse flash-bang" href="{% url 'painel' %}">Voltar</a>
 
                 </form>
                 <h4 class="hastag">#souUverse</h4>
