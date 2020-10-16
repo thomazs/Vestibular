@@ -54,7 +54,7 @@
             <div class="row">
 
                 {% if edicao %}
-                    <a class="col-2 item-menu" target="_blank" href="/static/{{ edicao.edital.url }}">
+                    <a class="col-2 item-menu" target="_blank" href="{{ edicao.edital.url }}">
                         <h4>
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-earmark-text"
                                  fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -130,23 +130,22 @@
             {#            <button type="button" class="btn btn-primary btn-uverse">Escolha um curso</button>#}
 
             <h6>MEUS CURSOS</h6>
-            <div class="card-uverse">
+{#            {% with i=user.get_inscricao_ativa %}#}
+                    {% for i in user.get_inscricoes %}
+            <div class="card-uverse flip-right">
 
 
                 <img src="{% static 'img/student.svg' %}">
 
                 <h4>
-                    {% for i in user.get_inscricoes %}
                         {{ i.curso }}
-                    {% endfor %}
                 </h4>
 
-                {% for i in user.get_inscricoes %}
                     {{ i.edicao.nome }}
-                {% endfor %}
-
 
             </div>
+                {% endfor %}
+{#            {% endwith %}#}
 
 
         </div>

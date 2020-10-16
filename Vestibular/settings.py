@@ -124,3 +124,6 @@ EMAIL_HOST_USER = "alertas@uverse.com.vc"
 EMAIL_HOST_PASSWORD = "AlertaFAAO2019!"
 
 HOST_CURRENT = 'http://localhost:8000'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'processo_seletivo', 'static', 'media')
+MEDIA_URL = 'http://localhost:8000/media/'
