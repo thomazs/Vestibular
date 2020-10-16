@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from processo_seletivo.views import index, cadastro, painel, sair, emailenviado, validar_email, concluir_cadastro, \
-    mensagem, faz_inscricao
+    mensagem, faz_inscricao, prova_online
 
 admin.site.site_header = 'Vestibular U:Verse'
 admin.site.site_title = 'VestU:Verse'
@@ -33,6 +33,7 @@ urlpatterns = [
     path('emailenviado/<token>/', emailenviado, name="emailenviado"),
     path('validar_email/<token>/', validar_email, name="validar_email"),
     path('concluir_cadastro/<token>/', concluir_cadastro, name="concluir_cadastro"),
+    path('prova_online/', prova_online, name="prova_online"),
 
     path('', index, name="index"),
 ]

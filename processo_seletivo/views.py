@@ -153,3 +153,7 @@ def faz_inscricao(request, id=None):
             return redirect('painel')
 
     return render(request, 'inscricao.html', locals())
+
+
+def prova_online(request):
+    return render(request, 'prova_online.html', locals())

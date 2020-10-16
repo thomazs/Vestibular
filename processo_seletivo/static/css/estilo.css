@@ -36,6 +36,25 @@ body {
     font-family: carnas-bold;
 }
 
+.card-uverse-lateral {
+    background-color: #111 !important;
+    color: #FFF !important;
+    padding: 20px 20px;
+    border-radius: 10px;
+    width: 100%;
+    border:1px solid #DDD;
+    text-align: center;
+    font-size: 11px;
+}
+.menu-lateral-item{
+    border-radius: 5px;
+    text-align: left;
+    margin-bottom: 5px !important;
+    padding: 5px !important;
+    text-transform: capitalize !important;
+    border-bottom: 1px solid #222;
+}
+
 .card-uverse > img {
     width: 60px;
     fill: #20c997;
