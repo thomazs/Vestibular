@@ -18,7 +18,48 @@
     <div class="container" style="margin-top: 50px;">
         <div class="row">
 
-            <div class="col-2">
+
+
+            <!--            <div class="col-sm space-extra"></div>-->
+
+
+            <div class="col-sm poster2 flip-top">
+                <h1 class="titulo" style="color: rgb(2, 107, 29)">Questão {{ questao.ordem }} de 20</h1>
+
+                <div class="row">
+                    <div class="col">
+                        {{ questao.questao.texto|safe }}
+                    </div>
+                </div>
+
+                <hr>
+
+                <!--                alternativas-->
+                {% for o in questao.questao.respostaquestao_set.all %}
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="resposta"
+                                   id="resposta_{{ forloop.counter }}"
+                                   value="{{ o.id }}">
+                            <label class="form-check-label" for="resposta_{{ forloop.counter }}">
+                                {{ o.texto|safe }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <hr>
+
+
+                <button class="btn btn-primaryb btn-uverse">Avançar</button>
+
+
+            </div>
+            <!--            END-->
+
+            <div class="col-12 col-sm-2">
                 <div class="row">
                     <div class="col">
                         <div class="card-uverse-lateral">
@@ -67,43 +108,8 @@
             </div>
 
 
-            <!--            <div class="col-sm space-extra"></div>-->
 
 
-            <div class="col-sm poster2 flip-top">
-                <h1 class="titulo" style="color: rgb(2, 107, 29)">Questão {{ questao.ordem }} de 20</h1>
-
-                <div class="row">
-                    <div class="col">
-                        {{ questao.questao.texto|safe }}
-                    </div>
-                </div>
-
-                <hr>
-
-                <!--                alternativas-->
-                {% for o in questao.questao.respostaquestao_set.all %}
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="resposta" id="resposta_{{ forloop.counter }}"
-                                       value="{{ o.id }}">
-                                <label class="form-check-label" for="resposta_{{ forloop.counter }}">
-                                    {{ o.texto|safe }}
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-
-                <hr>
-
-
-                <button class="btn btn-primaryb btn-uverse">Avançar</button>
-
-
-            </div>
-            <!--            END-->
 
         </div>
     </div>
