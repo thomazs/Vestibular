@@ -81,7 +81,7 @@ DATABASES = {
     }
 }
 
-PRODUCAO = False
+PRODUCAO = True
 if PRODUCAO:
     DATABASES = {
         'default': {
