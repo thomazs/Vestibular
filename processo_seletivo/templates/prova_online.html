@@ -7,9 +7,20 @@
     <title>Prova online</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script type="text/javascript" src="{% static 'js/1.5.2.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/animation.css' %}">
     <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
-
+    <script>
+        $(document).ready(function () {
+            $('#form_resposta').submit(function () {
+                if ($('input[name="resposta"]:checked').val() == '' || $('input[name="resposta"]:checked').val() == undefined) {
+                    alert('Selecione ao menos uma resposta');
+                    return false;
+                }
+                return true;
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="sep-uverse"></div>
@@ -69,39 +80,43 @@
 
             <!--            <div class="col-sm space-extra"></div>-->
 
-
             <div class="col-sm poster2 flip-top">
-                <h1 class="titulo" style="color: rgb(2, 107, 29)">Questão {{ questao.ordem }} de 20</h1>
+                <form method="POST" enctype="multipart/form-data" id="form_resposta">{% csrf_token %}
+                    <h1 class="titulo" style="color: rgb(2, 107, 29)">Questão {{ questao.ordem }} de {{ total_questoes }}</h1>
 
-                <div class="row">
-                    <div class="col">
-                        {{ questao.questao.texto|safe }}
-                    </div>
-                </div>
-
-                <hr>
-
-                <!--                alternativas-->
-                {% for o in questao.questao.respostaquestao_set.all %}
                     <div class="row">
                         <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="resposta" id="resposta_{{ forloop.counter }}"
-                                       value="{{ o.id }}">
-                                <label class="form-check-label" for="resposta_{{ forloop.counter }}">
-                                    {{ o.texto|safe }}
-                                </label>
-                            </div>
+                            {{ questao.questao.texto|safe }}
                         </div>
                     </div>
-                {% endfor %}
 
-                <hr>
+                    <hr>
+
+                    <!--                alternativas-->
+                    {% for o in questao.questao.respostaquestao_set.all %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="resposta"
+                                           id="resposta_{{ forloop.counter }}"
+                                           value="{{ o.id }}" {% if questao.resposta_id == o.id %}checked{% endif %} >
+                                    <label class="form-check-label" for="resposta_{{ forloop.counter }}">
+                                        {{ o.texto|safe }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <hr>
+
+                    {% if tag_voltar %}
+                        <a class="btn btn-uverse-verde btn-uverse" href="?qesp={{ tag_voltar }}">Voltar</a>
+                    {% endif %}
+                    <button type="submit" class="btn btn-primaryb btn-uverse">Avançar</button>
 
 
-                <button class="btn btn-primaryb btn-uverse">Avançar</button>
-
-
+                </form>
             </div>
             <!--            END-->
 

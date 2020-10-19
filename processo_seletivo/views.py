@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -10,7 +12,8 @@ from processo_seletivo.forms import LoginForm, FormCadastro, FormCompletaCadastr
 from processo_seletivo.models import Inscricao
 from processo_seletivo.services import tag_segura_valida, cria_tag_segura, gera_cod_validacao, \
     envia_email_cadastro, valida_email, ativa_pessoa, loga_pessoa, envia_email_cadastroconcluido, pega_edicao_ativa, \
-    envia_email_inscricaofeita, cria_perguntas_inscricao
+    envia_email_inscricaofeita, cria_perguntas_inscricao, pega_questao_responder, resposta_valida, responder_questao, \
+    prova_redirecionar_para, gravar_redacao
 
 
 def index(request):
@@ -136,7 +139,8 @@ def faz_inscricao(request, id=None):
     inscricao = get_object_or_404(Inscricao, id=id) if id else None
     if inscricao and inscricao.pessoa_id != pessoa:
         messages.error(request, 'Inscrição não pertence a este candidato!')
-        return redirect('painel')
+        return redirect('index')
+
     edicao = pega_edicao_ativa()
     form = FormInscricao(instance=inscricao, edicao=edicao)
     if request.method == 'POST':
@@ -156,23 +160,135 @@ def faz_inscricao(request, id=None):
 
 
 @login_required(login_url=reverse_lazy('index'))
+@transaction.atomic()
 def prova_online(request):
     edicao = pega_edicao_ativa()
     if (not edicao) or (not edicao.prova_liberada):
-        return redirect('index')
-
-    inscricao = request.user.get_inscricao_ativa()
-    if inscricao.fez_prova:
-        messages.info(request, 'Você já fez a prova!')
         return redirect('painel')
 
-    opcoes = inscricao.respostainscricao_set
-    ultima_respondida = opcoes.filter(
-        resposta__isnull=False
-    ).order_by('-ordem')
-    if ultima_respondida.exists():
-        questao = ultima_respondida.first()
-    else:
-        questao = opcoes.filter(ordem=1).first()
+    inscricao = request.user.get_inscricao_ativa()
 
+    # Se já fez a prova objetiva, redireciona
+    if inscricao.fez_prova:
+        return redirect(prova_redirecionar_para(inscricao))
+
+    # Verifica qual a primeira questão a responder
+    opcoes, primeira_responder, tag_voltar, questao = pega_questao_responder(inscricao)
+    total_questoes = opcoes.count()
+
+    # Verifica se foi pedido para ver uma pergunta em especial
+    questao_especifica = request.GET.get('qesp', None)
+    if questao_especifica:
+        is_ok, tag_questao = tag_segura_valida(questao_especifica)
+        if is_ok and opcoes.filter(pk=tag_questao).exists():
+            questao = opcoes.filter(pk=tag_questao).first()
+        else:
+            messages.info(request, 'Não foi possível identificar a questão solicitada')
+
+    # Verifica se todas as questões foram respondidas, vai para revisão
+    if questao is None:
+        return redirect('revisao_prova_online')
+
+    if request.method == 'POST':
+        resposta_id = request.POST.get('resposta')
+        if not resposta_id:
+            messages.error(request, 'Não foi repassado nenhuma resposta')
+        else:
+            resp_ok, resp = resposta_valida(questao.questao, resposta_id)
+            if not resp_ok:
+                messages.error(request, 'A resposta repassada não é válida!')
+
+            else:
+                responder_questao(questao, resp)
+                return redirect('prova_online')
     return render(request, 'prova_online.html', locals())
+
+
+@login_required(login_url=reverse_lazy('index'))
+def revisao_prova_online(request):
+    edicao = pega_edicao_ativa()
+    if (not edicao) or (not edicao.prova_liberada):
+        return redirect('painel')
+
+    inscricao = request.user.get_inscricao_ativa()
+
+    # Se já fez a prova objetiva, vai para redação
+    if inscricao.fez_prova:
+        return redirect(prova_redirecionar_para(inscricao))
+
+    if request.method == 'POST':
+        # todo Enviar email com as respostas das questões e suas pontuações
+        inscricao.fez_prova = True
+        inscricao.dt_fim_prova = datetime.now()
+        inscricao.save()
+        return redirect('prova_redacao')
+
+    respostas_dadas = inscricao.respostainscricao_set.order_by('ordem')
+    return render(request, 'revisao_prova_online.html', locals())
+
+
+@login_required(login_url=reverse_lazy('index'))
+def prova_redacao(request):
+    edicao = pega_edicao_ativa()
+    if (not edicao) or (not edicao.prova_liberada):
+        return redirect('painel')
+
+    inscricao = request.user.get_inscricao_ativa()
+
+    # Se já fez a prova objetiva, vai para redação
+    if inscricao.fez_redacao:
+        return redirect(prova_redirecionar_para(inscricao))
+
+    if request.method == 'POST':
+        redacao = request.POST.get('redacao')
+        gravar_redacao(inscricao, redacao)
+        return redirect('revisao_prova_redacao')
+
+    return render(request, 'prova_redacao.html', locals())
+
+
+@login_required(login_url=reverse_lazy('index'))
+def revisao_prova_redacao(request):
+    edicao = pega_edicao_ativa()
+    if (not edicao) or (not edicao.prova_liberada):
+        return redirect('painel')
+
+    inscricao = request.user.get_inscricao_ativa()
+
+    # Se já fez a prova objetiva, vai para redação
+    if inscricao.fez_redacao:
+        return redirect(prova_redirecionar_para(inscricao))
+
+    if request.method == 'POST':
+        # todo Enviar email com as respostas das questões e suas pontuações
+        inscricao.fez_redacao = True
+        inscricao.save()
+        return redirect('prova_completa')
+
+    texto_redacao = '<p>' + '</p><p>'.join(inscricao.redacao.split('\n')) + '</p>'
+    return render(request, 'revisao_prova_redacao.html', locals())
+
+
+@login_required(login_url=reverse_lazy('index'))
+def prova_completa(request):
+    edicao = pega_edicao_ativa()
+    if (not edicao) or (not edicao.prova_liberada):
+        return redirect('painel')
+
+    inscricao = request.user.get_inscricao_ativa()
+
+    if not inscricao.fez_prova:
+        return redirect('prova_online')
+
+    if not inscricao.fez_redacao:
+        return redirect('prova_redacao')
+
+    respostas_dadas = inscricao.respostainscricao_set.order_by('ordem')
+    texto_redacao = '<p>' + '</p><p>'.join(inscricao.redacao.split('\n')) + '</p>'
+    total_pontos_prova = sum([1 for r in respostas_dadas if r.resposta.correta])
+    # todo Adicionar pontuação da redação
+    return render(request, 'prova_completa.html', locals())
+
+# todo Criar modelo de envio de mensagens a candidatos com filtros específicos:
+# inscritos, não fizeram redação, não inscreveram curso, não fizeram prova, iniciaram mas não concluíram,
+# pontuaram, passaram

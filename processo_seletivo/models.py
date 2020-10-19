@@ -197,7 +197,13 @@ class RespostaInscricao(models.Model):
     questao = models.ForeignKey(QuestaoProva, on_delete=models.RESTRICT)
     resposta = models.ForeignKey(RespostaQuestao, on_delete=models.RESTRICT, null=True, blank=True)
     ordem = models.IntegerField(default=1)
+    dt_respondeu = models.DateTimeField(null=True, blank=True)
 
     @property
     def correta(self):
         return self.resposta.correta
+
+    @property
+    def tag(self):
+        from processo_seletivo.services import cria_tag_segura
+        return cria_tag_segura(self.id)

@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova online - Revisão de Questões</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script type="text/javascript" src="{% static 'js/1.5.2.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/animation.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+    <script>
+        $(document).ready(function () {
+            $('.respostas').hide();
+        });
+    </script>
+</head>
+<body>
+<div class="sep-uverse"></div>
+
+<section>
+    <div class="container" style="margin-top: 50px;">
+        <div class="row">
+
+            <div class="col-2">
+                <div class="row">
+                    <div class="col">
+                        <div class="card-uverse-lateral">
+
+                            <div class="row">
+                                <h6>{{ edicao.nome|upper }}</h6>
+                                <hr>
+                            </div>
+
+                            <div class="row menu-lateral-item">
+                                <div class="col-2">
+                                    <svg width="15" height="15px;" viewBox="0 0 16 16" class="bi bi-person-fill"
+                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                              d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                    </svg>
+                                </div>
+                                <div class="col-9">
+                                    {{ inscricao.pessoa.nome }}
+                                </div>
+                                <hr>
+                            </div>
+
+                            <div class="row menu-lateral-item">
+                                <div class="col-2">
+                                    <svg width="15" height="15" viewBox="0 0 16 16" class="bi bi-patch-check-fll"
+                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                              d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984a.5.5 0 0 0-.708-.708L7 8.793 5.854 7.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                                    </svg>
+                                </div>
+                                <div class="col-9">
+                                    {{ inscricao.curso }}
+                                </div>
+                                <hr>
+                            </div>
+
+
+                            <hr>
+                            <a href="{% url 'painel' %}" class="btn btn-primaryb btn-uverse">Voltar</a>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--            <div class="col-sm space-extra"></div>-->
+                <div class="col-sm poster2 flip-top">
+                    <h1 class="titulo" style="color: rgb(2, 107, 29)">Revisão das Questões</h1>
+
+                    {% for questao in respostas_dadas %}
+                    <div class="row">
+                        <div class="col">
+                            <b>{{ questao.ordem }}. </b>{{ questao.questao.texto|safe }}
+                        </div>
+                    </div>
+
+
+                    <!--                alternativas-->
+                    <div class="row">
+                        <hr>
+                        <div class="col">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="resposta{{ forloop.counter }}"
+                                       id="resposta_{{ forloop.counter }}" checked>
+                                <label class="form-check-label" for="resposta_{{ forloop.counter }}">
+                                    {{ questao.resposta.texto|safe }}
+                                </label>
+                            </div>
+                        </div>
+                        <hr>
+                        <a class="btn btn-uverse-verde btn-uverse" href="{% url 'prova_online' %}?qesp={{ questao.tag }}">Ir Para
+                            Questão {{ questao.ordem }}</a>
+                    </div>
+                    {% endfor %}
+                    <hr>
+                    <form method="POST" enctype="multipart/form-data" id="form_resposta">{% csrf_token %}
+                        <button type="submit" class="btn btn-primaryb btn-uverse">Salvar e Prosseguir</button>
+                    </form>
+                </div>
+            <!--            END-->
+
+        </div>
+    </div>
+</section>
+
+
+</body>
+</html>

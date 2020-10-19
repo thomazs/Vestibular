@@ -81,6 +81,18 @@ DATABASES = {
     }
 }
 
+PRODUCAO = False
+if PRODUCAO:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'uvest',
+            'USER': 'root',
+            'PASSWORD': 'faao',
+            'HOST': 'localhost',
+        }
+    }
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

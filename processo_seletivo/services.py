@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
 
-from processo_seletivo.models import Edicao, RespostaInscricao
+from processo_seletivo.models import Edicao, RespostaInscricao, RespostaQuestao
 
 UserModel = get_user_model()
 
@@ -158,3 +158,55 @@ def cria_perguntas_inscricao(inscricao):
         RespostaInscricao.objects.create(inscricao=inscricao, questao=questao, ordem=ordem)
 
     return True
+
+
+def pega_questao_responder(inscricao):
+    opcoes = inscricao.respostainscricao_set
+    primeira_responder = opcoes.filter(
+        resposta__isnull=True
+    ).order_by('ordem')
+    tag_voltar = None
+    if primeira_responder.exists():
+        questao = primeira_responder.first()
+        if questao.ordem > 1:
+            tag_voltar = cria_tag_segura(opcoes.filter(ordem=questao.ordem - 1).first().id)
+    else:
+        questao = None
+    return opcoes, primeira_responder, tag_voltar, questao
+
+
+def resposta_valida(questao, resposta_id):
+    if resposta_id is None:
+        return False, None
+
+    resposta = RespostaQuestao.objects.only('id', 'questao').filter(id=resposta_id)
+    if not resposta.exists():
+        return False, None
+
+    resposta = resposta.first()
+    return resposta.questao_id == questao.id, resposta
+
+
+def responder_questao(questao, resposta):
+    questao.resposta = resposta
+    questao.dt_respondeu = datetime.now()
+    questao.save()
+    return True
+
+
+def gravar_redacao(inscricao, redacao):
+    # todo Enviar email com o texto da redação
+    inscricao.redacao = redacao
+    inscricao.dt_fim_redacao = datetime.now()
+    inscricao.save()
+    return True
+
+
+def prova_redirecionar_para(inscricao):
+    if inscricao.fez_prova and inscricao.fez_redacao:
+        return 'painel'
+
+    if inscricao.fez_prova:
+        return 'prova_redacao'
+
+    return 'revisao_prova_online'
