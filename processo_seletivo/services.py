@@ -204,7 +204,7 @@ def gravar_redacao(inscricao, redacao):
 
 def prova_redirecionar_para(inscricao):
     if inscricao.fez_prova and inscricao.fez_redacao:
-        return 'painel'
+        return 'prova_completa'
 
     if inscricao.fez_prova:
         return 'prova_redacao'

@@ -88,10 +88,8 @@ class Inscricao(models.Model):
     ano_enem = models.IntegerField('Ano do Enem', null=True, blank=True)
     comprovante_enem = models.FileField(null=True, blank=True, max_length=250, upload_to=comprovante_enem_upload_to)
 
-    # todo Validar se TIPO_SELECAO=3. Se for, não permitir.
     treineiro = models.BooleanField(default=False)
 
-    # todo Utilizar o campo de comprovante_escolaridade apenas se TIPO_SELECAO=2
     comprovante_escolaridade = models.FileField(null=True, blank=True, max_length=250,
                                                 upload_to=comprovante_esc_upload_to)
 
