@@ -83,7 +83,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="id_redacao">Digite o texto de sua redação aqui</label>
+                                <label for="id_redacao">Digite o texto de sua redação aqui. O tema e demais instruções para realização da redação podem ser vistos <b><a
+                                        href="{% static 'folha_redacao.pdf' %}" target="_blank">CLICANDO AQUI</a></b></label>
                                 <textarea name="redacao" id="redacao" cols="60" rows="25"
                                           class="form-control">{{ inscricao.redacao|default_if_none:"" }}</textarea>
                             </div>

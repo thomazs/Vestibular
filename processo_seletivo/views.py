@@ -182,6 +182,10 @@ def prova_online(request):
         is_ok, tag_questao = tag_segura_valida(questao_especifica)
         if is_ok and opcoes.filter(pk=tag_questao).exists():
             questao = opcoes.filter(pk=tag_questao).first()
+            if questao.ordem > 1:
+                tag_voltar = cria_tag_segura(opcoes.filter(ordem=questao.ordem - 1).first().id)
+            else:
+                tag_voltar = None
         else:
             messages.info(request, 'Não foi possível identificar a questão solicitada')
 
@@ -285,7 +289,7 @@ def prova_completa(request):
 
     respostas_dadas = inscricao.respostainscricao_set.order_by('ordem')
     texto_redacao = '<p>' + '</p><p>'.join(inscricao.redacao.split('\n')) + '</p>'
-    total_pontos_prova = sum([1 for r in respostas_dadas if r.resposta.correta])
+    total_pontos_prova = sum([r.questao.pontos for r in respostas_dadas if r.resposta.correta])
     # todo Adicionar pontuação da redação
     return render(request, 'prova_completa.html', locals())
 
