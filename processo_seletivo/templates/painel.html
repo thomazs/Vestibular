@@ -81,6 +81,7 @@
                         </a>
                     {% endif %}
 
+					{% if user.get_inscricao_ativa %}
                      <a href="{% url 'prova_online' %}" class="col-2 item-menu">
                         <h4>
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-laptop" fill="currentColor"
@@ -92,6 +93,7 @@
                         </h4>
                         <p>Prova online</p>
                     </a>
+					{% endif %}
                 {% endif %}
 
                 {#                <a class="col-2 item-menu-sair" href="{% url 'sair' %}">#}
