@@ -292,3 +292,10 @@ def prova_completa(request):
 # todo Criar modelo de envio de mensagens a candidatos com filtros específicos:
 # inscritos, não fizeram redação, não inscreveram curso, não fizeram prova, iniciaram mas não concluíram,
 # pontuaram, passaram
+
+
+
+@login_required(login_url=reverse_lazy('index'))
+def acompanhamento(request):
+
+    return render(request, 'acompanhamento.html', locals())
