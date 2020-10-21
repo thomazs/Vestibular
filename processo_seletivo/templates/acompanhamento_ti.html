@@ -1,0 +1,43 @@
+{% load static %}
+{% load gravatar %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vestibular Uverse</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/animation.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+
+    <style>
+        body {
+            background: linear-gradient(90deg, #9cd116, #0AF6AE) !important;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<div class="container" style="text-align: center; margin-top: 50px;">
+    <di class="row" style="text-align: center">
+        <div class="col-12"><img src="{% static 'img/logo-uverse.svg' %}" width="100" height="30" ></div>
+        <div class="col-12" style="color: rgb(2, 107, 29) !important;">
+            <h4 >Inscritos no vestibular</h4>
+        </div>
+
+    </di>
+    <div class="row">
+        <div class="col">
+            <h1 class="titulo" style="font-size: 300px;">{{total_inscricao}}</h1>
+        </div>
+    </div>
+
+</div>
+
+
+
+</body>
+</html>
