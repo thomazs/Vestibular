@@ -82,17 +82,17 @@ DATABASES = {
     }
 }
 
-# PRODUCAO = True
-# if PRODUCAO:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'mysql.connector.django',
-#             'NAME': 'uvest',
-#             'USER': 'root',
-#             'PASSWORD': '!WRUverse#2020!DB',
-#             'HOST': 'localhost',
-#         }
-#     }
+PRODUCAO = True
+if PRODUCAO:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'mysql.connector.django',
+            'NAME': 'uvest',
+            'USER': 'root',
+            'PASSWORD': '!WRUverse#2020!DB',
+            'HOST': 'localhost',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -137,14 +137,13 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = "alertas@uverse.com.vc"
 EMAIL_HOST_PASSWORD = "AlertaFAAO2019!"
 
-HOST_CURRENT = 'http://localhost:8000'
-# HOST_CURRENT = 'http://uverse.in'
+#HOST_CURRENT = 'http://localhost:8000'
+HOST_CURRENT = 'http://uverse.in'
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, '/static')
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '/Vestibular/Vestibular/static')
-]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'processo_seletivo', 'static', 'media')
+STATIC_ROOT = 'C:/xampp/htdocs/media'
+MEDIA_URL = '/media/'
+LOGIN_URL = '/uvest/admin/login/'
+LOGIN_REDIRECT_URL = '/uvest/admin/login/'
+FORCE_SCRIPT_NAME = '/uvest'
