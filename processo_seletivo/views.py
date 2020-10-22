@@ -87,7 +87,7 @@ def validar_email(request, token=''):
 
     else:
         pessoa = pessoa.first()
-        if pessoa.email_valido:
+        if pessoa.email_valido and pessoa.usuario:
             messages.warning(request, 'Email já foi validado! Tente fazer o login!')
 
         else:
