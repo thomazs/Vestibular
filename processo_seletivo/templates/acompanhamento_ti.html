@@ -10,10 +10,23 @@
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/animation.css' %}">
     <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
-
+    <script>
+        setInterval(function () {
+            window.location = ".";
+        },5000)
+    </script>
     <style>
         body {
             background: linear-gradient(90deg, #9cd116, #0AF6AE) !important;
+            width: 100%;
+            height: 100vh !important;
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            align-items: center;
+        }
+        body{
+
         }
     </style>
 
@@ -25,7 +38,7 @@
     <di class="row" style="text-align: center">
         <div class="col-12"><img src="{% static 'img/logo-uverse.svg' %}" width="100" height="30" ></div>
         <div class="col-12" style="color: rgb(2, 107, 29) !important;">
-            <h4 >Inscritos no vestibular</h4>
+            <h4>Inscritos no vestibular</h4>
         </div>
 
     </di>
