@@ -60,7 +60,7 @@
         <div class="col-4">
             <ul class="list-group lista-cursos" style="font-size: 12px; padding: 0; max-height: 100%; overflow-y: scroll">
                 {% for i in cursos %}
-                <li class="list-group-item d-flex justify-content-between align-items-center" style="color: #FFF;background: transparent;font-size: 12px; padding: 5px">{{i.nome}} <span
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size: 12px; padding: 5px">{{i.nome}} <span
                         class="badge badge-secondary">{{ i.qtd_inscricoes }}</span></li>
                 {% endfor %}
             </ul>
