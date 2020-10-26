@@ -117,27 +117,25 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-if not os.getenv('USERDOMAIN')=='DESKTOP-JO69D6U':
+STATIC_ROOT = 'C:/xampp/htdocs/static'
+STATIC_URL = '/static/'
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "alertas@uverse.com.vc"
+EMAIL_HOST_PASSWORD = "AlertaFAAO2019!"
 
-    STATIC_ROOT = 'C:/xampp/htdocs/static'
-    STATIC_URL = '/static/'
-    # EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_HOST = "smtp.gmail.com"
-    EMAIL_USE_TLS = True
-    EMAIL_PORT = 587
-    EMAIL_HOST_USER = "alertas@uverse.com.vc"
-    EMAIL_HOST_PASSWORD = "AlertaFAAO2019!"
-
-    #HOST_CURRENT = 'http://localhost:8000'
-    HOST_CURRENT = 'http://uverse.in'
+#HOST_CURRENT = 'http://localhost:8000'
+HOST_CURRENT = 'http://uverse.in'
 
 
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'processo_seletivo', 'static', 'media')
-    STATIC_ROOT = 'C:/xampp/htdocs/media'
-    MEDIA_URL = '/media/'
-    LOGIN_URL = '/uvest/admin/login/'
-    LOGIN_REDIRECT_URL = '/uvest/admin/login/'
-    FORCE_SCRIPT_NAME = '/uvest'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'processo_seletivo', 'static', 'media')
+STATIC_ROOT = 'C:/xampp/htdocs/media'
+MEDIA_URL = '/media/'
+LOGIN_URL = '/uvest/admin/login/'
+LOGIN_REDIRECT_URL = '/uvest/admin/login/'
+FORCE_SCRIPT_NAME = '/uvest'
 
 
 
