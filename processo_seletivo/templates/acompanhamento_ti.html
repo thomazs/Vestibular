@@ -13,7 +13,7 @@
     <script>
         setInterval(function () {
             window.location = ".";
-        },300000)
+        }, 300000)
     </script>
     <style>
         body {
@@ -25,7 +25,8 @@
             align-content: center;
             align-items: center;
         }
-        body{
+
+        body {
 
         }
     </style>
@@ -35,29 +36,48 @@
 <body>
 
 <div class="container" style="text-align: center; margin-top: 50px;">
-    <di class="row" style="text-align: center">
-        <div class="col-12"><img src="{% static 'img/logo-uverse.svg' %}" width="100" height="30" ></div>
-        <div class="col-12" style="color: rgb(2, 107, 29) !important;">
-            <h4>Inscritos no vestibular</h4>
+
+
+    <div class="row">
+        <div class="col-8">
+            <di class="row" style="text-align: center">
+                <div class="col-12"><img src="{% static 'img/logo-uverse.svg' %}" width="100" height="30"></div>
+                <div class="col-12" style="color: rgb(2, 107, 29) !important;">
+                    <h4>Inscritos no vestibular</h4>
+                </div>
+
+            </di>
+            <div class="row">
+                <div class="col">
+                    <h1 class="titulo" style="font-size: 300px;">{{total_inscricao}}</h1>
+                </div>
+            </div>
+
         </div>
 
-    </di>
-    <div class="row">
-        <div class="col">
-            <h1 class="titulo" style="font-size: 300px;">{{total_inscricao}}</h1>
+        <!--        coluna de cursos-->
+
+        <div class="col-4">
+            <ul class="list-group list-group-flush">
+
+                <a href="#" class="list-group-item list-group-item-action active">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Inscritos por curso</h5>
+                        <small>{% now "d/m/Y H:i" %}</small>
+                    </div>
+                </a>
+
+                {% for i in cursos %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">{{i.nome}} <span
+                        class="badge badge-secondary">{{ i.qtd_inscricoes }}</span></li>
+                {% endfor %}
+            </ul>
         </div>
+
+
     </div>
 
 </div>
-
-
-<ul>
-{% for i in cursos %}
-
-    <li>{{i.nome}} - Qtd.Inscrições: {{ i.qtd_inscricoes }}</li>
-
-{% endfor %}
-</ul>
 
 
 </body>
