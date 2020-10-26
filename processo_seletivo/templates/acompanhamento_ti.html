@@ -39,7 +39,7 @@
 
 
     <div class="row">
-        <div class="col-12">
+        <div class="col-8">
             <di class="row" style="text-align: center">
                 <div class="col-12"><img src="{% static 'img/logo-uverse.svg' %}" width="100" height="30"></div>
                 <div class="col-12" style="color: rgb(2, 107, 29) !important;">
@@ -57,10 +57,10 @@
 
         <!--        coluna de cursos-->
 
-        <div class="col-12">
-            <ul class="list-group list-group-horizontal-md lista-cursos" style="font-size: 10px; padding: 0; column-count: 3;">
+        <div class="col-4">
+            <ul class="list-group lista-cursos" style="font-size: 10px; padding: 0; ">
                 {% for i in cursos %}
-                <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size: 10px; padding: 5px">{{i.nome}} <span
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="color: #FFF;background: transparent;font-size: 10px; padding: 5px">{{i.nome}} <span
                         class="badge badge-secondary">{{ i.qtd_inscricoes }}</span></li>
                 {% endfor %}
             </ul>
