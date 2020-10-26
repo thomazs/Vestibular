@@ -58,17 +58,9 @@
         <!--        coluna de cursos-->
 
         <div class="col-12">
-            <ul class="list-group list-group-horizontal lista-cursos" style="font-size: 10px; padding: 0">
-
-                <a href="#" class="list-group-item list-group-item-action active">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Inscritos por curso</h5>
-                        <small>{% now "d/m/Y H:i" %}</small>
-                    </div>
-                </a>
-
+            <ul class="list-group list-group-horizontal-sm lista-cursos" style="font-size: 10px; padding: 0; column-count: 3;">
                 {% for i in cursos %}
-                <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size: 11px; padding: 5px">{{i.nome}} <span
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size: 10px; padding: 5px">{{i.nome}} <span
                         class="badge badge-secondary">{{ i.qtd_inscricoes }}</span></li>
                 {% endfor %}
             </ul>
