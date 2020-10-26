@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 
@@ -293,10 +294,10 @@ def prova_completa(request):
     # todo Adicionar pontuação da redação
     return render(request, 'prova_completa.html', locals())
 
+
 # todo Criar modelo de envio de mensagens a candidatos com filtros específicos:
 # inscritos, não fizeram redação, não inscreveram curso, não fizeram prova, iniciaram mas não concluíram,
 # pontuaram, passaram
-
 
 
 @login_required(login_url=reverse_lazy('index'))
@@ -306,7 +307,6 @@ def acompanhamento(request):
 
 @login_required(login_url=reverse_lazy('index'))
 def acompanhamento_ti(request):
-
     total_inscricao = Inscricao.objects.all().count()
-
+    cursos = Curso.objects.annotate(qtd_inscricoes=Count('cursoopcao_set')).order_by('nome')
     return render(request, 'acompanhamento_ti.html', locals())

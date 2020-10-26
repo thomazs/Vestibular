@@ -51,6 +51,14 @@
 </div>
 
 
+<ul>
+{% for i in cursos %}
+
+    <li>{{i.nome}} - Qtd.Inscrições: {{ i.qtd_inscricoes }}</li>
+
+{% endfor %}
+</ul>
+
 
 </body>
 </html>
