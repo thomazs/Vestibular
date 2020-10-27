@@ -308,5 +308,5 @@ def acompanhamento(request):
 @login_required(login_url=reverse_lazy('index'))
 def acompanhamento_ti(request):
     total_inscricao = Inscricao.objects.all().count()
-    cursos = Curso.objects.annotate(qtd_inscricoes=Count('cursoopcao_set')).order_by('qtd_inscricoes')
+    cursos = Curso.objects.annotate(qtd_inscricoes=Count('cursoopcao_set')).order_by('qtd_inscricoes').reverse()
     return render(request, 'acompanhamento_ti.html', locals())
