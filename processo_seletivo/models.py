@@ -44,6 +44,15 @@ class EdicaoCurso(models.Model):
     curso = models.ForeignKey(Curso, on_delete=models.RESTRICT)
     qtd_vagas = models.IntegerField('Qtd.Vagas')
 
+    @property
+    def nome(self):
+        return self.curso.nome
+
+    def percentual_inscricoes(self):
+        qtd_inscricoes = self.curso.cursoopcao_set.count()
+        qtd_vagas = self.qtd_vagas
+        return int(qtd_inscricoes * 100 // qtd_vagas)
+
 
 TIPO_SELECAO = (
     (1, 'Processo Seletivo Comum (Prova)'),

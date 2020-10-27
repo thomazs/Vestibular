@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 
 from instituicao.models import Pessoa
 from processo_seletivo.forms import LoginForm, FormCadastro, FormCompletaCadastro, FormInscricao
-from processo_seletivo.models import Inscricao, Curso
+from processo_seletivo.models import Inscricao, Curso, EdicaoCurso
 from processo_seletivo.services import tag_segura_valida, cria_tag_segura, gera_cod_validacao, \
     envia_email_cadastro, valida_email, ativa_pessoa, loga_pessoa, envia_email_cadastroconcluido, pega_edicao_ativa, \
     envia_email_inscricaofeita, cria_perguntas_inscricao, pega_questao_responder, resposta_valida, responder_questao, \
@@ -308,6 +308,6 @@ def acompanhamento(request):
 @login_required(login_url=reverse_lazy('index'))
 def acompanhamento_ti(request):
     total_inscricao = Inscricao.objects.all().count()
-    cursos = Curso.objects.annotate(qtd_inscricoes=Count('cursoopcao_set')).order_by('qtd_inscricoes').reverse()
+    cursos = EdicaoCurso.objects.annotate(qtd_inscricoes=Count('curso__cursoopcao_set')).order_by('-qtd_inscricoes')
 
     return render(request, 'acompanhamento_ti.html', locals())
