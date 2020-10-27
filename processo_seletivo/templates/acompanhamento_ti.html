@@ -65,8 +65,7 @@
                     style="font-size: 12px; padding: 5px; text-align: left; font-weight: bold;">
                     <div style="padding-bottom: 3px; width: 100%;" class="d-flex justify-content-between align-items-center">
                         {{i.nome}}
-                        <span class="badge badge-secondary">{{ i.qtd_inscricoes }}</span>
-                        <span class="badge badge-secondary">{{ i.qtd_vagas }}</span>
+                        <span class="badge badge-secondary">{{ i.qtd_inscricoes }} / {{ i.qtd_vagas }}</span>
                     </div>
                     <div class="progress" style="width: 100%">
                         {% with perc=i.percentual_inscricoes %}
