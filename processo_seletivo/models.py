@@ -51,7 +51,7 @@ class EdicaoCurso(models.Model):
     def percentual_inscricoes(self):
         qtd_inscricoes = self.curso.cursoopcao_set.count()
         qtd_vagas = self.qtd_vagas
-        return int(qtd_inscricoes * 100 // qtd_vagas)
+        return int(round(qtd_inscricoes * 100 // qtd_vagas, 0))
 
 
 TIPO_SELECAO = (

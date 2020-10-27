@@ -71,7 +71,7 @@
                     </div>
                     <div class="progress" style="width: 100%">
                         {% with perc=i.percentual_inscricoes %}
-                        <div class="progress-bar" role="progresbar" style="width: 25%; background: linear-gradient(90deg, #9cd116, #0AF6AE)" aria-valuenow="{{ perc }}"
+                        <div class="progress-bar" role="progresbar" style="width: {{ perc }}%; background: linear-gradient(90deg, #9cd116, #0AF6AE)" aria-valuenow="{{ perc }}"
                              aria-valuemin="0" aria-valuemax="100">{{ perc }}%
                         </div>
                         {% endwith %}
