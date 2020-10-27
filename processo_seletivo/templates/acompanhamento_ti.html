@@ -62,7 +62,7 @@
                 {% for i in cursos %}
                 {% if i.qtd_inscricoes > 0 %}
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-column"
-                    style="font-size: 12px; padding: 5px">
+                    style="font-size: 12px; padding: 5px; text-align: left; font-weight: bold; background: transparent">
                     <div>
                         {{i.nome}} - {{i.qtd_vagas}} <span
                             class="badge badge-secondary">{{ i.qtd_inscricoes }}</span>
