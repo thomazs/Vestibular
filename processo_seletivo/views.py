@@ -309,4 +309,5 @@ def acompanhamento(request):
 def acompanhamento_ti(request):
     total_inscricao = Inscricao.objects.all().count()
     cursos = Curso.objects.annotate(qtd_inscricoes=Count('cursoopcao_set')).order_by('qtd_inscricoes').reverse()
+
     return render(request, 'acompanhamento_ti.html', locals())

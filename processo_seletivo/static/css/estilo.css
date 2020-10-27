@@ -195,6 +195,9 @@ a.item-menu{
 .texto-informativo {
     color: rgb(2, 107, 29) !important;
 }
+.progress-bar{
+    background: linear-gradient(90deg, #9cd116, #0AF6AE) !important;
+}
 
 
 /* css em telas de pequeno porte  */
