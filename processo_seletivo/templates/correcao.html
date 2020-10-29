@@ -1,0 +1,99 @@
+{% load static %}
+{% load gravatar %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vestibular Uverse</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/animation.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+    <script>
+        setInterval(function () {
+            window.location = ".";
+        }, 300000)
+    </script>
+    <style>
+        body {
+            background: linear-gradient(90deg, #9cd116, #0AF6AE) !important;
+            width: 100%;
+            height: 100vh !important;
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            align-items: center;
+        }
+
+        .letter {
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            margin: 26px auto 0;
+            max-width: 100%;
+            min-height: 300px;
+            padding: 24px;
+            position: relative;
+            width: 80%;
+        }
+
+        .letter:before, .letter:after {
+            content: "";
+            height: 98%;
+            position: absolute;
+            width: 100%;
+            z-index: -1;
+        }
+
+        .letter:before {
+            background: #fafafa;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+            left: -5px;
+            top: 4px;
+            transform: rotate(-2.5deg);
+        }
+
+        .letter:after {
+            background: #f6f6f6;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+            right: -3px;
+            top: 1px;
+            transform: rotate(1.4deg);
+        }
+        .correcao{
+            background: #fff;
+        }
+    </style>
+
+
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-8 redacao letter enter-left-bounce">
+            {% if redacao %}
+            <h1>Redação: </h1>
+            <hr>
+            {{redacao.redacao}}
+
+            <hr>
+            <h6>Aluno: {{redacao.pessoa.nome}}</h6>
+
+            {% else %}
+
+            <h1>Não existem redações para correção</h1>
+
+            {% endif %}
+        </div>
+
+        <div class="col-3 correcao">
+            Lançamento de notas
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

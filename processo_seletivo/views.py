@@ -311,3 +311,11 @@ def acompanhamento_ti(request):
     cursos = EdicaoCurso.objects.annotate(qtd_inscricoes=Count('curso__cursoopcao_set')).order_by('-qtd_inscricoes')
 
     return render(request, 'acompanhamento_ti.html', locals())
+
+
+@login_required
+def corrige_redacao(request):
+
+    redacao = Inscricao.objects.filter(fez_redacao='True').last()
+
+    return render(request, 'correcao.html', locals())
