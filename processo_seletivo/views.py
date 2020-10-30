@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 
 from instituicao.models import Pessoa
-from processo_seletivo.forms import LoginForm, FormCadastro, FormCompletaCadastro, FormInscricao
+from processo_seletivo.forms import LoginForm, FormCadastro, FormCompletaCadastro, FormInscricao, FormCorrigeRedacao
 from processo_seletivo.models import Inscricao, Curso, EdicaoCurso
 from processo_seletivo.services import tag_segura_valida, cria_tag_segura, gera_cod_validacao, \
     envia_email_cadastro, valida_email, ativa_pessoa, loga_pessoa, envia_email_cadastroconcluido, pega_edicao_ativa, \
@@ -315,7 +315,26 @@ def acompanhamento_ti(request):
 
 @login_required
 def corrige_redacao(request):
+    redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).last()
+    if request.method == "POST":
+        form = FormCorrigeRedacao(request.POST,  instance=redacao)
 
-    redacao = Inscricao.objects.filter(fez_redacao='True').last()
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.corretor_redacao = request.user
+            post.nota_redacao_p1 = post.nota_redacao_p1
+            post.nota_redacao_p2 = post.nota_redacao_p2
+            post.nota_redacao_p3 = post.nota_redacao_p3
+            post.nota_redacao_p4 = post.nota_redacao_p4
+            post.nota_redacao_p5 = post.nota_redacao_p5
+            post.nota_redacao = post.nota_redacao_p1 + post.nota_redacao_p2+post.nota_redacao_p3+post.nota_redacao_p4+post.nota_redacao_p5
+            post.save()
+            messages.success(request, 'Nota salva com sucesso')
+            return redirect('correcao')
+    else:
+        form = FormCorrigeRedacao()
+
+
+
 
     return render(request, 'correcao.html', locals())

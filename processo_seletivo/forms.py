@@ -108,3 +108,8 @@ class FormInscricao(forms.ModelForm):
             self.fields['curso'].queryset = Curso.objects.none()
 
         self.formata()
+
+class FormCorrigeRedacao(forms.ModelForm):
+    class Meta:
+        model = Inscricao
+        fields = ('nota_redacao_p1', 'nota_redacao_p2', 'nota_redacao_p3', 'nota_redacao_p4', 'nota_redacao_p5',)

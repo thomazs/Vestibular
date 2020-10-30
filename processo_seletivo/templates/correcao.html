@@ -10,6 +10,8 @@
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/animation.css' %}">
     <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+    <script type="text/javascript" src="{% static 'js/1.5.2.js'%}"></script>
+
     <script>
         setInterval(function () {
             window.location = ".";
@@ -60,8 +62,9 @@
             top: 1px;
             transform: rotate(1.4deg);
         }
-        .correcao{
-            background: #fff;
+
+        .correcao {
+            background: green;
         }
     </style>
 
@@ -76,10 +79,10 @@
             {% if redacao %}
             <h1>Redação: </h1>
             <hr>
-            {{redacao.redacao}}
+            {{redacao.redacao|linebreaks}}
 
             <hr>
-            <h6>Aluno: {{redacao.pessoa.nome}}</h6>
+
 
             {% else %}
 
@@ -90,10 +93,25 @@
 
         <div class="col-3 correcao">
             Lançamento de notas
+            <form method="POST" id="formulario">{% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="btn btn-uverse">Salvar notas</button>
+            </form>
         </div>
 
     </div>
 
+
+   {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 </div>
+
+
 </body>
 </html>
