@@ -315,7 +315,7 @@ def acompanhamento_ti(request):
 
 @login_required
 def corrige_redacao(request):
-    redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).last()
+    redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).first()
 
     corrigidas = Inscricao.objects.filter(corretor_redacao=request.user).count()
 
