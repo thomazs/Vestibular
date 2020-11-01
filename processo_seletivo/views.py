@@ -313,7 +313,7 @@ def acompanhamento_ti(request):
     return render(request, 'acompanhamento_ti.html', locals())
 
 
-@login_required
+@login_required(login_url=reverse_lazy('correcao'))
 def corrige_redacao(request):
     redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).last()
     if request.method == "POST":
