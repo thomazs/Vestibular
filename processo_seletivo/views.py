@@ -316,6 +316,10 @@ def acompanhamento_ti(request):
 @login_required
 def corrige_redacao(request):
     redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).last()
+
+    corrigidas = Inscricao.objects.filter(corretor_redacao=request.user).count()
+
+
     if request.method == "POST":
         form = FormCorrigeRedacao(request.POST,  instance=redacao)
 
