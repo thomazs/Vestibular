@@ -47,7 +47,7 @@ class FormCadastro(forms.ModelForm):
 
 class FormCompletaCadastro(forms.ModelForm):
     senha = forms.CharField(label='Senha de Acesso', required=True, widget=forms.PasswordInput())
-    confsenha = forms.CharField(label='Confiração de Senha', required=True, widget=forms.PasswordInput())
+    confsenha = forms.CharField(label='Confirmação de Senha', required=True, widget=forms.PasswordInput())
 
     class Meta:
         model = Pessoa
@@ -113,3 +113,13 @@ class FormCorrigeRedacao(forms.ModelForm):
     class Meta:
         model = Inscricao
         fields = ('nota_redacao_p1', 'nota_redacao_p2', 'nota_redacao_p3', 'nota_redacao_p4', 'nota_redacao_p5',)
+
+    def __init__(self, *args, **kwargs):
+        super(FormCorrigeRedacao, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+            self.fields['nota_redacao_p1'].required = True
+            self.fields['nota_redacao_p2'].required = True
+            self.fields['nota_redacao_p3'].required = True
+            self.fields['nota_redacao_p4'].required = True
+            self.fields['nota_redacao_p5'].required = True

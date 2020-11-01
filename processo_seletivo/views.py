@@ -334,7 +334,4 @@ def corrige_redacao(request):
     else:
         form = FormCorrigeRedacao()
 
-
-
-
     return render(request, 'correcao.html', locals())

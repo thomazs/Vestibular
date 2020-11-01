@@ -10,7 +10,13 @@
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/animation.css' %}">
     <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
-    <script type="text/javascript" src="{% static 'js/1.5.2.js'%}"></script>
+    <!-- jQuery and JS bundle w/ Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+            crossorigin="anonymous"></script>
 
     <script>
         setInterval(function () {
@@ -19,7 +25,8 @@
     </script>
     <style>
         body {
-            background: linear-gradient(90deg, #9cd116, #0AF6AE) !important;
+            background: #eee;
+            background-image: none !important;
             width: 100%;
             height: 100vh !important;
             display: flex;
@@ -28,56 +35,149 @@
             align-items: center;
         }
 
-        .letter {
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            margin: 26px auto 0;
-            max-width: 100%;
-            min-height: 300px;
-            padding: 24px;
-            position: relative;
-            width: 80%;
+        .correcao {
+            background: green;
         }
 
-        .letter:before, .letter:after {
-            content: "";
-            height: 98%;
+        #menu-vertical {
+            position: fixed;
+            z-index: 999;
+            left: 0px;
+            top: 0px;
+            min-width: 20%;
+            height: 100%;
+            overflow: hidden;
+            padding: 6px;
+            background: linear-gradient(90deg, #9cd116, #0AF6AE) !important;
+            padding: 2%;
+        }
+
+        .conteudo {
             position: absolute;
-            width: 100%;
-            z-index: -1;
-        }
-
-        .letter:before {
-            background: #fafafa;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-            left: -5px;
-            top: 4px;
-            transform: rotate(-2.5deg);
-        }
-
-        .letter:after {
-            background: #f6f6f6;
-            box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-            right: -3px;
-            top: 1px;
-            transform: rotate(1.4deg);
+            width: 80%;
+            height: auto;
+            padding: 2% 4%;
+            right: 0;
+            top: 0;
+            overflow-y: scroll;
         }
 
         .correcao {
-            background: green;
+            padding: 5px 20px;
+            border-radius: 25px;
+            background: #fff;
+            text-transform: uppercase;
+            color: #9f9f9f;
+
+        }
+
+        .btn-uverse-verde-bg {
+            border-radius: 20px;
+            background: #0AF6AE !important;
+            background: transparent;
+            border: 3px solid #17cf9a;
+            font-weight: bold;
+            color: #0a6549;
+            font-size: 14px;
+
+        }
+
+        .redacao {
+            text-align: justify;
+        }
+
+        .aprovado {
+            background: #9cd116 !important;
+            transition: 1s linear;
+        }
+
+        .reprovado {
+            background: red !important;
+        }
+
+        .lista-menu-uverse {
+            background: transparent !important;
+        }
+
+        .lista-menu-uverse li {
+            background: transparent !important;
+            border:none !important;
+        }
+
+        .lista-menu-uverse a{
+            color: #0a6549 !important;
+        }
+        .lista-menu-uverse a:hover {
+            color: #FFF !important;
+            text-decoration: none !important;
+            transition: 0.5s linear;
         }
     </style>
 
 
 </head>
 <body>
+<div class="sep-uverse" style="position: fixed; top: 0;"></div>
+
+<div id="menu-vertical">
+
+    <div>
+        <img src="{% static 'img/logo-uverse.svg' %}" width="100" height="30" class="d-inline-block align-top" alt=""
+             loading="lazy">
+    </div>
+    <hr>
+    <ul class="list-group lista-menu-uverse">
+        <a href="https://uverse.com.vc/vestibular-2021/" target="_blank">
+            <li class="list-group-item d-flex justify-content-start align-items-center">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z"/>
+                  <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                </svg>
+                &nbsp;Vestibular Uverse
+            </li>
+        </a>
+        <a href="{% url 'sair' %}">
+            <li class="list-group-item d-flex justify-content-start align-items-center">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-door-open" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M1 15.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM11.5 2H11V1h.5A1.5 1.5 0 0 1 13 2.5V15h-1V2.5a.5.5 0 0 0-.5-.5z"/>
+                  <path fill-rule="evenodd" d="M10.828.122A.5.5 0 0 1 11 .5V15h-1V1.077l-6 .857V15H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117z"/>
+                  <path d="M8 9c0 .552.224 1 .5 1s.5-.448.5-1-.224-1-.5-1-.5.448-.5 1z"/>
+                </svg>
+                &nbsp;Sair do sistema
+            </li>
+        </a>
+    </ul>
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-8 redacao letter enter-left-bounce">
+</div>
+
+
+<div class="conteudo">
+
+    {% if redacao %}
+
+    <div class="correcao d-flex justify-content-between align-items-center">
+        <h4>Correção: Redação <strong>#{{redacao.id}}</strong></h4>
+        <button type="button"
+                class="btn btn-primary btn-uverse-verde-bg d-flex justify-content-between align-items-center"
+                data-toggle="modal" data-target="#exampleModal">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-checklist" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                <path fill-rule="evenodd"
+                      d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+            </svg>
+            &nbsp;LANÇAR NOTAS
+
+        </button>
+    </div>
+    {% endif %}
+
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-12 redacao letter enter-left-bounce">
             {% if redacao %}
-            <h1>Redação: </h1>
+            <span class="badge badge-secondary">Redação: </span>
             <hr>
             {{redacao.redacao|linebreaks}}
 
@@ -91,26 +191,109 @@
             {% endif %}
         </div>
 
-        <div class="col-3 correcao">
-            Lançamento de notas
-            <form method="POST" id="formulario">{% csrf_token %}
-                {{ form.as_p }}
+        <!--        <div class="col-2 correcao">-->
+        <!--            Lançamento de notas-->
+        <!--            <form method="POST" id="formulario">{% csrf_token %}-->
+        <!--                {{ form.as_p }}-->
 
-                <button type="submit" class="btn btn-uverse">Salvar notas</button>
-            </form>
-        </div>
+        <!--                <button type="submit" class="btn btn-uverse">Salvar notas</button>-->
+        <!--            </form>-->
+        <!--        </div>-->
 
     </div>
 
 
-   {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li
+                {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="POST" id="formulario">{% csrf_token %}
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Correção de redação #{{redacao.id}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <!--                        {{ form.as_p }}-->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="nota_redacao_p1">Nota peso 1</label>
+                                    {{ form.nota_redacao_p1 }}
+                                </div>
+                                <div class="col-6">
+                                    <label for="nota_redacao_p2">Nota peso 2</label>
+                                    {{ form.nota_redacao_p2 }}
+                                </div>
+                                <div class="col-6">
+                                    <label for="nota_redacao_p3">Nota peso 3</label>
+                                    {{ form.nota_redacao_p3 }}
+                                </div>
+                                <div class="col-6">
+                                    <label for="nota_redacao_p4">Nota peso 4</label>
+                                    {{ form.nota_redacao_p4 }}
+                                </div>
+                                <div class="col-6">
+                                    <label for="nota_redacao_p5">Nota peso 5</label>
+                                    {{ form.nota_redacao_p5 }}
+                                </div>
+
+                                <div class="col-6" style="padding: 30px 18px">
+                                    <h2 id="nota-total"></h2>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar notas</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
 </div>
+
+
+<script>
+    $("input").focusout(function () {
+        var n1 = parseInt($('#id_nota_redacao_p1').val());
+        var n2 = parseInt($('#id_nota_redacao_p2').val());
+        var n3 = parseInt($('#id_nota_redacao_p3').val());
+        var n4 = parseInt($('#id_nota_redacao_p4').val());
+        var n5 = parseInt($('#id_nota_redacao_p5').val());
+        var total = parseInt(n1 + n2 + n3 + n4 + n5);
+
+
+        if (total > 100) {
+            $('.modal-content').addClass('aprovado');
+            $('#nota-total').html("<span class=\'badge badge-success\'>" + total + " - APROVADO");
+        } else ;
+
+    });
+</script>
 
 
 </body>
