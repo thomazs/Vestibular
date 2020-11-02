@@ -315,27 +315,30 @@ def acompanhamento_ti(request):
 
 @login_required
 def corrige_redacao(request):
-    redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).first()
 
-    corrigidas = Inscricao.objects.filter(corretor_redacao=request.user).count()
+    if request.user.is_staff:
+        redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).first()
 
+        corrigidas = Inscricao.objects.filter(corretor_redacao=request.user).count()
 
-    if request.method == "POST":
-        form = FormCorrigeRedacao(request.POST,  instance=redacao)
+        if request.method == "POST":
+            form = FormCorrigeRedacao(request.POST,  instance=redacao)
 
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.corretor_redacao = request.user
-            post.nota_redacao_p1 = post.nota_redacao_p1
-            post.nota_redacao_p2 = post.nota_redacao_p2
-            post.nota_redacao_p3 = post.nota_redacao_p3
-            post.nota_redacao_p4 = post.nota_redacao_p4
-            post.nota_redacao_p5 = post.nota_redacao_p5
-            post.nota_redacao = post.nota_redacao_p1 + post.nota_redacao_p2+post.nota_redacao_p3+post.nota_redacao_p4+post.nota_redacao_p5
-            post.save()
-            messages.success(request, 'Nota salva com sucesso')
-            return redirect('correcao')
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.corretor_redacao = request.user
+                post.nota_redacao_p1 = post.nota_redacao_p1
+                post.nota_redacao_p2 = post.nota_redacao_p2
+                post.nota_redacao_p3 = post.nota_redacao_p3
+                post.nota_redacao_p4 = post.nota_redacao_p4
+                post.nota_redacao_p5 = post.nota_redacao_p5
+                post.nota_redacao = post.nota_redacao_p1 + post.nota_redacao_p2+post.nota_redacao_p3+post.nota_redacao_p4+post.nota_redacao_p5
+                post.save()
+                messages.success(request, 'Nota salva com sucesso')
+                return redirect('correcao')
+        else:
+            form = FormCorrigeRedacao()
     else:
-        form = FormCorrigeRedacao()
+        return redirect('index')
 
     return render(request, 'correcao.html', locals())
