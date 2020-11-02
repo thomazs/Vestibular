@@ -318,6 +318,7 @@ def corrige_redacao(request):
 
     if request.user.is_staff:
         redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).first()
+        sem_redacao = Inscricao.objects.filter(fez_redacao='False')
 
         corrigidas = Inscricao.objects.filter(corretor_redacao=request.user).count()
 
@@ -341,4 +342,11 @@ def corrige_redacao(request):
     else:
         return redirect('index')
 
-    return render(request, 'correcao.html', locals())
+    return render(request, 'redacao/correcao.html', locals())
+
+@login_required
+def redacao_pendente(request):
+
+    sem_redacao = Inscricao.objects.filter(fez_redacao='False')
+
+    return render(request, 'redacao/lista-redacao-pendente.html', locals())

@@ -1,0 +1,85 @@
+{% extends 'redacao/base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+
+{% include "redacao/menu.html" %}
+
+
+<div class="conteudo">
+
+    {% if redacao %}
+
+    <div class="correcao d-flex justify-content-between align-items-center">
+        <h4>Correção: Redação <strong>#{{redacao.id}}</strong></h4>
+        <button type="button"
+                class="btn btn-primary btn-uverse-verde-bg d-flex justify-content-between align-items-center"
+                data-toggle="modal" data-target="#exampleModal">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-checklist" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                <path fill-rule="evenodd"
+                      d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+            </svg>
+            &nbsp;LANÇAR NOTAS
+
+        </button>
+    </div>
+    {% endif %}
+
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-12 redacao enter-left-bounce">
+
+            <h1 class="titulo" style="color: #666666">Inscrições que não fizeram redação</h1>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Dt. Inscricao</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Telefone</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in sem_redacao %}
+                <tr>
+                    <th scope="row">{{i.pessoa.nome}}</th>
+                    <td>{{i.data_inclusao |date:"d/m/Y - H:m"}}</td>
+                    <td>{{i.pessoa.email}}</td>
+                    <td>{{i.pessoa.fone}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    $("input").focusout(function () {
+        var n1 = parseInt($('#id_nota_redacao_p1').val());
+        var n2 = parseInt($('#id_nota_redacao_p2').val());
+        var n3 = parseInt($('#id_nota_redacao_p3').val());
+        var n4 = parseInt($('#id_nota_redacao_p4').val());
+        var n5 = parseInt($('#id_nota_redacao_p5').val());
+        var total = parseInt(n1 + n2 + n3 + n4 + n5);
+
+
+        if (total > 100) {
+            $('.modal-content').addClass('aprovado');
+            $('#nota-total').html("<span class=\'badge badge-success\'>" + total + " - APROVADO");
+        } else ;
+
+    });
+</script>
+
+{% endblock %}

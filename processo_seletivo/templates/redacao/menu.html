@@ -1,0 +1,72 @@
+{% load static %}
+<div class="sep-uverse" style="position: fixed; top: 0;"></div>
+
+<div id="menu-vertical">
+
+    <div class="logo-instituicao">
+        <hr>
+        <img src="{% static 'img/logo-uverse.svg' %}" width="100" height="30" class="d-inline-block align-top" alt=""
+             loading="lazy">
+        Desenvolvido por: TI - U:versesss
+    </div>
+
+    <h3 class="titulo-painel">Olá, {{request.user.first_name}}!</h3>
+
+
+    <hr>
+    <div style="text-align: center; color: #0a6549">
+        <h1>{{corrigidas}}</h1>
+        <h6>Minhas correções</h6>
+
+    </div>
+    <hr>
+
+    <ul class="list-group lista-menu-uverse">
+        <a href="https://uverse.com.vc/vestibular-2021/" target="_blank">
+            <li class="list-group-item d-flex justify-content-start align-items-center">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door-fill" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z"/>
+                    <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                </svg>
+                &nbsp;Vestibular Uverse
+            </li>
+        </a>
+
+        <a href="{% url 'correcao' %}">
+            <li class="list-group-item d-flex justify-content-start align-items-center">
+               <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-check-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-1.146 6.854a.5.5 0 0 0-.708-.708L7.5 8.793 6.354 7.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+               </svg>
+                &nbsp;Correção de redação
+            </li>
+        </a>
+
+        <a href="{% url 'redacao_pendente' %}">
+            <li class="list-group-item d-flex justify-content-start align-items-center">
+               <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                </svg>
+                &nbsp;Não fizeram redação
+            </li>
+        </a>
+
+        <a href="{% url 'sair' %}">
+            <li class="list-group-item d-flex justify-content-start align-items-center">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-door-open" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M1 15.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM11.5 2H11V1h.5A1.5 1.5 0 0 1 13 2.5V15h-1V2.5a.5.5 0 0 0-.5-.5z"/>
+                    <path fill-rule="evenodd"
+                          d="M10.828.122A.5.5 0 0 1 11 .5V15h-1V1.077l-6 .857V15H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117z"/>
+                    <path d="M8 9c0 .552.224 1 .5 1s.5-.448.5-1-.224-1-.5-1-.5.448-.5 1z"/>
+                </svg>
+                &nbsp;Sair do sistema
+            </li>
+        </a>
+
+
+    </ul>
+
+</div>

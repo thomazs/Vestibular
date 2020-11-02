@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from processo_seletivo.views import index, cadastro, painel, sair, emailenviado, validar_email, concluir_cadastro, \
-    mensagem, faz_inscricao, prova_online, revisao_prova_online, prova_redacao, revisao_prova_redacao, prova_completa, acompanhamento, acompanhamento_ti, corrige_redacao
+    mensagem, faz_inscricao, prova_online, revisao_prova_online, prova_redacao, revisao_prova_redacao, prova_completa, acompanhamento, acompanhamento_ti, corrige_redacao, redacao_pendente
 
 admin.site.site_header = 'Vestibular U:Verse'
 admin.site.site_title = 'VestU:Verse'
@@ -43,6 +43,7 @@ urlpatterns = [
     path('acompanhamento/', acompanhamento, name="acompanhamento"),
     path('acompanhamento_ti/', acompanhamento_ti, name="acompanhamento_ti"),
     path('correcao/', corrige_redacao, name="correcao"),
+    path('redacao_pendente/', redacao_pendente, name="redacao_pendente"),
 
     path('', index, name="index"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static('media/', document_root=settings.MEDIA_ROOT)
