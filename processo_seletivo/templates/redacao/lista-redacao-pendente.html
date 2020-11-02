@@ -42,6 +42,7 @@
                     <th scope="col">Dt. Inscricao</th>
                     <th scope="col">Email</th>
                     <th scope="col">Telefone</th>
+                    <th scope="col">Mensagem</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,6 +52,13 @@
                     <td>{{i.data_inclusao |date:"d/m/Y - H:m"}}</td>
                     <td>{{i.pessoa.email}}</td>
                     <td>{{i.pessoa.fone}}</td>
+                    <td>
+                        {% with  texto="Olá, sou colaborador U:verse estou entrando em contato para falar sobre a sua redação do vestibular U:verse" %}
+                        <a href="https://wa.me/55{{i.pessoa.fone}}?text={{texto}}">
+                            <button type="button" class="btn btn-sm btn-outline-success">WhatsApp</button>
+                        </a>
+                        {% endwith %}
+                    </td>
                 </tr>
                 {% endfor %}
                 </tbody>
