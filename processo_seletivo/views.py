@@ -346,7 +346,9 @@ def corrige_redacao(request):
 
 @login_required
 def redacao_pendente(request):
-
-    sem_redacao = Inscricao.objects.filter(fez_redacao='False')
+    if request.user.is_staff:
+        sem_redacao = Inscricao.objects.filter(fez_redacao='False')
+    else:
+        return redirect('index')
 
     return render(request, 'redacao/lista-redacao-pendente.html', locals())
