@@ -34,31 +34,28 @@
         <div class="col-12 redacao enter-left-bounce">
 
             <h1 class="titulo" style="color: #666666">Ingressos Através do Enem</h1>
-
-            {% for i in candidatos %}
-
-
             <div class="row">
+                {% for i in candidatos %}
                 <div class="col-sm-4">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">{{i.pessoa.nome}}</h4>
-                            <h5 class="card-title">
-                               Nota do enem: <strong> {{i.nota_enem}}</strong>
-                            </h5>
+                            <h4 class="card-title" style="text-align: left;text-transform: uppercase; font-weight: 800">{{i.pessoa.nome}}</h4>
+                            <h6 class="card-title">
+                                Nota: <strong> {{i.nota_enem}}</strong>
+                            </h6>
+                            <h6 class="card-title">
+                                Nota: <strong> {{i.ano_enem}}</strong>
+                            </h6>
                             <p class="card-text">
-
+                                <a href="{{i.comprovante_enem}}">Comprovante do enem</a>
                             </p>
 
                             <a href="#" class="btn btn-primary btn-success">Aprovar</a>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-
-
-            {% endfor %}
-
 
         </div>
 
