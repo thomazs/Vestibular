@@ -39,17 +39,27 @@
                 <div class="col-sm-4">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title" style="text-align: left;text-transform: uppercase; font-weight: 800">{{i.pessoa.nome}}</h4>
+                            <h4 class="card-title" style="text-align: left;text-transform: uppercase; font-weight: 800">
+                                {{i.pessoa.nome}}</h4>
                             <h6 class="card-title">
                                 Nota: <strong> {{i.nota_enem}}</strong>
                             </h6>
                             <h6 class="card-title">
                                 Nota: <strong> {{i.ano_enem}}</strong>
                             </h6>
+                            {% if comprovante_enem %}
                             <p class="card-text">
                                 <a href="{{i.comprovante_enem}}">Comprovante do enem</a>
                             </p>
-
+                            {% else %}
+                            <p class="card-text">
+                            <div class="alert alert-danger" role="alert">
+                                Não anexou comprovante de inscrição
+                            </div>
+                            <hr>
+                            <h6>Telefone: {{i.pessoa.fone}}</h6>
+                            </p>
+                            {% endif %}
                             <a href="#" class="btn btn-primary btn-success">Aprovar</a>
                         </div>
                     </div>
