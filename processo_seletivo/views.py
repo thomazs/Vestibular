@@ -151,7 +151,7 @@ def faz_inscricao(request, id=None):
             pinscricao.curso_final = pinscricao.curso
             pinscricao.edicao = edicao
             # pinscricao.pessoa = pessoa
-            pinscricao.pessoa = request.user
+            pinscricao.pessoa = request.user.get_pessoa()
             pinscricao.save()
             cria_perguntas_inscricao(pinscricao)
             envia_email_inscricaofeita(pessoa, pinscricao)
