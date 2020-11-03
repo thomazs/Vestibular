@@ -315,7 +315,6 @@ def acompanhamento_ti(request):
 
 @login_required
 def corrige_redacao(request):
-
     if request.user.is_staff:
         redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).first()
         sem_redacao = Inscricao.objects.filter(fez_redacao='False')
@@ -323,7 +322,7 @@ def corrige_redacao(request):
         corrigidas = Inscricao.objects.filter(corretor_redacao=request.user).count()
 
         if request.method == "POST":
-            form = FormCorrigeRedacao(request.POST,  instance=redacao)
+            form = FormCorrigeRedacao(request.POST, instance=redacao)
 
             if form.is_valid():
                 post = form.save(commit=False)
@@ -333,7 +332,7 @@ def corrige_redacao(request):
                 post.nota_redacao_p3 = post.nota_redacao_p3
                 post.nota_redacao_p4 = post.nota_redacao_p4
                 post.nota_redacao_p5 = post.nota_redacao_p5
-                post.nota_redacao = post.nota_redacao_p1 + post.nota_redacao_p2+post.nota_redacao_p3+post.nota_redacao_p4+post.nota_redacao_p5
+                post.nota_redacao = post.nota_redacao_p1 + post.nota_redacao_p2 + post.nota_redacao_p3 + post.nota_redacao_p4 + post.nota_redacao_p5
                 post.save()
                 messages.success(request, 'Nota salva com sucesso')
                 return redirect('correcao')
@@ -344,6 +343,7 @@ def corrige_redacao(request):
 
     return render(request, 'redacao/correcao.html', locals())
 
+
 @login_required
 def redacao_pendente(request):
     if request.user.is_staff:
@@ -352,3 +352,13 @@ def redacao_pendente(request):
         return redirect('index')
 
     return render(request, 'redacao/lista-redacao-pendente.html', locals())
+
+
+@login_required
+def inscricao_enem(request):
+    if request.user.is_staff:
+       candidatos = Inscricao.objects.filter(tipo_selecao='3')
+    else:
+        return redirect('index')
+
+    return render(request, 'redacao/selecao-enem.html', locals())

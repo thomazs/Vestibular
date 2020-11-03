@@ -33,36 +33,31 @@
     <div class="row" style="margin-top: 50px;">
         <div class="col-12 redacao enter-left-bounce">
 
-            <h1 class="titulo" style="color: #666666">Inscrições que não fizeram redação</h1>
+            <h1 class="titulo" style="color: #666666">Ingressos Através do Enem</h1>
 
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Dt. Inscricao</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Telefone</th>
-                    <th scope="col">Mensagem</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for i in sem_redacao %}
-                <tr>
-                    <th scope="row">{{i.pessoa.nome}}</th>
-                    <td>{{i.data_inclusao |date:"d/m/Y"}}</td>
-                    <td>{{i.pessoa.email}}</td>
-                    <td>{{i.pessoa.fone}}</td>
-                    <td>
-                        {% with  texto="Olá, sou colaborador U:verse estou entrando em contato para falar sobre a sua redação do vestibular U:verse" %}
-                        <a href="https://wa.me/55{{i.pessoa.fone}}?text={{texto}}">
-                            <button type="button" class="btn btn-sm btn-outline-success">WhatsApp</button>
-                        </a>
-                        {% endwith %}
-                    </td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            {% for i in candidatos %}
+
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">{{i.pessoa.nome}}</h4>
+                            <h5 class="card-title">
+                               Nota do enem: <strong> {{i.nota_enem}}</strong>
+                            </h5>
+                            <p class="card-text">
+
+                            </p>
+
+                            <a href="#" class="btn btn-primary btn-success">Aprovar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {% endfor %}
 
 
         </div>
