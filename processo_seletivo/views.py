@@ -146,7 +146,7 @@ def faz_inscricao(request, id=None):
     edicao = pega_edicao_ativa()
     form = FormInscricao(instance=inscricao, edicao=edicao)
     if request.method == 'POST':
-        form = FormInscricao(request.POST, instance=inscricao, edicao=edicao)
+        form = FormInscricao(request.POST, instance=inscricao, edicao=edicao, pessoa=pessoa)
         if form.is_valid():
             pinscricao = form.save(commit=False)
             pinscricao.curso_final = pinscricao.curso
