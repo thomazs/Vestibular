@@ -131,8 +131,7 @@ HOST_CURRENT = 'http://uverse.in'
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'processo_seletivo', 'static', 'media')
-# STATIC_ROOT = 'C:/xampp/htdocs/media'
-STATIC_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = 'C:/xampp/htdocs/media'
 MEDIA_URL = '/media/'
 LOGIN_URL = '/uvest/admin/login/'
 LOGIN_REDIRECT_URL = '/uvest/admin/login/'
