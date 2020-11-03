@@ -136,8 +136,7 @@ def concluir_cadastro(request, token):
 @login_required(login_url=reverse_lazy('index'))
 @transaction.atomic()
 def faz_inscricao(request, id=None):
-    # pessoa = request.user.get_pessoa()
-    pessoa = Pessoa.objects.filter(usuario=request.user)
+    pessoa = request.user.get_pessoa()
     inscricao = get_object_or_404(Inscricao, id=id) if id else None
     if inscricao and inscricao.pessoa_id != pessoa:
         messages.error(request, 'Inscrição não pertence a este candidato!')
@@ -151,7 +150,6 @@ def faz_inscricao(request, id=None):
             pinscricao = form.save(commit=False)
             pinscricao.curso_final = pinscricao.curso
             pinscricao.edicao = edicao
-            # pinscricao.pessoa = pessoa
             pinscricao.pessoa = pessoa
             pinscricao.save()
             cria_perguntas_inscricao(pinscricao)
