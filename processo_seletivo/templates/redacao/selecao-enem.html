@@ -35,20 +35,21 @@
 
             <h1 class="titulo" style="color: #666666">Ingressos Através do Enem</h1>
             <div class="row">
+                {% if candidatos %}
                 {% for i in candidatos %}
                 <div class="col-sm-4">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title" style="text-align: left;text-transform: uppercase; font-weight: 800">
+                            <h4 class="card-title titulo titulo-uverse-cinza">
                                 {{i.pessoa.nome}}</h4>
-                            <h6 class="card-title">
+                            <h6 style="color: #666666">
                                 Nota: <strong> {{i.nota_enem}}</strong>
                             </h6>
-                            <h6 class="card-title">
-                                Nota: <strong> {{i.ano_enem}}</strong>
+                            <h6 style="color: #666666">
+                                Ano: <strong> {{i.ano_enem}}</strong>
                             </h6>
                             {% if comprovante_enem %}
-                            <p class="card-text">
+                            <p class="card-text" style="color: #666666">
                                 <a href="{{i.comprovante_enem}}">Comprovante do enem</a>
                             </p>
                             {% else %}
@@ -57,14 +58,17 @@
                                 Não anexou comprovante de inscrição
                             </div>
                             <hr>
-                            <h6>Telefone: {{i.pessoa.fone}}</h6>
+                            <h6 style="color: #666666">Telefone: {{i.pessoa.fone}}</h6>
                             </p>
                             {% endif %}
-                            <a href="#" class="btn btn-primary btn-success">Aprovar</a>
+                            <a href="#" class="btn btn-uverse-verde-bg">Aprovar</a>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
+                {% else %}
+                    <h2>Não existe novas candidatos cadastrados com nota do Enem</h2>
+                {% endif %}
             </div>
 
         </div>
