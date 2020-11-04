@@ -1,0 +1,247 @@
+{% load static %}
+
+<style>
+    /* Progress Tracker v2 */
+
+    ol.progresso[data-steps="2"] li {
+        width: 49%;
+    }
+
+    ol.progresso[data-steps="3"] li {
+        width: 33%;
+    }
+
+    ol.progresso[data-steps="4"] li {
+        width: 24%;
+    }
+
+    ol.progresso[data-steps="5"] li {
+        width: 19%;
+    }
+
+    ol.progresso[data-steps="6"] li {
+        width: 16%;
+    }
+
+    ol.progresso[data-steps="7"] li {
+        width: 14%;
+    }
+
+    ol.progresso[data-steps="8"] li {
+        width: 12%;
+    }
+
+    ol.progresso[data-steps="9"] li {
+        width: 11%;
+    }
+
+    .progresso {
+        width: 100%;
+        list-style: none;
+        list-style-image: none;
+        margin: 20px 0 20px 0;
+        padding: 0;
+    }
+
+    .progresso li {
+        float: left;
+        text-align: center;
+        position: relative;
+    }
+
+    .progresso .name {
+        display: block;
+        vertical-align: bottom;
+        text-align: center;
+        margin-bottom: 1em;
+        color: black;
+        opacity: 0.3;
+    }
+
+    .progresso .step {
+        color: black;
+        border: 3px solid silver;
+        background-color: silver;
+        border-radius: 50%;
+        line-height: 1.2;
+        width: 40px;
+        height: 40px;
+        display: inline-block;
+        z-index: 0;
+        padding: 5px;
+    }
+
+    .progresso .step span {
+        opacity: 0.3;
+
+    }
+
+    .progresso .active .name,
+    .progresso .active .step span {
+        opacity: 1;
+    }
+
+    /*.progresso .step:before {*/
+    /*    content: "";*/
+    /*    display: block;*/
+    /*    background-color: silver;*/
+    /*    height: 0.4em;*/
+    /*    width: 50%;*/
+    /*    position: absolute;*/
+    /*    bottom: 0.6em;*/
+    /*    left: 0;*/
+    /*    z-index: -1;*/
+    /*}*/
+
+    /*.progresso .step:after {*/
+    /*    content: "";*/
+    /*    display: block;*/
+    /*    background-color: silver;*/
+    /*    height: 0.4em;*/
+    /*    width: 50%;*/
+    /*    position: absolute;*/
+    /*    bottom: 0.6em;*/
+    /*    right: 0;*/
+    /*    z-index: -1;*/
+    /*}*/
+
+    /*.progresso li:first-of-type .step:before {*/
+    /*    display: none;*/
+    /*}*/
+
+    /*.progresso li:last-of-type .step:after {*/
+    /*    display: none;*/
+    /*}*/
+
+    .progresso .done .step,
+    .progresso .done .step:before,
+    .progresso .done .step:after,
+    .progresso .active .step,
+    .progresso .active .step:before {
+        background-color: #28a745;
+        color: #20c997;
+    }
+
+    .progresso .done .step,
+    .progresso .active .step {
+        border: 3px solid #28a745;
+    }
+
+    .active .step {
+        background: #28a745 !important;
+        color: #FFF !important;
+    }
+
+    .active .name {
+        color: #FFF !important;
+    }
+    .container-passos{
+        padding: 0;
+        margin: 0;
+        background: #20c997;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        padding: 20px 0;
+        text-align: center !important;
+    }
+    .container-passos a{
+        color: #fff;
+        text-decoration: none;
+    }
+     .container-passos ul{
+        color: #222 !important;
+        text-decoration: none;
+    }
+</style>
+
+
+<!--            acompanhar inscrições-->
+{% with i=user.get_inscricao_ativa %}
+{% for i in user.get_inscricoes %}
+<div class="col-12 container-passos">
+    <ol class="progresso" data-steps="3">
+        <li class="{% if not i.fez_redacao or not i.fez_prova %}active{%else%}done{%endif%}">
+            <span class="step"><span>
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle-fill" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </svg>
+
+            </span></span>
+            <span class="name">Avaliação</span>
+
+        </li>
+        <li class="{% if i.fez_redacao and i.fez_prova %}active{%else%}done{%endif%}">
+            <span class="step"><span>
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle-fill" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </svg>
+            </span></span>
+            <span class="name">Correção</span>
+        </li>
+        <li class="done">
+            <span class="step"><span>
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle-fill" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </svg>
+
+            </span></span>
+            <span class="name">Matrícula</span>
+        </li>
+    </ol>
+
+    <div class="row">
+        <div class="col" style="text-align: center; color: #FFF;">
+
+
+            {% if i.tipo_selecao == 1 %}
+                {% if not i.fez_redacao and not i.fez_prova %}
+                <a href="{% url 'prova_online' %}">
+                    <h5>Você precisa fazer a prova online e redação
+                    </h5>
+                </a>
+
+                {% elif not i.fez_redacao and i.fez_prova %}
+                <a href="{% url 'prova_online' %}">
+                    <h5>Você realizou a sua prova online, agora só falta finalizar a redação.</h5>
+                </a>
+                {% endif %}
+
+                {% if i.fez_redacao and i.fez_prova %}
+                    {% if i.nota_geral and i.nota_redacao %}
+                        <ul class="list-group list-group-horizontal-sm">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Nota geral:
+                                <span class="badge badge-primary badge-pill">{{i.nota_geral}}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Nota da prova:
+                                 <span class="badge badge-primary badge-pill">{{i.nota_prova}}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Nota da redação:
+                            <span class="badge badge-primary badge-pill">{{i.nota_redacao}}</span>
+                        </ul>
+                    {% else %}
+                        <a href="{% url 'prova_online' %}">
+                            <h5>AGUARDANDO CORREÇÃO...</h5>
+                        </a>
+                    {% endif %}
+                {% endif %}
+
+
+            {% endif %}
+
+
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+{% endwith %}
+<!--            acompanhar inscrições-->
