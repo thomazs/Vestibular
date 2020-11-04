@@ -69,15 +69,14 @@ SITUACAO_INSCRICAO = (
     (31, 'Matriculado'),
 )
 
-
 def comprovante_enem_upload_to(instance, filename):
     ext = filename.split('.')[-1]
-    return f'/E{instance.edicao.pk}/comprovate_enem/P{instance.pessoa.pk}.{ext}'
+    return f'E{instance.edicao.pk}/comprovate_enem/P{instance.pessoa.pk}.{ext}'
 
 
 def comprovante_esc_upload_to(instance, filename):
     ext = filename.split('.')[-1]
-    return f'/E{instance.edicao.pk}/comprovate_escolaridade/P{instance.pessoa.pk}.{ext}'
+    return f'E{instance.edicao.pk}/comprovate_escolaridade/P{instance.pessoa.pk}.{ext}'
 
 
 class Inscricao(models.Model):
@@ -99,8 +98,7 @@ class Inscricao(models.Model):
 
     treineiro = models.BooleanField(default=False)
 
-    comprovante_escolaridade = models.FileField(null=True, blank=True, max_length=250,
-                                                upload_to=comprovante_esc_upload_to)
+    comprovante_escolaridade = models.FileField(null=True, blank=True, max_length=250, upload_to=comprovante_esc_upload_to)
 
     nec_intlibras = models.BooleanField(default=False)
     nec_ledor = models.BooleanField(default=False)
