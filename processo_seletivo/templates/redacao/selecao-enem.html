@@ -52,7 +52,9 @@
 
                             {% if i.comprovante_enem %}
                             <p class="card-text" style="color: #666666">
-                                <a href="/media/{{i.comprovante_enem}}" target="_blank">Comprovante do enem</a>
+                                <a class="alert alert-success" role="alert" href="/media/{{i.comprovante_enem}}" target="_blank">
+                                    Comprovante do enem
+                                </a>
                             </p>
                             {% else %}
                             <p class="card-text">
@@ -70,7 +72,7 @@
                 </div>
                 {% endfor %}
                 {% else %}
-                    <h2>Não existe novas candidatos cadastrados com nota do Enem</h2>
+                <h2>Não existe novas candidatos cadastrados com nota do Enem</h2>
                 {% endif %}
             </div>
 
