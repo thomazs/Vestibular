@@ -362,3 +362,12 @@ def inscricao_enem(request):
         return redirect('index')
 
     return render(request, 'redacao/selecao-enem.html', locals())
+
+@login_required
+def portador_diploma(request):
+    if request.user.is_staff:
+       candidatos = Inscricao.objects.filter(tipo_selecao='2')
+    else:
+        return redirect('index')
+
+    return render(request, 'redacao/portador-diploma.html', locals())
