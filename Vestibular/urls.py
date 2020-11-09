@@ -21,7 +21,7 @@ from django.conf import settings
 from processo_seletivo.views import index, cadastro, painel, sair, emailenviado, validar_email, concluir_cadastro, \
     mensagem, faz_inscricao, prova_online, revisao_prova_online, \
     prova_redacao, revisao_prova_redacao, prova_completa, \
-    acompanhamento, acompanhamento_ti, corrige_redacao, redacao_pendente,inscricao_enem,portador_diploma
+    acompanhamento, acompanhamento_ti, corrige_redacao, redacao_pendente,inscricao_enem,portador_diploma, ajuste_nota
 
 admin.site.site_header = 'Vestibular U:Verse'
 admin.site.site_title = 'VestU:Verse'
@@ -48,6 +48,7 @@ urlpatterns = [
     path('redacao_pendente/', redacao_pendente, name="redacao_pendente"),
     path('inscricao_enem/', inscricao_enem, name="inscricao_enem"),
     path('portador-diploma/', portador_diploma, name="portador_diploma"),
+    path('ajuste_nota/', ajuste_nota, name="ajuste_nota"),
 
     path('', index, name="index"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static('media/', document_root=settings.MEDIA_ROOT)

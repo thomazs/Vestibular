@@ -371,3 +371,22 @@ def portador_diploma(request):
         return redirect('index')
 
     return render(request, 'redacao/portador-diploma.html', locals())
+
+
+@login_required
+def ajuste_nota(request):
+
+    notas = Inscricao.objects.all()
+
+
+    for i in notas:
+        if i.nota_redacao > 200:
+            i.nota_redacao_p1 = (i.nota_redacao_p1 * 40) / 100
+            i.nota_redacao_p2 = (i.nota_redacao_p2 * 40) / 100
+            i.nota_redacao_p3 = (i.nota_redacao_p3 * 40) / 100
+            i.nota_redacao_p4 = (i.nota_redacao_p4 * 40) / 100
+            i.nota_redacao_p5 = (i.nota_redacao_p5 * 40) / 100
+            i.nota_redacao = i.nota_redacao_p1+i.nota_redacao_p2+i.nota_redacao_p3+i.nota_redacao_p4+i.nota_redacao_p5
+            i.save()
+
+    return render(request, 'ajuste-nota.html', locals())
