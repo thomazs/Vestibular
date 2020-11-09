@@ -380,13 +380,14 @@ def ajuste_nota(request):
 
 
     for i in notas:
-        if i.nota_redacao > 200:
-            i.nota_redacao_p1 = (i.nota_redacao_p1 * 40) / 100
-            i.nota_redacao_p2 = (i.nota_redacao_p2 * 40) / 100
-            i.nota_redacao_p3 = (i.nota_redacao_p3 * 40) / 100
-            i.nota_redacao_p4 = (i.nota_redacao_p4 * 40) / 100
-            i.nota_redacao_p5 = (i.nota_redacao_p5 * 40) / 100
-            i.nota_redacao = i.nota_redacao_p1+i.nota_redacao_p2+i.nota_redacao_p3+i.nota_redacao_p4+i.nota_redacao_p5
-            i.save()
+        if i.nota_redacao:
+            if i.nota_redacao > 200:
+                i.nota_redacao_p1 = (i.nota_redacao_p1 * 40) / 100
+                i.nota_redacao_p2 = (i.nota_redacao_p2 * 40) / 100
+                i.nota_redacao_p3 = (i.nota_redacao_p3 * 40) / 100
+                i.nota_redacao_p4 = (i.nota_redacao_p4 * 40) / 100
+                i.nota_redacao_p5 = (i.nota_redacao_p5 * 40) / 100
+                i.nota_redacao = i.nota_redacao_p1+i.nota_redacao_p2+i.nota_redacao_p3+i.nota_redacao_p4+i.nota_redacao_p5
+                i.save()
 
     return render(request, 'ajuste-nota.html', locals())
