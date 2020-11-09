@@ -320,6 +320,7 @@ def corrige_redacao(request):
         sem_redacao = Inscricao.objects.filter(fez_redacao='False')
 
         corrigidas = Inscricao.objects.filter(corretor_redacao=request.user).count()
+        redacao_geral = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).count()
 
         if request.method == "POST":
             form = FormCorrigeRedacao(request.POST, instance=redacao)
