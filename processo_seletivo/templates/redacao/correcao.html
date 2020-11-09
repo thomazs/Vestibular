@@ -143,6 +143,28 @@
         var total = parseInt(n1 + n2 + n3 + n4 + n5);
 
 
+        if(n1>40){
+            alert("Atenção a nota precisa estar entre 0 e 40");
+            $('#id_nota_redacao_p1').val('');
+        }
+         if(n2>40){
+            alert("Atenção a nota precisa estar entre 0 e 40");
+            $('#id_nota_redacao_p2').val('');
+        }
+         if(n3>40){
+            alert("Atenção a nota precisa estar entre 0 e 40");
+            $('#id_nota_redacao_p3').val('');
+        }
+         if(n4>40){
+            alert("Atenção a nota precisa estar entre 0 e 40");
+            $('#id_nota_redacao_p4').val('');
+        }
+         if(n5>40){
+            alert("Atenção a nota precisa estar entre 0 e 40");
+            $('#id_nota_redacao_p5').val('');
+        }
+
+
         if (total > 100) {
             $('.modal-content').addClass('aprovado');
             $('#nota-total').html("<span class=\'badge badge-success\'>" + total + " - APROVADO");

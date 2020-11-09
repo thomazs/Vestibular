@@ -1,26 +1,5 @@
 {% load static %}
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-    google.charts.load("current", {packages: ["corechart"]});
-    google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Correções', 'Usuário'],
-            ['{{ user.first_name|lower|capfirst }}', {{corrigidas}}],
-            ['Outros', {{redacao_geral}}],
-        ]);
-
-        var options = {
-            title: 'Correções',
-            pieHole: 0.4,
-            backgroundColor:'#0a6549',
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
-    }
-</script>
 <div class="sep-uverse" style="position: fixed; top: 0;"></div>
 
 <div id="menu-vertical">
@@ -44,8 +23,6 @@
     </div>
     <hr>
     {% endif %}
-
-<!--    <div id="donutchart" style="width:100%; height: 100px;"></div>-->
 
     <ul class="list-group lista-menu-uverse">
         <a href="https://uverse.com.vc/vestibular-2021/" target="_blank">
