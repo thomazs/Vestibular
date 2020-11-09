@@ -14,10 +14,10 @@
         var options = {
             title: 'Correções',
             pieHole: 0.4,
-            backgroundColor:'#0a6549',
+            backgroundColor:'#0AF6AE',
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        var chart = new google.visualization.AreaChart (document.getElementById('donutchart'));
         chart.draw(data, options);
     }
 </script>
