@@ -7,7 +7,7 @@
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
             ['Correções', 'Usuário'],
-            ['Ionara', {{corrigidas}}],
+            ['{{ user.first_name|lower|capfirst }}', {{corrigidas}}],
             ['Outros', {{redacao_geral}}],
         ]);
 
