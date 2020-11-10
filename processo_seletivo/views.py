@@ -405,14 +405,25 @@ def ajuste_nota(request):
     #             i.save()
 
     # lança as notas de prova e geral
+    # notas = Inscricao.objects.all()
+    # for i in notas:
+    #     if i.fez_redacao and i.fez_prova and i.nota_redacao:
+    #         if i.nota_geral is None and i.nota_prova is None:
+    #             pontos_prova = RespostaInscricao.objects.filter(inscricao=i, resposta__correta=True).aggregate(
+    #                 Sum('questao__pontos'))
+    #             i.nota_prova = pontos_prova['questao__pontos__sum']
+    #             i.nota_geral = i.nota_redacao + pontos_prova['questao__pontos__sum']
+    #             i.save()
+
+
     notas = Inscricao.objects.all()
     for i in notas:
         if i.fez_redacao and i.fez_prova and i.nota_redacao:
-            if i.nota_geral is None and i.nota_prova is None:
-                pontos_prova = RespostaInscricao.objects.filter(inscricao=i, resposta__correta=True).aggregate(
-                    Sum('questao__pontos'))
-                i.nota_prova = pontos_prova['questao__pontos__sum']
-                i.nota_geral = i.nota_redacao + pontos_prova['questao__pontos__sum']
-                i.save()
+            if i.nota_geral >= 200:
+                i.situacao = 21
+            else:
+                i.situacao = 11
+
+            i.save()
 
     return render(request, 'ajuste-nota.html', locals())
