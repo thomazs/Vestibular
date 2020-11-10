@@ -55,8 +55,6 @@
             </div>
 
 
-
-
             <!-- menu -->
             <div class="row">
 
@@ -163,24 +161,32 @@
             <h6>MEUS CURSOS</h6>
             {% with i=user.get_inscricao_ativa %}
             {% for i in user.get_inscricoes %}
-            <div class="card-uverse flip-right">
+            <div class="card-uverse flip-right {% if i.nota_geral >= 200 %}aprovado-vest{% endif %}">
                 <img src="{% static 'img/student.svg' %}">
                 <h4>
                     {{ i.curso }}
                 </h4>
                 {{ i.edicao.nome }}
 
+                {% if i.nota_geral %}
+                    {% if i.nota_geral >= 200 %}
+                    <hr>
+                    <button type="button" class="btn btn-success">Aprovado</button>
+                    {% endif %}
+                {% endif %}
+
+
             </div>
 
-<!--            {% if not i.fez_redacao and not i.fez_prova %}-->
-<!--            <a href="{% url 'prova_online' %}" class="alert alert-danger" role="alert">Você precisa fazer a prova online-->
-<!--                e redação</a>-->
+            <!--            {% if not i.fez_redacao and not i.fez_prova %}-->
+            <!--            <a href="{% url 'prova_online' %}" class="alert alert-danger" role="alert">Você precisa fazer a prova online-->
+            <!--                e redação</a>-->
 
-<!--            {% elif not i.fez_redacao and i.fez_prova %}-->
-<!--            <a href="{% url 'prova_online' %}" class="alert alert-danger" role="alert">-->
-<!--                Você realizou a sua prova online, agora só falta finalizar a redação.-->
-<!--            </a>-->
-<!--            {% endif %}-->
+            <!--            {% elif not i.fez_redacao and i.fez_prova %}-->
+            <!--            <a href="{% url 'prova_online' %}" class="alert alert-danger" role="alert">-->
+            <!--                Você realizou a sua prova online, agora só falta finalizar a redação.-->
+            <!--            </a>-->
+            <!--            {% endif %}-->
 
             {% endfor %}
             {% endwith %}
