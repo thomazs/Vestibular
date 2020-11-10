@@ -340,7 +340,7 @@ def corrige_redacao(request):
                 post.nota_redacao = post.nota_redacao_p1 + post.nota_redacao_p2 + post.nota_redacao_p3 + post.nota_redacao_p4 + post.nota_redacao_p5
                 post.nota_prova = pontos_prova['questao__pontos__sum']
                 post.nota_geral = post.nota_redacao + post.nota_prova
-                if post.nota_geral >=200:
+                if post.nota_geral >= 200:
                     post.situacao = 21
                 else:
                     post.situacao = 11
@@ -360,10 +360,22 @@ def corrige_redacao(request):
 def redacao_pendente(request):
     if request.user.is_staff:
         sem_redacao = Inscricao.objects.filter(fez_redacao='False')
+
     else:
         return redirect('index')
 
     return render(request, 'redacao/lista-redacao-pendente.html', locals())
+
+
+@login_required
+def csv_redacao_pendente(request):
+    if request.user.is_staff:
+        sem_redacao = Inscricao.objects.filter(fez_redacao='False')
+    else:
+        return redirect('index')
+    r = render(request, 'csv/redacao_pendente.html', locals(), content_type='text/plain')
+    r['content-disposition']='attachment; filename="Redacao.csv"'
+    return r
 
 
 @login_required
@@ -386,12 +398,9 @@ def portador_diploma(request):
     return render(request, 'redacao/portador-diploma.html', locals())
 
 
-
-
-
 @login_required
 def ajuste_nota(request):
-
+    if request.user.is_staff:
     # arredondar nota para padrão uverse
     # notas = Inscricao.objects.all()
     # for i in notas:
@@ -428,4 +437,4 @@ def ajuste_nota(request):
     #
     #         i.save()
 
-    return render(request, 'ajuste-nota.html', locals())
+        return render(request, 'ajuste-nota.html', locals())
