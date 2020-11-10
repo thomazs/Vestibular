@@ -323,7 +323,8 @@ def corrige_redacao(request):
         corrigidas = Inscricao.objects.filter(corretor_redacao=request.user).count()
         nao_corrigidas = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).count()
 
-        pontos_prova = RespostaInscricao.objects.filter(inscricao=redacao, resposta__correta=True).aggregate(Sum('questao__pontos'))
+        pontos_prova = RespostaInscricao.objects.filter(inscricao=redacao, resposta__correta=True).aggregate(
+            Sum('questao__pontos'))
 
         if request.method == "POST":
             form = FormCorrigeRedacao(request.POST, instance=redacao)
@@ -363,16 +364,17 @@ def redacao_pendente(request):
 @login_required
 def inscricao_enem(request):
     if request.user.is_staff:
-       candidatos = Inscricao.objects.filter(tipo_selecao='3')
+        candidatos = Inscricao.objects.filter(tipo_selecao='3')
     else:
         return redirect('index')
 
     return render(request, 'redacao/selecao-enem.html', locals())
 
+
 @login_required
 def portador_diploma(request):
     if request.user.is_staff:
-       candidatos = Inscricao.objects.filter(tipo_selecao='2')
+        candidatos = Inscricao.objects.filter(tipo_selecao='2')
     else:
         return redirect('index')
 
@@ -381,19 +383,29 @@ def portador_diploma(request):
 
 @login_required
 def ajuste_nota(request):
+    # arredondar nota para padrão uverse
+    # notas = Inscricao.objects.all()
+    # for i in notas:
+    #     if i.nota_redacao:
+    #         if i.nota_redacao > 200:
+    #             i.nota_redacao_p1 = (i.nota_redacao_p1 * 40) / 100
+    #             i.nota_redacao_p2 = (i.nota_redacao_p2 * 40) / 100
+    #             i.nota_redacao_p3 = (i.nota_redacao_p3 * 40) / 100
+    #             i.nota_redacao_p4 = (i.nota_redacao_p4 * 40) / 100
+    #             i.nota_redacao_p5 = (i.nota_redacao_p5 * 40) / 100
+    #             i.nota_redacao = i.nota_redacao_p1 + i.nota_redacao_p2 + i.nota_redacao_p3 + i.nota_redacao_p4 + i.nota_redacao_p5
+    #             i.save()
 
+    # arredondar nota para padrão uverse
     notas = Inscricao.objects.all()
 
-
     for i in notas:
-        if i.nota_redacao:
-            if i.nota_redacao > 200:
-                i.nota_redacao_p1 = (i.nota_redacao_p1 * 40) / 100
-                i.nota_redacao_p2 = (i.nota_redacao_p2 * 40) / 100
-                i.nota_redacao_p3 = (i.nota_redacao_p3 * 40) / 100
-                i.nota_redacao_p4 = (i.nota_redacao_p4 * 40) / 100
-                i.nota_redacao_p5 = (i.nota_redacao_p5 * 40) / 100
-                i.nota_redacao = i.nota_redacao_p1+i.nota_redacao_p2+i.nota_redacao_p3+i.nota_redacao_p4+i.nota_redacao_p5
+        if i.fez_redacao and i.fez_prova:
+            if i.nota_geral is None and i.nota_prova is None:
+                pontos_prova = RespostaInscricao.objects.filter(inscricao=i, resposta__correta=True).aggregate(
+                    Sum('questao__pontos'))
+                i.nota_prova = pontos_prova['questao__pontos__sum']
+                i.nota_geral = i.nota_redacao + pontos_prova['questao__pontos__sum']
                 i.save()
 
     return render(request, 'ajuste-nota.html', locals())
