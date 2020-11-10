@@ -53,11 +53,9 @@
                     <td>{{i.pessoa.email}}</td>
                     <td>{{i.pessoa.fone}}</td>
                     <td>
-                        {% with  texto="Olá, meu nome é {{ user.first_name|lower|capfirst }} sou colaborador(a) U:verse. Estou entrando em contato para falar sobre a sua redação do vestibular U:verse..." %}
-                        <a href="https://wa.me/55{{i.pessoa.fone}}?text={{texto}}">
+                        <a href="https://wa.me/55{{i.pessoa.fone}}?text=Olá, meu nome é {{ user.first_name|lower|capfirst }} sou colaborador(a) U:verse. Estou entrando em contato para falar sobre a sua redação do vestibular U:verse...">
                             <button type="button" class="btn btn-sm btn-outline-success">WhatsApp</button>
                         </a>
-                        {% endwith %}
                     </td>
                 </tr>
                 {% endfor %}
