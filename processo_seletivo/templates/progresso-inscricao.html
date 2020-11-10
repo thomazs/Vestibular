@@ -138,10 +138,12 @@
     .container-passos{
         padding: 0;
         margin: 0;
-        background: #20c997;
+        /*background: #20c997;*/
+        background: transparent !important;
+        border: 2px dashed rgb(2, 107, 29);
         border-radius: 10px;
-        margin-bottom: 10px;
-        padding: 20px 0;
+        margin: 10px 0;
+        padding: 20px 20px;
         text-align: center !important;
     }
     .container-passos a{
@@ -152,6 +154,12 @@
         color: #222 !important;
         text-decoration: none;
     }
+     .list-uverse{
+         background: transparent !important;
+         color: #FFF !important;
+         border: 2px dashed rgb(2, 107, 29) !important;
+         border-radius: 20px !important;
+     }
 </style>
 
 
@@ -214,16 +222,16 @@
 
                 {% if i.fez_redacao and i.fez_prova %}
                     {% if i.nota_geral and i.nota_redacao %}
-                        <ul class="list-group list-group-horizontal-sm">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <ul class="list-group list-group-horizontal d-flex justify-content-between align-items-center">
+                            <li class="list-group-item list-uverse" >
                                 Nota geral:
                                 <span class="badge badge-primary badge-pill">{{i.nota_geral}}</span>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <li class="list-group-item list-uverse">
                                 Nota da prova:
                                  <span class="badge badge-primary badge-pill">{{i.nota_prova}}</span>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <li class="list-group-item list-uverse">
                             Nota da redação:
                             <span class="badge badge-primary badge-pill">{{i.nota_redacao}}</span>
                         </ul>

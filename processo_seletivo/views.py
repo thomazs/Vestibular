@@ -1,4 +1,6 @@
 from datetime import datetime
+from django.db.models import Avg, Count, Min, Sum
+from decimal import Decimal
 
 from django.contrib import messages
 from django.contrib.auth import logout
@@ -14,7 +16,7 @@ from processo_seletivo.models import Inscricao, Curso, EdicaoCurso
 from processo_seletivo.services import tag_segura_valida, cria_tag_segura, gera_cod_validacao, \
     envia_email_cadastro, valida_email, ativa_pessoa, loga_pessoa, envia_email_cadastroconcluido, pega_edicao_ativa, \
     envia_email_inscricaofeita, cria_perguntas_inscricao, pega_questao_responder, resposta_valida, responder_questao, \
-    prova_redirecionar_para, gravar_redacao
+    prova_redirecionar_para, gravar_redacao, RespostaInscricao
 
 
 def index(request):
@@ -320,7 +322,7 @@ def corrige_redacao(request):
         sem_redacao = Inscricao.objects.filter(fez_redacao='False')
 
         corrigidas = Inscricao.objects.filter(corretor_redacao=request.user).count()
-        redacao_geral = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).count()
+        pontos_prova = RespostaInscricao.objects.filter(inscricao=redacao, resposta__correta=True).aggregate(Sum('questao__pontos'))
 
         if request.method == "POST":
             form = FormCorrigeRedacao(request.POST, instance=redacao)
@@ -334,6 +336,8 @@ def corrige_redacao(request):
                 post.nota_redacao_p4 = post.nota_redacao_p4
                 post.nota_redacao_p5 = post.nota_redacao_p5
                 post.nota_redacao = post.nota_redacao_p1 + post.nota_redacao_p2 + post.nota_redacao_p3 + post.nota_redacao_p4 + post.nota_redacao_p5
+                post.nota_prova = pontos_prova['questao__pontos__sum']
+                post.nota_geral = post.nota_redacao + post.nota_prova
                 post.save()
                 messages.success(request, 'Nota salva com sucesso')
                 return redirect('correcao')
