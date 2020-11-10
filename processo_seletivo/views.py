@@ -340,7 +340,12 @@ def corrige_redacao(request):
                 post.nota_redacao = post.nota_redacao_p1 + post.nota_redacao_p2 + post.nota_redacao_p3 + post.nota_redacao_p4 + post.nota_redacao_p5
                 post.nota_prova = pontos_prova['questao__pontos__sum']
                 post.nota_geral = post.nota_redacao + post.nota_prova
+                if post.nota_geral >=200:
+                    post.situacao = 21
+                else:
+                    post.situacao = 11
                 post.save()
+
                 messages.success(request, 'Nota salva com sucesso')
                 return redirect('correcao')
         else:
@@ -381,6 +386,9 @@ def portador_diploma(request):
     return render(request, 'redacao/portador-diploma.html', locals())
 
 
+
+
+
 @login_required
 def ajuste_nota(request):
     # arredondar nota para padrão uverse
@@ -396,7 +404,7 @@ def ajuste_nota(request):
     #             i.nota_redacao = i.nota_redacao_p1 + i.nota_redacao_p2 + i.nota_redacao_p3 + i.nota_redacao_p4 + i.nota_redacao_p5
     #             i.save()
 
-    # arredondar nota para padrão uverse
+    # lança as notas de prova e geral
     notas = Inscricao.objects.all()
     for i in notas:
         if i.fez_redacao and i.fez_prova and i.nota_redacao:
