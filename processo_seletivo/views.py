@@ -391,6 +391,7 @@ def portador_diploma(request):
 
 @login_required
 def ajuste_nota(request):
+
     # arredondar nota para padrão uverse
     # notas = Inscricao.objects.all()
     # for i in notas:
@@ -415,15 +416,16 @@ def ajuste_nota(request):
     #             i.nota_geral = i.nota_redacao + pontos_prova['questao__pontos__sum']
     #             i.save()
 
-
-    notas = Inscricao.objects.all()
-    for i in notas:
-        if i.fez_redacao and i.fez_prova and i.nota_redacao:
-            if i.nota_geral >= 200:
-                i.situacao = 21
-            else:
-                i.situacao = 11
-
-            i.save()
+    #
+    # aprovação de candidatos
+    # notas = Inscricao.objects.all()
+    # for i in notas:
+    #     if i.fez_redacao and i.fez_prova and i.nota_redacao:
+    #         if i.nota_geral >= 200:
+    #             i.situacao = 21
+    #         else:
+    #             i.situacao = 11
+    #
+    #         i.save()
 
     return render(request, 'ajuste-nota.html', locals())
