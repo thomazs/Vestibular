@@ -399,7 +399,7 @@ def ajuste_nota(request):
     # arredondar nota para padrão uverse
     notas = Inscricao.objects.all()
     for i in notas:
-        if i.fez_redacao and i.fez_prova:
+        if i.fez_redacao and i.fez_prova and i.nota_redacao:
             if i.nota_geral is None and i.nota_prova is None:
                 pontos_prova = RespostaInscricao.objects.filter(inscricao=i, resposta__correta=True).aggregate(
                     Sum('questao__pontos'))
