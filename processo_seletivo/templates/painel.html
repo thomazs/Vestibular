@@ -40,15 +40,15 @@
 
     <div class="row">
 
-        <div class="col-8" style="padding: 4%; color: #FFF;">
+        <div class="col-12 col-sm-8" style="padding: 4%; color: #FFF;">
 
             <div class="row">
-                <div class="col-2">
+                <div class="col-12 col-sm-2">
                     <div class="avatar">
                         {{ user.email|gravatar:54 }}
                     </div>
                 </div>
-                <div class="col-10">
+                <div class="col-12 col-sm-10">
                     <h1 class="titulo">Olá, <strong>{{ user.first_name|lower|capfirst }}</strong></h1>
                     <h6>Seja bem vindo a sua página de acompanhamento da sua inscrição no vestibular U:verse</h6>
                 </div>
@@ -126,7 +126,7 @@
 
         </div>
 
-        <div class="col-4 d-flex flex-column justify-content-center"
+        <div class="col-12 col-sm-4 d-flex flex-column justify-content-center"
              style="background:#20c997;color:#fff; padding: 4%; text-align: center;">
 
             <!--            {#-->
