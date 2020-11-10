@@ -169,10 +169,10 @@
                 {{ i.edicao.nome }}
 
                 {% if i.nota_geral %}
-                    {% if i.nota_geral >= 200 %}
-                    <hr>
-                    <button type="button" class="btn btn-success">Aprovado</button>
-                    {% endif %}
+                {% if i.nota_geral >= 200 %}
+                <hr>
+                <button type="button" class="btn btn-success">Aprovado</button>
+                {% endif %}
                 {% endif %}
 
 
@@ -194,6 +194,12 @@
         </div>
     </div>
 </div>
+
+
+<style>
+    .aprovado-vest{
+    }
+</style>
 
 
 </body>

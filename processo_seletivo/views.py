@@ -320,8 +320,9 @@ def corrige_redacao(request):
     if request.user.is_staff:
         redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).first()
         sem_redacao = Inscricao.objects.filter(fez_redacao='False')
-
         corrigidas = Inscricao.objects.filter(corretor_redacao=request.user).count()
+        nao_corrigidas = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).count()
+
         pontos_prova = RespostaInscricao.objects.filter(inscricao=redacao, resposta__correta=True).aggregate(Sum('questao__pontos'))
 
         if request.method == "POST":
