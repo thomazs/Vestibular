@@ -34,7 +34,9 @@
         <div class="col-12 redacao enter-left-bounce">
 
             <h1 class="titulo" style="color: #666666">Inscrições que não fizeram redação</h1>
-            <a href="{% url 'csv_redacao_pendente' %}" target="_blank">Baixar lista CSV</a>
+            <a class="btn btn-success" href="{% url 'csv_redacao_pendente' %}" target="_blank">
+                Baixar lista CSV
+            </a>
 
             <table class="table table-striped">
                 <thead>
