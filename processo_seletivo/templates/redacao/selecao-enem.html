@@ -43,6 +43,9 @@
                             <h4 class="card-title titulo titulo-uverse-cinza">
                                 {{i.pessoa.nome}}</h4>
                             <h6 style="color: #666666">
+                                Nota: <strong> {{i.curso.nome | default_if_none:"Sem informação"}}</strong>
+                            </h6>
+                            <h6 style="color: #666666">
                                 Nota: <strong> {{i.nota_enem | default_if_none:"Sem informação"}}</strong>
                             </h6>
                             <h6 style="color: #666666">
