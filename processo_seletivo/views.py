@@ -319,7 +319,7 @@ def acompanhamento_ti(request):
 def corrige_redacao(request):
     if request.user.is_staff:
         redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).first()
-        sem_redacao = Inscricao.objects.filter(fez_redacao='False')
+        sem_redacao = Inscricao.objects.filter(fez_redacao='False', tipo_selecao=1)
         corrigidas = Inscricao.objects.filter(corretor_redacao=request.user).count()
         nao_corrigidas = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).count()
 
@@ -359,7 +359,7 @@ def corrige_redacao(request):
 @login_required
 def redacao_pendente(request):
     if request.user.is_staff:
-        sem_redacao = Inscricao.objects.filter(fez_redacao='False')
+        sem_redacao = Inscricao.objects.filter(fez_redacao='False', tipo_selecao=1)
 
     else:
         return redirect('index')
