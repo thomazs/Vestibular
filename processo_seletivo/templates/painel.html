@@ -168,11 +168,12 @@
                 </h4>
                 {{ i.edicao.nome }}
 
-                {% if i.nota_geral %}
-                {% if i.nota_geral >= 200 %}
-                <hr>
-                <button type="button" class="btn btn-success">Aprovado</button>
-                {% endif %}
+                {% if i.situacao == 21 %}
+                    <hr>
+                    <button type="button" class="btn btn-success" style="font-weight: 300">APROVADO</button>
+                {% elif i.situacao != 1 and i.situacao != 21 and i.situacao != 31 %}
+                    <hr>
+                    <button type="button" class="btn btn-warning" style="font-weight: 300">REPROVADO</button>
                 {% endif %}
 
 
