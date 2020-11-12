@@ -21,7 +21,8 @@ from django.conf import settings
 from processo_seletivo.views import index, cadastro, painel, sair, emailenviado, validar_email, concluir_cadastro, \
     mensagem, faz_inscricao, prova_online, revisao_prova_online, \
     prova_redacao, revisao_prova_redacao, prova_completa, \
-    acompanhamento, acompanhamento_ti, corrige_redacao, redacao_pendente,inscricao_enem,portador_diploma, ajuste_nota, csv_redacao_pendente
+    acompanhamento, acompanhamento_ti, corrige_redacao, redacao_pendente, inscricao_enem, portador_diploma, ajuste_nota, \
+    csv_redacao_pendente, ativa_enem
 
 admin.site.site_header = 'Vestibular U:Verse'
 admin.site.site_title = 'VestU:Verse'
@@ -47,6 +48,7 @@ urlpatterns = [
     path('correcao/', corrige_redacao, name="correcao"),
     path('redacao_pendente/', redacao_pendente, name="redacao_pendente"),
     path('inscricao_enem/', inscricao_enem, name="inscricao_enem"),
+    path('ativa_enem/<codigo>/<status>', ativa_enem, name="ativa_enem"),
     path('portador-diploma/', portador_diploma, name="portador_diploma"),
     path('ajuste_nota/', ajuste_nota, name="ajuste_nota"),
     path('csv_redacao_pendente/', csv_redacao_pendente, name="csv_redacao_pendente"),

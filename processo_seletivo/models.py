@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 from instituicao.models import Curso, Pessoa
-
 UserModel = get_user_model()
 
 
@@ -140,6 +139,10 @@ class Inscricao(models.Model):
     data_inclusao = models.DateTimeField(auto_now_add=True)
     data_alteracao = models.DateTimeField(auto_now=True)
     situacao = models.IntegerField(default=1, choices=SITUACAO_INSCRICAO)
+
+    def id_protegido(self):
+        from processo_seletivo.services import cria_tag_segura
+        return cria_tag_segura(str(self.id))
     # todo Adicionar opção de controle de pagamento
 
 

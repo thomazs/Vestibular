@@ -7,6 +7,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.db.models import Count
+from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 
@@ -374,14 +375,14 @@ def csv_redacao_pendente(request):
     else:
         return redirect('index')
     r = render(request, 'csv/redacao_pendente.html', locals(), content_type='text/plain')
-    r['content-disposition']='attachment; filename="Redacao.csv"'
+    r['content-disposition'] = 'attachment; filename="Redacao.csv"'
     return r
 
 
 @login_required
 def inscricao_enem(request):
     if request.user.is_staff:
-        candidatos = Inscricao.objects.filter(tipo_selecao='3')
+        candidatos = Inscricao.objects.filter(tipo_selecao='3', situacao=1)
     else:
         return redirect('index')
 
@@ -399,42 +400,64 @@ def portador_diploma(request):
 
 
 @login_required
+def ativa_enem(request, codigo, status):
+    if request.user.is_staff:
+        is_ok, cod = tag_segura_valida(codigo)
+        if not is_ok:
+            raise Http404()
+        inscricao = get_object_or_404(Inscricao, id=cod)
+
+        if status=='A':
+            inscricao.situacao = 21
+            inscricao.save()
+            return redirect('inscricao_enem')
+        elif status=='R':
+            inscricao.situacao = 13
+            inscricao.save()
+            return redirect('inscricao_enem')
+
+    else:
+        return redirect('index')
+
+
+
+@login_required
 def ajuste_nota(request):
     if request.user.is_staff:
-    # arredondar nota para padrão uverse
-    # notas = Inscricao.objects.all()
-    # for i in notas:
-    #     if i.nota_redacao:
-    #         if i.nota_redacao > 200:
-    #             i.nota_redacao_p1 = (i.nota_redacao_p1 * 40) / 100
-    #             i.nota_redacao_p2 = (i.nota_redacao_p2 * 40) / 100
-    #             i.nota_redacao_p3 = (i.nota_redacao_p3 * 40) / 100
-    #             i.nota_redacao_p4 = (i.nota_redacao_p4 * 40) / 100
-    #             i.nota_redacao_p5 = (i.nota_redacao_p5 * 40) / 100
-    #             i.nota_redacao = i.nota_redacao_p1 + i.nota_redacao_p2 + i.nota_redacao_p3 + i.nota_redacao_p4 + i.nota_redacao_p5
-    #             i.save()
+        # arredondar nota para padrão uverse
+        # notas = Inscricao.objects.all()
+        # for i in notas:
+        #     if i.nota_redacao:
+        #         if i.nota_redacao > 200:
+        #             i.nota_redacao_p1 = (i.nota_redacao_p1 * 40) / 100
+        #             i.nota_redacao_p2 = (i.nota_redacao_p2 * 40) / 100
+        #             i.nota_redacao_p3 = (i.nota_redacao_p3 * 40) / 100
+        #             i.nota_redacao_p4 = (i.nota_redacao_p4 * 40) / 100
+        #             i.nota_redacao_p5 = (i.nota_redacao_p5 * 40) / 100
+        #             i.nota_redacao = i.nota_redacao_p1 + i.nota_redacao_p2 + i.nota_redacao_p3 + i.nota_redacao_p4 + i.nota_redacao_p5
+        #             i.save()
 
-    # lança as notas de prova e geral
-    # notas = Inscricao.objects.all()
-    # for i in notas:
-    #     if i.fez_redacao and i.fez_prova and i.nota_redacao:
-    #         if i.nota_geral is None and i.nota_prova is None:
-    #             pontos_prova = RespostaInscricao.objects.filter(inscricao=i, resposta__correta=True).aggregate(
-    #                 Sum('questao__pontos'))
-    #             i.nota_prova = pontos_prova['questao__pontos__sum']
-    #             i.nota_geral = i.nota_redacao + pontos_prova['questao__pontos__sum']
-    #             i.save()
+        # lança as notas de prova e geral
+        # notas = Inscricao.objects.all()
+        # for i in notas:
+        #     if i.fez_redacao and i.fez_prova and i.nota_redacao:
+        #         if i.nota_geral is None and i.nota_prova is None:
+        #             pontos_prova = RespostaInscricao.objects.filter(inscricao=i, resposta__correta=True).aggregate(
+        #                 Sum('questao__pontos'))
+        #             i.nota_prova = pontos_prova['questao__pontos__sum']
+        #             i.nota_geral = i.nota_redacao + pontos_prova['questao__pontos__sum']
+        #             i.save()
 
-    #
-    # aprovação de candidatos
-    # notas = Inscricao.objects.all()
-    # for i in notas:
-    #     if i.fez_redacao and i.fez_prova and i.nota_redacao:
-    #         if i.nota_geral >= 200:
-    #             i.situacao = 21
-    #         else:
-    #             i.situacao = 11
-    #
-    #         i.save()
+        #
+        # aprovação de candidatos
+        # notas = Inscricao.objects.all()
+        # for i in notas:
+        #     if i.fez_redacao and i.fez_prova and i.nota_redacao:
+        #         if i.nota_geral >= 200:
+        #             i.situacao = 21
+        #         else:
+        #             i.situacao = 11
+        #
+        #         i.save()
 
         return render(request, 'ajuste-nota.html', locals())

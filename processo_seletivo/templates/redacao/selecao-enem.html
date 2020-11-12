@@ -67,8 +67,8 @@
                             <h6 style="color: #666666">Telefone: {{i.pessoa.fone}}</h6>
                             </p>
                             {% endif %}
-                            <a href="#" class="btn btn-uverse-verde-bg">Aprovar</a>
-                            <a href="#" class="btn btn-danger btn-uverse-perigo">Reprovar</a>
+                            <a href="{% url 'ativa_enem' i.id_protegido 'A' %}" class="btn btn-uverse-verde-bg">Aprovar</a>
+                            <a href="{% url 'ativa_enem' i.id_protegido 'R' %}" class="btn btn-danger btn-uverse-perigo">Reprovar</a>
                         </div>
                     </div>
                 </div>
