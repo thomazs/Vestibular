@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 
 from instituicao.models import Pessoa, Curso
 from processo_seletivo.models import Inscricao
-
+from decimal import Decimal
 
 class LoginForm(forms.Form):
     email = forms.CharField(label='Email', required=True)
@@ -123,3 +123,16 @@ class FormCorrigeRedacao(forms.ModelForm):
             self.fields['nota_redacao_p3'].required = True
             self.fields['nota_redacao_p4'].required = True
             self.fields['nota_redacao_p5'].required = True
+
+    def clean (self):
+        data=super(FormCorrigeRedacao, self).clean()
+
+        for i in range(1, 6):
+            v = data.get(f'nota_redacao_p{i}', None)
+            if v is None:
+                raise forms.ValidationError('Os valores da redação precisam ser informados')
+
+            if v > Decimal('40'):
+                raise forms.ValidationError('Os valores de redação precisam ser menores que 40')
+
+        return data
