@@ -45,6 +45,11 @@
 
                 </div>
 
+            <div class="row">
+                <div class="col">
+                    <input class="form-control" id="busca" type="text" placeholder="Buscar..">
+                </div>
+            </div>
 
                 <table class="table table-striped">
                     <thead>
@@ -56,7 +61,7 @@
                         <th scope="col">Mensagem</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tabela">
                     {% for i in sem_redacao %}
                     <tr>
                         <th scope="row">{{i.pessoa.nome}}</th>
@@ -79,6 +84,19 @@
         </div>
 
     </div>
+
+<script>
+$(document).ready(function(){
+  $("#busca").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tabela tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+
 
 
     {% endblock %}
