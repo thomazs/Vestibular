@@ -51,7 +51,7 @@
 
             </di>
             <div class="row">
-                <div class="col">
+                <div class="col-12">
                     <h1 class="titulo" style="font-size: 300px;">{{ total_inscricao }}</h1>
                     <h6 style="font-size: 30px; color: rgb(2, 107, 29) !important;">Não fizeram redação: {{ media }}%
                         <sup><span class="badge badge-pill badge-warning">{{ redacao_pendente }}</span></sup>
@@ -104,7 +104,7 @@
         <div class="row">
             {% for i in cursos %}
                 {% if i.qtd_inscricoes > 0 %}
-                    <div class="col-3">
+                    <div class="col-3 col-sm-12">
                         <div class="card bg-light mb-3" style="max-width: 18rem;">
                             <div class="card-header">{{ i.nome }}</div>
                             <div class="card-body">
