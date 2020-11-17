@@ -53,9 +53,8 @@
             <div class="row">
                 <div class="col">
                     <h1 class="titulo" style="font-size: 300px;">{{ total_inscricao }}</h1>
-                    <h6 style="font-size: 30px; color: rgb(2, 107, 29) !important;">Não fizeram
-                        <h6 style="font-size: 20px; color: rgb(2, 107, 29) !important;">Redações por
-                            corrigir: {{ redacao_naocorrigida }}</h6>
+                    <h6 style="font-size: 30px; color: rgb(2, 107, 29) !important;">Não fizeram redação: {{ media }}%
+                    <h6 style="font-size: 30px; color: rgb(2, 107, 29) !important;">Redações por corrigir: {{ redacao_naocorrigida }}</h6>
                 </div>
             </div>
 
@@ -121,7 +120,7 @@
                                 </h5>
                                 <p class="card-text">
                                     <strong>Inscrições:</strong> {{ i.qtd_inscricoes }} |
-                                    <strong>Vagas:</strong> {{ i.qtd_vagas }}
+                                    <strong>Vagas:</strong>  {{ i.qtd_vagas }}
                                 </p>
                             </div>
                         </div>
