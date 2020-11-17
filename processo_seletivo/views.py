@@ -376,7 +376,7 @@ def redacao_pendente(request):
 @login_required
 def csv_redacao_pendente(request):
     if request.user.is_staff:
-        sem_redacao = Inscricao.objects.filter(fez_redacao='False')
+        sem_redacao = Inscricao.objects.filter(fez_redacao='False', tipo_selecao=1)
     else:
         return redirect('index')
     r = render(request, 'csv/redacao_pendente.html', locals(), content_type='text/plain')
