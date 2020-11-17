@@ -312,8 +312,8 @@ def acompanhamento(request):
 def acompanhamento_ti(request):
     total_inscricao = Inscricao.objects.all().count()
     cursos = EdicaoCurso.objects.annotate(qtd_inscricoes=Count('curso__cursoopcao_set')).order_by('-qtd_inscricoes')
-
     redacao_pendente = Inscricao.objects.filter(fez_redacao=False).count()
+    redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True).count()
     media = int((redacao_pendente * 100)/total_inscricao)
 
 
