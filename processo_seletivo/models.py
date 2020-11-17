@@ -42,6 +42,7 @@ class EdicaoCurso(models.Model):
     edicao = models.ForeignKey(Edicao, on_delete=models.RESTRICT)
     curso = models.ForeignKey(Curso, on_delete=models.RESTRICT)
     qtd_vagas = models.IntegerField('Qtd.Vagas')
+    valor_curso = models.DecimalField('Valor do curso', null=True, blank=True, max_digits=7, decimal_places=2)
 
     @property
     def nome(self):
