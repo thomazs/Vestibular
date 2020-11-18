@@ -35,7 +35,6 @@
                         <tr>
                             <th scope="col">Nome</th>
                             <th scope="col">Dt. Inscricao</th>
-                            <th scope="col">Email</th>
                             <th scope="col">Curso</th>
                             <th scope="col">Mensagem</th>
                         </tr>
@@ -45,7 +44,6 @@
                             <tr>
                                 <th scope="row">{{ i.pessoa.nome }}</th>
                                 <td>{{ i.data_inclusao |date:"d/m/Y" }}</td>
-                                <td>{{ i.pessoa.email }}</td>
                                 <td>{{ i.curso.nome }}</td>
                                 <td>
                                     <a href="https://wa.me/55{{ i.pessoa.fone }}?text=Olá, meu nome é {{ user.first_name|lower|capfirst }}, sou colaborador(a) U:verse. Estou entrando em contato para falar sobre a sua redação do vestibular U:verse...">
