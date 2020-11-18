@@ -433,7 +433,7 @@ def aprovados_provapadrao(request):
     else:
         return redirect('index')
 
-    return render(request, 'redacao/lista-redacao-pendente.html', locals())
+    return render(request, 'redacao/aprovados.html', locals())
 
 
 
