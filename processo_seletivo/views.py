@@ -425,6 +425,17 @@ def ativa_enem(request, codigo, status):
         return redirect('index')
 
 
+@login_required
+def aprovados_provapadrao(request):
+    if request.user.is_staff:
+        inscritos = Inscricao.objects.filter(situacao=21, tipo_selecao=1)
+
+    else:
+        return redirect('index')
+
+    return render(request, 'redacao/lista-redacao-pendente.html', locals())
+
+
 
 @login_required
 def ajuste_nota(request):
