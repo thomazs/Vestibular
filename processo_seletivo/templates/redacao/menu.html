@@ -11,17 +11,17 @@
         Desenvolvido por: TI - U:verse
     </div>
 
-    <h3 class="titulo-painel">Olá, {{request.user.first_name}}!</h3>
+    <h3 class="titulo-painel">Olá, {{ request.user.first_name }}!</h3>
 
 
     <hr>
 
     {% if corrigidas > 0 %}
-    <div style="text-align: center; color: #0a6549">
-        <h1 style="font-weight: 800">{{corrigidas}} / <span style="opacity: 0.7">{{nao_corrigidas}}</span></h1>
-        <h6>Minhas correções</h6>
-    </div>
-    <hr>
+        <div style="text-align: center; color: #0a6549">
+            <h1 style="font-weight: 800">{{ corrigidas }} / <span style="opacity: 0.7">{{ nao_corrigidas }}</span></h1>
+            <h6>Minhas correções</h6>
+        </div>
+        <hr>
     {% endif %}
 
     <ul class="list-group lista-menu-uverse">
@@ -35,6 +35,21 @@
                 &nbsp;Vestibular Uverse
             </li>
         </a>
+
+         <a href="{% url 'aprovados' %}">
+            <li class="list-group-item d-flex justify-content-start align-items-center">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-credit-card-2-front" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M14 3H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"/>
+                    <path d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1z"/>
+                    <path fill-rule="evenodd"
+                          d="M2 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+                &nbsp;Aprovados
+            </li>
+        </a>
+
 
         <a href="{% url 'correcao' %}">
             <li class="list-group-item d-flex justify-content-start align-items-center">
@@ -85,19 +100,6 @@
             </li>
         </a>
 
-        <a href="{% url 'aprovados' %}">
-            <li class="list-group-item d-flex justify-content-start align-items-center">
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-door-open" fill="currentColor"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                          d="M1 15.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM11.5 2H11V1h.5A1.5 1.5 0 0 1 13 2.5V15h-1V2.5a.5.5 0 0 0-.5-.5z"/>
-                    <path fill-rule="evenodd"
-                          d="M10.828.122A.5.5 0 0 1 11 .5V15h-1V1.077l-6 .857V15H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117z"/>
-                    <path d="M8 9c0 .552.224 1 .5 1s.5-.448.5-1-.224-1-.5-1-.5.448-.5 1z"/>
-                </svg>
-                &nbsp;Aprovados
-            </li>
-        </a>
 
         <a href="{% url 'sair' %}">
             <li class="list-group-item d-flex justify-content-start align-items-center">
