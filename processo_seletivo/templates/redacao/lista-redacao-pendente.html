@@ -44,7 +44,8 @@
                             </a>
                         </div>
                         <div class="col-12">
-                            <input class="form-control" id="busca" type="text" placeholder="Nome, data, e-mail ou telefone..." style="width: 100%;">
+                            <input class="form-control" id="busca" type="text"
+                                   placeholder="Nome, data, e-mail ou telefone..." style="width: 100%;">
                         </div>
 
                     </div>
@@ -62,14 +63,23 @@
                         </thead>
                         <tbody id="tabela">
                         {% for i in sem_redacao %}
-                            <tr {% if i.treineiro %}style="background: #CC3434; color: #FFF" {% endif %}>
-                                <th scope="row">{{ i.pessoa.nome }}{% if i.treineiro %}<hr>(Treneiro) | {{ i.pessoa.dt_nasc }}{% endif %}</th>
+                            <tr {% if i.treineiro %}class="p-3 mb-2 bg-info text-white" {% endif %}>
+                                <th scope="row">
+                                    {{ i.pessoa.nome }}
+                                    {% if i.treineiro %}
+                                        <span class="badge badge-pill badge-warning">(Treneiro)</span>{% endif %}
+                                </th>
                                 <td>{{ i.data_inclusao |date:"d/m/Y" }}</td>
                                 <td>{{ i.pessoa.email }}</td>
                                 <td>{{ i.pessoa.fone }}</td>
                                 <td>
                                     <a href="https://wa.me/55{{ i.pessoa.fone }}?text=Olá, meu nome é {{ user.first_name|lower|capfirst }}, sou colaborador(a) U:verse. Estou entrando em contato para falar sobre a sua redação do vestibular U:verse...">
-                                        <button type="button" class="btn btn-sm btn-outline-success">WhatsApp</button>
+                                        {% if i.treineiro %}
+                                            <button type="button" class="btn btn-warning">WhatsApp</button>
+                                        {% else %}
+                                            <button type="button" class="btn btn-sm btn-outline-success">WhatsApp
+                                            </button>
+                                        {% endif %}
                                     </a>
                                 </td>
                             </tr>
