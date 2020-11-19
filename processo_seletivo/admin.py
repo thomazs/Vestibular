@@ -71,7 +71,7 @@ admin.site.register(RespostaQuestao, RespostaQuestaoAdmin)
 
 class RespostaInscricaoAdmin(admin.ModelAdmin):
     list_display = ('inscricao', 'questao',)
-    search_fields = ('inscricao__pessoa__nome',)
+    search_fields = ('inscricao__pessoa__nome', 'inscricao__id')
 
 
 admin.site.register(RespostaInscricao, RespostaInscricaoAdmin)
