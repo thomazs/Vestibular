@@ -310,7 +310,7 @@ def acompanhamento(request):
 
 @login_required
 def acompanhamento_ti(request):
-    total_inscricao = Inscricao.objects.all(treineiro=False).count()
+    total_inscricao = Inscricao.objects.filter(treineiro=False).count()
     cursos = EdicaoCurso.objects.annotate(qtd_inscricoes=Count('curso__cursoopcao_set')).order_by('-qtd_inscricoes')
     redacao_pendente = Inscricao.objects.filter(fez_redacao=False, tipo_selecao=1).count()
     redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True, tipo_selecao=1).count()
