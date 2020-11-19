@@ -62,8 +62,8 @@
                         </thead>
                         <tbody id="tabela">
                         {% for i in sem_redacao %}
-                            <tr>
-                                <th scope="row">{{ i.pessoa.nome }}</th>
+                            <tr {% if i.treineiro %}style="background: #CC3434; color: #FFF" {% endif %}>
+                                <th scope="row">{{ i.pessoa.nome }}{% if i.treineiro %} (Treneiro){% endif %}</th>
                                 <td>{{ i.data_inclusao |date:"d/m/Y" }}</td>
                                 <td>{{ i.pessoa.email }}</td>
                                 <td>{{ i.pessoa.fone }}</td>
