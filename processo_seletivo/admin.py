@@ -70,7 +70,7 @@ admin.site.register(RespostaQuestao, RespostaQuestaoAdmin)
 
 
 class RespostaInscricaoAdmin(admin.ModelAdmin):
-    list_display = ('inscricao', 'questao','inscricao')
+    list_display = ('inscricao', 'questao')
     search_fields = ('inscricao__pessoa__nome', 'inscricao__id')
 
 
