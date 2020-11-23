@@ -305,7 +305,24 @@ def prova_completa(request):
 
 @login_required(login_url=reverse_lazy('index'))
 def acompanhamento(request):
-    return render(request, 'acompanhamento.html', locals())
+    total_inscricao = Inscricao.objects.filter(treineiro=False).count()
+    redacao_pendente = Inscricao.objects.filter(fez_redacao=False, tipo_selecao=1).count()
+    redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True, tipo_selecao=1).count()
+    media = int((redacao_pendente * 100) / total_inscricao)
+
+    inscricao_enem = Inscricao.objects.filter(tipo_selecao=3).count()
+    inscricao_enem_aprovados = Inscricao.objects.filter(tipo_selecao=3, situacao=21).count()
+    inscricao_enem_reprovados = Inscricao.objects.filter(tipo_selecao=3, situacao=13).count()
+
+
+    inscricao_portadordiploma = Inscricao.objects.filter(tipo_selecao=2).count()
+    inscricao_portadordiploma_aprovados = Inscricao.objects.filter(tipo_selecao=2, situacao=21).count()
+    inscricao_portadordiploma_reprovados = Inscricao.objects.filter(tipo_selecao=2, situacao=13).count()
+
+
+
+
+    return render(request, 'redacao/home.html', locals())
 
 
 @login_required
