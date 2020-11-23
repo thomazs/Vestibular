@@ -12,9 +12,8 @@
 
         <div class="row">
 
-
             {#bloco1#}
-            <div class="col-6" style="text-align: center">
+            <div class="col-3" style="text-align: center">
                 <div class="card bg-info text-white" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title"><span class="badge badge-light">Inscrições</span></h5>
@@ -22,64 +21,61 @@
                         <h1 class="titulo">{{ total_inscricao }}</h1>
                         <hr>
                         </p>
-{#                        <a href="#" class="btn btn-uverse">Acessar correção</a>#}
+                        {#                        <a href="#" class="btn btn-uverse">Acessar correção</a>#}
                     </div>
                 </div>
             </div>
             {#bloco1#}
 
 
-
             {#bloco1#}
-            <div class="col-6" style="text-align: center">
+            <div class="col-3" style="text-align: center">
                 <div class="card bg-info text-white" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title"><span class="badge badge-light">Redação</span></h5>
                         <p class="card-text">
                         <h6>Redação por corrigir: {{ redacao_naocorrigida }} </h6>
-                        <h6>Não fizeram redação: {{ redacao_pendente }} <sup><span class="badge badge-warning">{{ media }}%</span></sup> </h6>
+                        <h6>Não fizeram redação: {{ redacao_pendente }} <sup><span
+                                class="badge badge-warning">{{ media }}%</span></sup></h6>
                         <hr>
                         </p>
-{#                        <a href="#" class="btn btn-uverse">Acessar correção</a>#}
+                        {#                        <a href="#" class="btn btn-uverse">Acessar correção</a>#}
                     </div>
                 </div>
             </div>
             {#bloco1#}
 
-{#bloco1#}
-            <div class="col-6" style="text-align: center">
+            {#bloco1#}
+            <div class="col-3" style="text-align: center">
                 <div class="card bg-info text-white" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title"><span class="badge badge-light">Inscrição via enem</span></h5>
                         <p class="card-text">
                         <h6>Inscritos: {{ inscricao_enem }} </h6>
-                        <h6>Aprovados: {{ inscricao_enem_aprovados}} | Reprovados: {{ inscricao_enem_reprovados}}</h6>
+                        <h6>Aprovados: {{ inscricao_enem_aprovados }} | Reprovados: {{ inscricao_enem_reprovados }}</h6>
                         <hr>
                         </p>
-{#                        <a href="#" class="btn btn-uverse">Acessar correção</a>#}
+                        {#                        <a href="#" class="btn btn-uverse">Acessar correção</a>#}
                     </div>
                 </div>
             </div>
             {#bloco1#}
 
-<div class="col-6" style="text-align: center">
+            <div class="col-3" style="text-align: center">
                 <div class="card bg-info text-white" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title"><span class="badge badge-light">Portador de Diploma</span></h5>
                         <p class="card-text">
                         <h6>Inscritos: {{ inscricao_portadordiploma }} </h6>
-                        <h6>Aprovados: {{ inscricao_portadordiploma_aprovados }} | Reprovados: {{ inscricao_portadordiploma_reprovados}}</h6>
+                        <h6>Aprovados: {{ inscricao_portadordiploma_aprovados }} |
+                            Reprovados: {{ inscricao_portadordiploma_reprovados }}</h6>
                         <hr>
                         </p>
-{#                        <a href="#" class="btn btn-uverse">Acessar correção</a>#}
+                        {#                        <a href="#" class="btn btn-uverse">Acessar correção</a>#}
                     </div>
                 </div>
             </div>
             {#bloco1#}
-
-
-
-
 
 
         </div>
@@ -87,11 +83,11 @@
 
     </div>
 
-<style>
-{#ajjustes no card  s#}
-.card{
-    margin-bottom: 20px !important;
-}
-</style>
+    <style>
+        {#ajjustes no card  s#}
+        .card {
+            margin-bottom: 20px !important;
+        }
+    </style>
 
 {% endblock %}
