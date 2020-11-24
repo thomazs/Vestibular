@@ -305,7 +305,7 @@ def prova_completa(request):
 
 @login_required(login_url=reverse_lazy('index'))
 def acompanhamento(request):
-    if request.user.is_staff:
+    if request.user.is_superuser:
         total_inscricao = Inscricao.objects.filter(treineiro=False).count()
         metas = EdicaoCurso.objects.all().aggregate(q=Sum('qtd_vagas'))
         # calcula a meta minima de inscrições
@@ -327,10 +327,10 @@ def acompanhamento(request):
         inscricao_portadordiploma_aprovados = Inscricao.objects.filter(tipo_selecao=2, situacao=21).count()
         inscricao_portadordiploma_reprovados = Inscricao.objects.filter(tipo_selecao=2, situacao=13).count()
 
-
-
-
         return render(request, 'redacao/home.html', locals())
+    else:
+        return redirect('acompanhamento_ti')
+
 
 
 @login_required
