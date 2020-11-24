@@ -35,7 +35,7 @@
                 &nbsp;Vestibular Uverse
             </li>
         </a>
-
+        {% if request.user.is_superuser %}
          <a href="{% url 'aprovados' %}">
             <li class="list-group-item d-flex justify-content-start align-items-center">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-credit-card-2-front" fill="currentColor"
@@ -49,8 +49,9 @@
                 &nbsp;Aprovados
             </li>
         </a>
+        {% endif %}
 
-
+     {% if request.user.is_superuser %}
         <a href="{% url 'correcao' %}">
             <li class="list-group-item d-flex justify-content-start align-items-center">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-check-fill" fill="currentColor"
@@ -61,7 +62,9 @@
                 &nbsp;Correção de redação
             </li>
         </a>
+        {% endif %}
 
+        {% if request.user.is_superuser %}
         <a href="{% url 'redacao_pendente' %}">
             <li class="list-group-item d-flex justify-content-start align-items-center">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-circle" fill="currentColor"
@@ -73,7 +76,8 @@
                 &nbsp;Não fizeram redação
             </li>
         </a>
-
+        {% endif %}
+        {% if request.user.is_superuser %}
         <a href="{% url 'inscricao_enem' %}">
             <li class="list-group-item d-flex justify-content-start align-items-center">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up-right-square"
@@ -86,7 +90,7 @@
                 &nbsp;Inscrições via Enem
             </li>
         </a>
-
+        {% endif %}
         {% if request.user.is_superuser %}
 
             <a href="{% url 'portador_diploma' %}">
