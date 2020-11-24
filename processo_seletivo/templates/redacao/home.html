@@ -8,18 +8,26 @@
     {% include "redacao/menu.html" %}
 
 
-    <div class="conteudo" >
+    <div class="conteudo">
 
         <div class="row">
 
 
             {#bloco1#}
-            <div class="col-4">
+            <div class="col-12">
                 <div class="card bg-info text-white">
                     <div class="card-body">
                         <h5 class="card-title"><span class="badge badge-light">Inscrições</span></h5>
                         <p class="card-text">
                         <h1 class="titulo">{{ total_inscricao }}</h1>
+                        <h1 class="titulo">{{ metas.q }}</h1>
+                        {{ meta_minima }}%
+
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ meta_minima }}%"
+                                 aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="background: linear-gradient(90deg, #9cd116, #0AF6AE)"></div>
+                        </div>
+
                         <hr>
                         </p>
                         {#                        <a href="#" class="btn btn-uverse">Acessar correção</a>#}

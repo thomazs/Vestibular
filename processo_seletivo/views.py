@@ -306,6 +306,13 @@ def prova_completa(request):
 @login_required(login_url=reverse_lazy('index'))
 def acompanhamento(request):
     total_inscricao = Inscricao.objects.filter(treineiro=False).count()
+    metas = EdicaoCurso.objects.all().aggregate(q=Sum('qtd_vagas'))
+    # calcula a meta minima de inscrições
+    meta_minima = (total_inscricao * 100)/metas['q']
+
+
+
+
     redacao_pendente = Inscricao.objects.filter(fez_redacao=False, tipo_selecao=1).count()
     redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True, tipo_selecao=1).count()
     media = int((redacao_pendente * 100) / total_inscricao)
