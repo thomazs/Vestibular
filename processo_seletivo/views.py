@@ -305,44 +305,46 @@ def prova_completa(request):
 
 @login_required(login_url=reverse_lazy('index'))
 def acompanhamento(request):
-    total_inscricao = Inscricao.objects.filter(treineiro=False).count()
-    metas = EdicaoCurso.objects.all().aggregate(q=Sum('qtd_vagas'))
-    # calcula a meta minima de inscrições
-    meta_minima = int((total_inscricao * 100)/metas['q'])
+    if request.user.is_staff:
+        total_inscricao = Inscricao.objects.filter(treineiro=False).count()
+        metas = EdicaoCurso.objects.all().aggregate(q=Sum('qtd_vagas'))
+        # calcula a meta minima de inscrições
+        meta_minima = int((total_inscricao * 100)/metas['q'])
 
 
 
 
-    redacao_pendente = Inscricao.objects.filter(fez_redacao=False, tipo_selecao=1).count()
-    redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True, tipo_selecao=1).count()
-    media = int((redacao_pendente * 100) / total_inscricao)
+        redacao_pendente = Inscricao.objects.filter(fez_redacao=False, tipo_selecao=1).count()
+        redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True, tipo_selecao=1).count()
+        media = int((redacao_pendente * 100) / total_inscricao)
 
-    inscricao_enem = Inscricao.objects.filter(tipo_selecao=3).count()
-    inscricao_enem_aprovados = Inscricao.objects.filter(tipo_selecao=3, situacao=21).count()
-    inscricao_enem_reprovados = Inscricao.objects.filter(tipo_selecao=3, situacao=13).count()
-
-
-    inscricao_portadordiploma = Inscricao.objects.filter(tipo_selecao=2).count()
-    inscricao_portadordiploma_aprovados = Inscricao.objects.filter(tipo_selecao=2, situacao=21).count()
-    inscricao_portadordiploma_reprovados = Inscricao.objects.filter(tipo_selecao=2, situacao=13).count()
+        inscricao_enem = Inscricao.objects.filter(tipo_selecao=3).count()
+        inscricao_enem_aprovados = Inscricao.objects.filter(tipo_selecao=3, situacao=21).count()
+        inscricao_enem_reprovados = Inscricao.objects.filter(tipo_selecao=3, situacao=13).count()
 
 
+        inscricao_portadordiploma = Inscricao.objects.filter(tipo_selecao=2).count()
+        inscricao_portadordiploma_aprovados = Inscricao.objects.filter(tipo_selecao=2, situacao=21).count()
+        inscricao_portadordiploma_reprovados = Inscricao.objects.filter(tipo_selecao=2, situacao=13).count()
 
 
-    return render(request, 'redacao/home.html', locals())
+
+
+        return render(request, 'redacao/home.html', locals())
 
 
 @login_required
 def acompanhamento_ti(request):
-    total_inscricao = Inscricao.objects.filter(treineiro=False).count()
-    cursos = EdicaoCurso.objects.annotate(qtd_inscricoes=Count('curso__cursoopcao_set')).order_by('-qtd_inscricoes')
-    redacao_pendente = Inscricao.objects.filter(fez_redacao=False, tipo_selecao=1).count()
-    redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True, tipo_selecao=1).count()
-    media = int((redacao_pendente * 100)/total_inscricao)
+    if request.user.is_staff:
+        total_inscricao = Inscricao.objects.filter(treineiro=False).count()
+        cursos = EdicaoCurso.objects.annotate(qtd_inscricoes=Count('curso__cursoopcao_set')).order_by('-qtd_inscricoes')
+        redacao_pendente = Inscricao.objects.filter(fez_redacao=False, tipo_selecao=1).count()
+        redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True, tipo_selecao=1).count()
+        media = int((redacao_pendente * 100)/total_inscricao)
 
 
 
-    return render(request, 'acompanhamento_ti.html', locals())
+        return render(request, 'acompanhamento_ti.html', locals())
 
 
 @login_required
