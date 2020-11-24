@@ -308,7 +308,7 @@ def acompanhamento(request):
     total_inscricao = Inscricao.objects.filter(treineiro=False).count()
     metas = EdicaoCurso.objects.all().aggregate(q=Sum('qtd_vagas'))
     # calcula a meta minima de inscrições
-    meta_minima = (total_inscricao * 100)/metas['q']
+    meta_minima = int((total_inscricao * 100)/metas['q'])
 
 
 
