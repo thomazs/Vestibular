@@ -1,13 +1,14 @@
 from datetime import datetime
 from django.db.models import Avg, Count, Min, Sum
 from decimal import Decimal
+import json
 
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.db.models import Count
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 
@@ -309,19 +310,16 @@ def acompanhamento(request):
         total_inscricao = Inscricao.objects.filter(treineiro=False).count()
         metas = EdicaoCurso.objects.all().aggregate(q=Sum('qtd_vagas'))
         # calcula a meta minima de inscrições
-        meta_minima = int((total_inscricao * 100)/metas['q'])
-
-
-
+        meta_minima = int((total_inscricao * 100) / metas['q'])
 
         redacao_pendente = Inscricao.objects.filter(fez_redacao=False, tipo_selecao=1).count()
-        redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True, tipo_selecao=1).count()
+        redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True,
+                                                        tipo_selecao=1).count()
         media = int((redacao_pendente * 100) / total_inscricao)
 
         inscricao_enem = Inscricao.objects.filter(tipo_selecao=3).count()
         inscricao_enem_aprovados = Inscricao.objects.filter(tipo_selecao=3, situacao=21).count()
         inscricao_enem_reprovados = Inscricao.objects.filter(tipo_selecao=3, situacao=13).count()
-
 
         inscricao_portadordiploma = Inscricao.objects.filter(tipo_selecao=2).count()
         inscricao_portadordiploma_aprovados = Inscricao.objects.filter(tipo_selecao=2, situacao=21).count()
@@ -332,17 +330,15 @@ def acompanhamento(request):
         return redirect('acompanhamento_ti')
 
 
-
 @login_required
 def acompanhamento_ti(request):
     if request.user.is_staff:
         total_inscricao = Inscricao.objects.filter(treineiro=False).count()
         cursos = EdicaoCurso.objects.annotate(qtd_inscricoes=Count('curso__cursoopcao_set')).order_by('-qtd_inscricoes')
         redacao_pendente = Inscricao.objects.filter(fez_redacao=False, tipo_selecao=1).count()
-        redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True, tipo_selecao=1).count()
-        media = int((redacao_pendente * 100)/total_inscricao)
-
-
+        redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True,
+                                                        tipo_selecao=1).count()
+        media = int((redacao_pendente * 100) / total_inscricao)
 
         return render(request, 'acompanhamento_ti.html', locals())
 
@@ -438,11 +434,11 @@ def ativa_enem(request, codigo, status):
             raise Http404()
         inscricao = get_object_or_404(Inscricao, id=cod)
 
-        if status=='A':
+        if status == 'A':
             inscricao.situacao = 21
             inscricao.save()
             return redirect('inscricao_enem')
-        elif status=='R':
+        elif status == 'R':
             inscricao.situacao = 13
             inscricao.save()
             return redirect('inscricao_enem')
@@ -462,6 +458,11 @@ def aprovados_provapadrao(request):
 
     return render(request, 'redacao/aprovados.html', locals())
 
+
+def cursosJson(request):
+    teste = [ {'id': i.id, 'curso': i.curso.nome} for i in Inscricao.objects.all()]
+
+    return HttpResponse(json.dumps(teste), content_type='text/json')
 
 
 @login_required
