@@ -464,6 +464,16 @@ def cursosJson(request):
 
     return HttpResponse(json.dumps(teste), content_type='text/json')
 
+def afiliados(request):
+    afiliado = Inscricao.objects.filter(afiliado__pessoa__usuario=request.user)
+
+    return render(request, 'redacao/afiliados.html', locals())
+
+
+
+
+
+
 
 @login_required
 def ajuste_nota(request):
