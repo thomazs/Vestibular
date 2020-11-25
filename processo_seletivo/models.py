@@ -140,7 +140,7 @@ class Inscricao(models.Model):
     data_inclusao = models.DateTimeField(auto_now_add=True)
     data_alteracao = models.DateTimeField(auto_now=True)
     situacao = models.IntegerField(default=1, choices=SITUACAO_INSCRICAO)
-
+    afiliado = models.ForeignKey('Afiliado', on_delete=models.RESTRICT, null=True, blank=True)
     def id_protegido(self):
         from processo_seletivo.services import cria_tag_segura
         return cria_tag_segura(str(self.id))
