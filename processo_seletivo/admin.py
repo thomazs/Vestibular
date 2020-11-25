@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Edicao
+from .models import Edicao, Afiliado
 from .models import EdicaoCurso
 from .models import Inscricao
 from .models import Disciplina
@@ -73,5 +73,11 @@ class RespostaInscricaoAdmin(admin.ModelAdmin):
     list_display = ('inscricao', 'questao')
     search_fields = ('inscricao__pessoa__nome', 'inscricao__id')
 
-
 admin.site.register(RespostaInscricao, RespostaInscricaoAdmin)
+
+class AfiliadoAdmin(admin.ModelAdmin):
+    pass
+    # list_display = ('pessoa__nome',)
+    # search_fields = ('')
+
+admin.site.register(Afiliado, AfiliadoAdmin)
