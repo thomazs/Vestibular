@@ -466,6 +466,8 @@ def cursosJson(request):
 
 def afiliados(request):
     afiliado = Inscricao.objects.filter(afiliado__pessoa__usuario=request.user)
+    ganhos = Inscricao.objects.filter(afiliado__pessoa__usuario=request.user, situacao=31).count() * 50
+
 
     return render(request, 'redacao/afiliados.html', locals())
 
