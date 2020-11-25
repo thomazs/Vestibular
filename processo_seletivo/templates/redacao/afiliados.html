@@ -33,54 +33,28 @@
         <div class="row" style="margin-top: 50px;">
             <div class="col-12 redacao enter-left-bounce">
                 <div class="row">
-                    <div class="row">
-                        <div class="col-10">
-                            <h1 class="titulo" style="color: #666666">Inscrições que não fizeram redação</h1>
-                        </div>
-
-                        <div class="col-2">
-                            <a class="btn btn-success" href="{% url 'csv_redacao_pendente' %}" target="_blank">
-                                Baixar lista CSV
-                            </a>
-                        </div>
                         <div class="col-12">
-                            <input class="form-control" id="busca" type="text"
-                                   placeholder="Nome, data, e-mail ou telefone..." style="width: 100%;">
+                            <h1 class="titulo" style="color: #666666">Minhas indicações</h1>
                         </div>
-
-                    </div>
 
 
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Dt. Inscricao</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Telefone</th>
-                            <th scope="col">Mensagem</th>
+                            <th scope="col">NOME</th>
                         </tr>
                         </thead>
                         <tbody id="tabela">
                         {% for i in afiliado %}
                             <tr {% if i.treineiro %}class="p-3 mb-2 bg-info text-white" {% endif %}>
-                                <th scope="row">
-                                    {{ i.pessoa.nome }}
-                                    {% if i.treineiro %}
-                                        <span class="badge badge-pill badge-warning">(Treneiro)</span>{% endif %}
+                                <th scope="row" style="{% if i.situacao == 31 %} background:#17a2b8; color: #FFF{% endif %}">
+                                    {{ i.pessoa.nome | upper }}
+                                    {% if i.situacao == 31 %}
+                                        <span class="badge badge-light"> Ganho obtido </span>
+                                    {% else %}
+                                        <span class="badge badge-warning"> Aguardando Matricula </span>
+                                    {% endif %}
                                 </th>
-                                <td>{{ i.data_inclusao |date:"d/m/Y" }}</td>
-                                <td>{{ i.pessoa.email }}</td>
-                                <td>{{ i.pessoa.fone }}</td>
-                                <td>
-                                    <a href="https://wa.me/55{{ i.pessoa.fone }}?text=Olá, meu nome é {{ user.first_name|lower|capfirst }}, sou colaborador(a) U:verse. Estou entrando em contato para falar sobre a sua redação do vestibular U:verse...">
-                                        {% if i.treineiro %}
-                                            <button type="button" class="btn btn-warning">WhatsApp</button>
-                                        {% else %}
-                                            <button type="button" class="btn btn-sm btn-outline-success">WhatsApp
-                                            </button>
-                                        {% endif %}
-                                    </a>
                                 </td>
                             </tr>
                         {% endfor %}
