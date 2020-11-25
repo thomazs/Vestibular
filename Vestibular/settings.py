@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'instituicao',
     'processo_seletivo',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -70,7 +70,7 @@ DATABASES = {
     }
 }
 
-if not os.getenv('USERDOMAIN')=='DESKTOP-JO69D6U':
+if not os.getenv('USERDOMAIN') == 'DESKTOP-JO69D6U':
     PRODUCAO = True
     if PRODUCAO:
         DATABASES = {
@@ -126,9 +126,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = "alertas@uverse.com.vc"
 EMAIL_HOST_PASSWORD = "AlertaFAAO2019!"
 
-#HOST_CURRENT = 'http://localhost:8000'
+# HOST_CURRENT = 'http://localhost:8000'
 HOST_CURRENT = 'http://uverse.in'
-
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'processo_seletivo', 'static', 'media')
 STATIC_ROOT = 'C:/xampp/htdocs/media'

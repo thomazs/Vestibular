@@ -1,5 +1,6 @@
 {% extends 'redacao/base.html' %}
 
+{% load humanize %}
 {% load static %}
 
 
@@ -10,33 +11,16 @@
 
     <div class="conteudo">
 
-        {% if redacao %}
-
-            <div class="correcao d-flex justify-content-between align-items-center">
-                <h4>Correção: Redação <strong>#{{ redacao.id }}</strong></h4>
-                <button type="button"
-                        class="btn btn-primary btn-uverse-verde-bg d-flex justify-content-between align-items-center"
-                        data-toggle="modal" data-target="#exampleModal">
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-checklist" fill="currentColor"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                              d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                        <path fill-rule="evenodd"
-                              d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
-                    </svg>
-                    &nbsp;LANÇAR NOTAS
-
-                </button>
-            </div>
-        {% endif %}
 
         <div class="row" style="margin-top: 50px;">
             <div class="col-12 redacao enter-left-bounce">
                 <div class="row">
-                        <div class="col-12">
-                            <h1 class="titulo" style="color: #666666">Minhas indicações</h1>
-                        </div>
-
+                    <div class="col-12">
+                        <h1 class="titulo" style="color: #666666">Minhas indicações</h1>
+                    </div>
+                    <div class="col">
+                        <h6>GANHOS ATUAIS: R${{ ganhos | intword  }}</h6>
+                    </div>
 
                     <table class="table table-striped">
                         <thead>
@@ -47,7 +31,8 @@
                         <tbody id="tabela">
                         {% for i in afiliado %}
                             <tr {% if i.treineiro %}class="p-3 mb-2 bg-info text-white" {% endif %}>
-                                <th scope="row" style="{% if i.situacao == 31 %} background:#17a2b8; color: #FFF{% endif %}">
+                                <th scope="row"
+                                    style="{% if i.situacao == 31 %} background:#17a2b8; color: #FFF{% endif %}">
                                     {{ i.pessoa.nome | upper }}
                                     {% if i.situacao == 31 %}
                                         <span class="badge badge-light"> Ganho obtido </span>
