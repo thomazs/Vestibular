@@ -32,7 +32,7 @@
                         {% for i in afiliado %}
                             <tr {% if i.treineiro %}class="p-3 mb-2 bg-info text-white" {% endif %}>
                                 <th scope="row"
-                                    style="{% if i.situacao == 31 %} background:#17a2b8; color: #FFF{% endif %}">
+                                    style="{% if i.situacao == 31 %} background:#28a745; color: #FFF{% endif %}">
                                     {{ i.pessoa.nome | upper }}
                                     {% if i.situacao == 31 %}
                                         <span class="badge badge-light"> Ganho obtido </span>
