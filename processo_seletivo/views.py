@@ -460,9 +460,11 @@ def aprovados_provapadrao(request):
 
 
 def cursosJson(request):
-    teste = [ {'id': i.id, 'curso': i.curso.nome} for i in Inscricao.objects.all()]
+    cursos = [ {'id': i.id, 'curso': i.curso.nome, 'qtd_inscricoes': i.qtd_inscricoes} for i in EdicaoCurso.objects.annotate(qtd_inscricoes=Count('curso__cursoopcao_set')).order_by('-qtd_inscricoes')]
 
-    return HttpResponse(json.dumps(teste), content_type='text/json')
+    # teste = [ {'id': i.id, 'curso': i.curso.nome} for i in Inscricao.objects.all()]
+
+    return HttpResponse(json.dumps(cursos), content_type='text/json')
 
 @login_required
 def afiliados(request):
