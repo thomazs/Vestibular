@@ -25,21 +25,30 @@
                         <h1 class="titulo" style="color: #666666">Minhas indicações</h1>
                     </div>
                     <div class="col">
-                        <h6> <span class="badge badge-pill badge-info">GANHOS ATUAIS: R$ {{ ganhos | intword  }}</span></h6>
+                        <h6><span class="badge badge-pill badge-info">GANHOS ATUAIS: R$ {{ ganhos | intword }}</span>
+                        </h6>
                     </div>
 
                     <table class="table table-striped">
                         <thead>
                         <tr>
                             <th scope="col">NOME</th>
+                            <th scope="col">DATA</th>
+                            <th scope="col">STATUS</th>
                         </tr>
                         </thead>
                         <tbody id="tabela">
                         {% for i in afiliado %}
-                            <tr {% if i.treineiro %}class="p-3 mb-2 bg-info text-white" {% endif %}>
+                            <tr>
                                 <th scope="row"
                                     style="{% if i.situacao == 31 %} background:#28a745; color: #FFF{% endif %}">
-                                    {{ i.pessoa.nome | upper }}
+                                    {{ i.pessoa.nome | upper | truncatewords:1 }}
+
+                                </th>
+                                <th>
+                                    {{ i.data_inclusao }}
+                                </th>
+                                <th>
                                     {% if i.situacao == 31 %}
                                         <span class="badge badge-light"> Ganho obtido </span>
                                     {% else %}
