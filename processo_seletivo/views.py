@@ -464,6 +464,7 @@ def cursosJson(request):
 
     return HttpResponse(json.dumps(teste), content_type='text/json')
 
+@login_required
 def afiliados(request):
     afiliado = Inscricao.objects.filter(afiliado__pessoa__usuario=request.user)
     ganhos = Inscricao.objects.filter(afiliado__pessoa__usuario=request.user, situacao=31).count() * 50
