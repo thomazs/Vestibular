@@ -450,8 +450,8 @@ def ativa_enem(request, codigo, status):
 @login_required
 def aprovados_provapadrao(request):
     if request.user.is_staff:
-        inscritos = Inscricao.objects.filter(situacao=21, tipo_selecao=1)
-        n_aprovados = Inscricao.objects.filter(situacao=21, tipo_selecao=1).count()
+        inscritos = Inscricao.objects.filter(situacao=21)
+        n_aprovados = Inscricao.objects.filter(situacao=21).count()
 
     else:
         return redirect('index')
