@@ -25,8 +25,17 @@
                         <h1 class="titulo" style="color: #666666">Minhas indicações</h1>
                     </div>
                     <div class="col">
-                        <h6><span class="badge badge-pill badge-info">GANHOS ATUAIS: R$ {{ ganhos | intword }}</span>
-                        </h6>
+
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Saldo</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Meus ganhos por indicação</h6>
+                                <p class="card-text">
+                                <h2>R$ {{ ganhos | intword }}</h2>
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
 
                     <table class="table table-striped">
