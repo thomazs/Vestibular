@@ -37,7 +37,7 @@
                     </div>
 
 
-
+                    {% if afiliado %}
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -67,7 +67,9 @@
                         {% endfor %}
                         </tbody>
                     </table>
-
+                    {% else %}
+                    <h5>Você não tem indicados</h5>
+                    {% endif %}
 
                 </div>
 
