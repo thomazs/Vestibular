@@ -39,11 +39,9 @@
                         </thead>
                         <tbody id="tabela">
                         {% for i in afiliado %}
-                            <tr>
-                                <th scope="row"
-                                    style="{% if i.situacao == 31 %} background:#28a745; color: #FFF{% endif %}">
+                            <tr style="{% if i.situacao == 31 %} background:#67f187; color: #FFF{% endif %}">
+                                <th scope="row">
                                     {{ i.pessoa.nome | upper | truncatewords:1 }}
-
                                 </th>
                                 <th>
                                     {{ i.data_inclusao }}
