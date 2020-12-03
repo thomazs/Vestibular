@@ -102,6 +102,47 @@
         {% endif %}
 
 
+         {% if reprovados %}
+            <hr>
+            <div class="row">
+                <div class="col-12"><h5>REPROVADOS</h5></div>
+                <div class="col-12">
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Dt. Inscricao</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Telefone</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tabela">
+                        {% for i in reprovados %}
+                            <tr class="{% if i.treineiro %}p-3 mb-2 bg-info text-white{% endif %} bg-warning">
+                                <th scope="row">
+                                    {{ i.pessoa.nome }}
+                                    {% if i.treineiro %}
+                                        <span class="badge badge-pill badge-warning">(Treneiro)</span>{% endif %}
+                                </th>
+                                <td>{{ i.data_inclusao |date:"d/m/Y" }}</td>
+                                <td>{{ i.pessoa.email }}</td>
+                                <td>{{ i.pessoa.fone }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
+        {% endif %}
+
+
+
+
+
     </div>
 
 
