@@ -420,6 +420,10 @@ def inscricao_enem(request):
 def portador_diploma(request):
     if request.user.is_staff:
         candidatos = Inscricao.objects.filter(tipo_selecao='2', situacao=1)
+        aprovados = Inscricao.objects.filter(tipo_selecao='2', situacao=21)
+
+
+
     else:
         return redirect('index')
 

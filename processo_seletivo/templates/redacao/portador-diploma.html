@@ -5,59 +5,104 @@
 
 {% block content %}
 
-{% include "redacao/menu.html" %}
+    {% include "redacao/menu.html" %}
 
 
-<div class="conteudo">
+    <div class="conteudo">
 
 
-    <div class="row" style="margin-top: 50px;">
-        <div class="col-12 redacao enter-left-bounce">
+        <div class="row" style="margin-top: 50px;">
+            <div class="col-12 redacao enter-left-bounce">
 
-            <h1 class="titulo" style="color: #666666">Portador de diploma</h1>
-            <div class="row">
-                {% if candidatos %}
-                {% for i in candidatos %}
-                <div class="col-sm-4">
-                    <div class="card" style="margin-bottom: 5px;">
-                        <div class="card-body">
-                            <h4 class="card-title titulo titulo-uverse-cinza">
-                                {{i.pessoa.nome}}</h4>
-                            <h6 style="color: #666666">
-                                Curso: <strong> {{i.curso.nome}}</strong>
-                            </h6>
+                <h1 class="titulo" style="color: #666666">Portador de diploma</h1>
+                <div class="row">
+                    {% if candidatos %}
+                        {% for i in candidatos %}
+                            <div class="col-sm-4">
+                                <div class="card" style="margin-bottom: 5px;">
+                                    <div class="card-body">
+                                        <h4 class="card-title titulo titulo-uverse-cinza">
+                                            {{ i.pessoa.nome }}</h4>
+                                        <h6 style="color: #666666">
+                                            Curso: <strong> {{ i.curso.nome }}</strong>
+                                        </h6>
 
-                            {% if i.comprovante_escolaridade %}
-                            <p class="card-text" style="color: #666666">
-                            <div class="alert alert-success" role="alert">
-                                <a href="/media/{{i.comprovante_escolaridade}}" target="_blank">Comprovante de escolaridade</a>
+                                        {% if i.comprovante_escolaridade %}
+                                            <p class="card-text" style="color: #666666">
+                                            <div class="alert alert-success" role="alert">
+                                                <a href="/media/{{ i.comprovante_escolaridade }}" target="_blank">Comprovante
+                                                    de escolaridade</a>
+                                            </div>
+                                            </p>
+                                        {% else %}
+                                            <p class="card-text">
+                                            <div class="alert alert-danger" role="alert">
+                                                Sem comprovante de escolaridade
+                                            </div>
+                                            <hr>
+                                            <h6 style="color: #666666">Telefone: {{ i.pessoa.fone }}</h6>
+                                            </p>
+                                        {% endif %}
+                                        <a href="{% url 'ativa_portador_diploma' i.id 'A' %}"
+                                           class="btn btn-uverse-verde-bg">Aprovar</a>
+                                        <a href="{% url 'ativa_portador_diploma' i.id 'R' %}"
+                                           class="btn btn-danger btn-uverse-perigo">Reprovar</a>
+                                    </div>
+                                </div>
                             </div>
-                            </p>
-                            {% else %}
-                            <p class="card-text">
-                            <div class="alert alert-danger" role="alert">
-                                Sem comprovante de escolaridade
-                            </div>
-                            <hr>
-                            <h6 style="color: #666666">Telefone: {{i.pessoa.fone}}</h6>
-                            </p>
-                            {% endif %}
-                            <a href="{% url 'ativa_portador_diploma' i.id 'A' %}" class="btn btn-uverse-verde-bg">Aprovar</a>
-                            <a href="{% url 'ativa_portador_diploma' i.id 'R' %}" class="btn btn-danger btn-uverse-perigo">Reprovar</a>
-                        </div>
-                    </div>
+                        {% endfor %}
+                    {% else %}
+                        <h2>Não existe novas inscrições como portador de diploma...</h2>
+                    {% endif %}
+
+
                 </div>
-                {% endfor %}
-                {% else %}
-                <h2>Não existe novas inscrições como portador de diploma...</h2>
-                {% endif %}
+
             </div>
 
         </div>
 
-    </div>
 
-</div>
+
+        {% if aprovados %}
+            <hr>
+            <div class="row">
+                <div class="col-12"><h5>APROVADOS</h5></div>
+                <div class="col-12">
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Dt. Inscricao</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Telefone</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tabela">
+                        {% for i in aprovados %}
+                            <tr class="{% if i.treineiro %}p-3 mb-2 bg-info text-white{% endif %} bg-info">
+                                <th scope="row">
+                                    {{ i.pessoa.nome }}
+                                    {% if i.treineiro %}
+                                        <span class="badge badge-pill badge-warning">(Treneiro)</span>{% endif %}
+                                </th>
+                                <td>{{ i.data_inclusao |date:"d/m/Y" }}</td>
+                                <td>{{ i.pessoa.email }}</td>
+                                <td>{{ i.pessoa.fone }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
+        {% endif %}
+
+
+    </div>
 
 
 {% endblock %}
