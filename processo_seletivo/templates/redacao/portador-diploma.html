@@ -119,7 +119,7 @@
                         </thead>
                         <tbody id="tabela">
                         {% for i in reprovados %}
-                            <tr class="{% if i.treineiro %}p-3 mb-2 bg-info text-white{% endif %} bg-warning">
+                            <tr class="{% if i.treineiro %}p-3 mb-2 bg-info text-white{% endif %} bg-danger">
                                 <th scope="row">
                                     {{ i.pessoa.nome }}
                                     {% if i.treineiro %}
