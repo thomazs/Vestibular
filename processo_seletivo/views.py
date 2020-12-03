@@ -419,7 +419,7 @@ def inscricao_enem(request):
 @login_required
 def portador_diploma(request):
     if request.user.is_staff:
-        candidatos = Inscricao.objects.filter(tipo_selecao='2')
+        candidatos = Inscricao.objects.filter(tipo_selecao='2', situacao=1)
     else:
         return redirect('index')
 
@@ -445,6 +445,26 @@ def ativa_enem(request, codigo, status):
 
     else:
         return redirect('index')
+
+
+def ativa_portador_diploma(request, codigo, status):
+    if request.user.is_staff:
+        inscricao = get_object_or_404(Inscricao, id=codigo)
+
+        if status == 'A':
+            inscricao.situacao = 21
+            inscricao.save()
+            return redirect('portador_diploma')
+        elif status == 'R':
+            inscricao.situacao = 13
+            inscricao.save()
+            return redirect('portador-diploma')
+
+    else:
+        return redirect('index')
+
+
+
 
 
 @login_required

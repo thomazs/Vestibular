@@ -42,8 +42,8 @@
                             <h6 style="color: #666666">Telefone: {{i.pessoa.fone}}</h6>
                             </p>
                             {% endif %}
-                            <a href="#" class="btn btn-uverse-verde-bg">Aprovar</a>
-                            <span style="font-size: 10px; color: red">Em desenvolvimento</span>
+                            <a href="{% url 'ativa_portador_diploma' i.id 'A' %}" class="btn btn-uverse-verde-bg">Aprovar</a>
+                            <a href="{% url 'ativa_portador_diploma' i.id 'R' %}" class="btn btn-danger btn-uverse-perigo">Reprovar</a>
                         </div>
                     </div>
                 </div>
