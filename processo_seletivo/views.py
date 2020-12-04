@@ -484,8 +484,23 @@ def aprovados_provapadrao(request):
     return render(request, 'redacao/aprovados.html', locals())
 
 
-def cursosJson(request):
-    cursos = [ {'id': i.id, 'curso': i.curso.nome, 'qtd_inscricoes': i.qtd_inscricoes} for i in EdicaoCurso.objects.annotate(qtd_inscricoes=Count('curso__cursoopcao_set')).order_by('-qtd_inscricoes')]
+def cursosJson(request, cod):
+
+    codigo = '4b68f9fa5686f541bb53c1e77a78833a6536d84aeb80190e7e6d84eea376e8268df51ff87973147a4bec7f7130f25225b60c530d4e0be29259a4a42e934b8fe1'
+
+
+    if cod == codigo:
+        cursos = [ {'id': i.id,
+                    'curso': i.curso.nome,
+                    'qtd_inscricoes': i.qtd_inscricoes,
+                    'vagas':i.qtd_vagas, 
+                    } for i in EdicaoCurso.objects.annotate(qtd_inscricoes=Count('curso__cursoopcao_set')).order_by('-qtd_inscricoes')]
+    else:
+        cursos = [{'erro':'Código incorreto'}]
+
+
+
+
 
     # teste = [ {'id': i.id, 'curso': i.curso.nome} for i in Inscricao.objects.all()]
 

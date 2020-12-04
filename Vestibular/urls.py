@@ -55,7 +55,7 @@ urlpatterns = [
     path('csv_redacao_pendente/', csv_redacao_pendente, name="csv_redacao_pendente"),
     path('aprovados/', aprovados_provapadrao, name="aprovados"),
     path('afiliados/', afiliados, name="afiliados"),
-    path('cursosJson/', cursosJson, name="cursosJson"),
+    path('cursosJson/<cod>', cursosJson, name="cursosJson"),
 
     path('', index, name="index"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static('media/', document_root=settings.MEDIA_ROOT)
