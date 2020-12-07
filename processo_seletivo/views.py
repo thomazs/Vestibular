@@ -496,13 +496,26 @@ def cursosJson(request, cod):
     else:
         cursos = [{'erro':'Código incorreto'}]
 
-
-
-
-
     # teste = [ {'id': i.id, 'curso': i.curso.nome} for i in Inscricao.objects.all()]
 
     return HttpResponse(json.dumps(cursos), content_type='text/json')
+
+def cursosIndividualJson(request, cod_curso, cod):
+    codigo = '4b68f9fa5686f541bb53c1e77a78833a6536d84aeb80190e7e6d84eea376e8268df51ff87973147a4bec7f7130f25225b60c530d4e0be29259a4a42e934b8fe1'
+
+    if cod == codigo:
+        nao_fezredacao = Inscricao.objects.filter(curso_id=cod_curso, fez_redacao=False).count()
+        matriculados = Inscricao.objects.filter(curso_id=cod_curso, situacao=31).count()
+        curso = [ { 'nao_redacao': nao_fezredacao, 'matriculados': matriculados}]
+    else:
+        curso = [{'erro':'Código incorreto'}]
+
+    return HttpResponse(json.dumps(curso), content_type='text/json')
+
+
+
+
+
 
 @login_required
 def afiliados(request):
