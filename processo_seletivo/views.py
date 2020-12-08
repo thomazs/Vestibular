@@ -506,12 +506,6 @@ def cursosJson(request, cod):
     # response["Access-Control-Allow-Headers"] = 'X-Requested-With, Content-Type'
     return response
 
-
-
-
-
-
-
 def cursosIndividualJson(request, cod_curso, cod):
     codigo = '4b68f9fa5686f541bb53c1e77a78833a6536d84aeb80190e7e6d84eea376e8268df51ff87973147a4bec7f7130f25225b60c530d4e0be29259a4a42e934b8fe1'
 
@@ -522,8 +516,12 @@ def cursosIndividualJson(request, cod_curso, cod):
     else:
         curso = [{'erro':'Código incorreto'}]
 
-    return HttpResponse(json.dumps(curso), content_type='text/json')
-
+    response = HttpResponse(json.dumps(curso), content_type='text/json')
+    response["Access-Control-Allow-Origin"] = '*'
+    # response["Access-Control-Allow-Methods"] = 'GET'
+    # response["Access-Control-Max-Age"] = '1000'
+    # response["Access-Control-Allow-Headers"] = 'X-Requested-With, Content-Type'
+    return response
 
 
 
