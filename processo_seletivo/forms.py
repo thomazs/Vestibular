@@ -78,7 +78,7 @@ class FormInscricao(forms.ModelForm):
         fields = (
             'tipo_selecao', 'nota_enem', 'ano_enem', 'comprovante_enem', 'treineiro', 'comprovante_escolaridade',
             'nec_intlibras', 'nec_ledor', 'nec_transcritor', 'nec_localfacilacesso', 'nec_outros',
-            'nec_outros_desc', 'nec_prova_presencial', 'curso','curso_final'
+            'nec_outros_desc', 'nec_prova_presencial', 'curso'
         )
 
     def formata(self):
