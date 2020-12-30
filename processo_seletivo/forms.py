@@ -104,8 +104,8 @@ class FormInscricao(forms.ModelForm):
         if edicao:
             cursos_id = [ec.curso.id for ec in edicao.edicaocurso_set.only('curso').all()]
             self.fields['curso'].queryset = self.fields['curso'].queryset.filter(id__in=cursos_id)
-        # else:
-        #     self.fields['curso'].queryset = Curso.objects.none()
+        else:
+            self.fields['curso'].queryset = Curso.objects.none()
 
         self.formata()
 
