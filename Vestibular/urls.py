@@ -23,7 +23,7 @@ from processo_seletivo.views import index, cadastro, painel, sair, emailenviado,
     prova_redacao, revisao_prova_redacao, prova_completa, \
     acompanhamento, acompanhamento_ti, corrige_redacao, redacao_pendente, inscricao_enem, portador_diploma, ajuste_nota, \
     csv_redacao_pendente, ativa_enem, aprovados_provapadrao, cursosJson, afiliados, ativa_portador_diploma, \
-    cursosIndividualJson
+    cursosIndividualJson, consultaStatusAPI
 
 admin.site.site_header = 'Vestibular U:Verse'
 admin.site.site_title = 'VestU:Verse'
@@ -58,6 +58,7 @@ urlpatterns = [
     path('afiliados/', afiliados, name="afiliados"),
     path('cursosJson/<cod>', cursosJson, name="cursosJson"),
     path('cursosIndividualJson/<cod_curso>/<cod>', cursosIndividualJson, name="cursosIndividualJson"),
+    path('consultaStatusAPI/<cod>/<email>', consultaStatusAPI, name="consultaStatusAPI"),
 
     path('', index, name="index"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static('media/', document_root=settings.MEDIA_ROOT)
