@@ -542,12 +542,12 @@ def consultaStatusAPI(request, cod, email):
 
     if cod == codigo:
         dados = Inscricao.objects.filter(pessoa__email=email)
-        curso = [ { 'status': i.get_situacao_display(), 'curso': i.curso.nome} for i in dados]
-        teste =  list(dados)
+        curso = [{ 'status': i.get_situacao_display(), 'curso': i.curso.nome} for i in dados]
+
     else:
         curso = [{'erro':'Código incorreto'}]
 
-    response = HttpResponse(json.dumps(teste), content_type='text/json')
+    response = HttpResponse(json.dumps(curso), content_type='text/json')
     response["Access-Control-Allow-Origin"] = '*'
     response["Access-Control-Allow-Methods"] = 'GET'
     response["Access-Control-Max-Age"] = '1000'
