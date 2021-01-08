@@ -14,6 +14,22 @@
     <meta property="og:description" content="Venha para U:verse">
     <meta property="og:image" content="{% static 'img/logo-uverse.svg' %}">
 
+    <script src="https://unpkg.com/blip-chat-widget" type="text/javascript">
+</script>
+<script>
+    (function () {
+        window.onload = function () {
+            new BlipChat()
+            .withAppKey('dXZlcnNlMTo2N2Q1YWZlMS1iNWU5LTRjN2QtODk5Ni02MjhkNGI3NmRiNzA=')
+            .withButton({"color":"#2CC3D5","icon":""})
+            .withCustomCommonUrl('https://chat.blip.ai/')
+            .build();
+        }
+    })();
+</script>
+
+
+
 </head>
 <body>
 <div class="sep-uverse"></div>
