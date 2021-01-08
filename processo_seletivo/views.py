@@ -543,7 +543,7 @@ def consultaStatusAPI(request, cod, email):
     if cod == codigo:
         dados = Inscricao.objects.filter(pessoa__email=email)
         curso = [ { 'status': i.get_situacao_display(), 'curso': i.curso.nome} for i in dados]
-        result = {'status':curso.status, 'curso':curso.curso}
+        result = {'status':curso[0], 'curso':curso[1]}
     else:
         curso = [{'erro':'Código incorreto'}]
 
