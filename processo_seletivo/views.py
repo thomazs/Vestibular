@@ -547,13 +547,15 @@ def consultaStatusAPI(request, cod, email):
             curso = {
                 'status': dados.get_situacao_display(),
                 'curso': dados.curso.nome,
-                'mensagem': 'Aguardando correção'
+                'mensagem': 'Aguardando correção',
+                'text': 'Você pode verificar o status da correção de sua prova a qualquer momento através do painel de controle do candidato, disponível em: https://uverse.in/uvest'
             }
-        else:
+        elif dados.get_situacao_display() == 'Aprovado':
             curso = {
                 'status': dados.get_situacao_display(),
                 'curso': dados.curso.nome,
-                'mensagem': dados.get_situacao_display()
+                'mensagem': dados.get_situacao_display(),
+                'texto':'Agora que você foi aprovado, é necessário comparecer na instituição para efetivar sua matrícula. É importante que tenha em mãos todos os documentos para matrícula previstos no edital'
             }
     else:
         curso = [{'erro':'Código incorreto'}]
