@@ -563,7 +563,7 @@ def consultaStatusAPI(request, cod, email):
             curso = {
                 'status': 'Não encontrado',
                 'curso': 'Não encontrado',
-                'mensagem': dados.get_situacao_display(),
+                'mensagem': 'Dados não encontrados',
                 'texto': 'Verifiquei aqui e notei que você não possui nenhuma inscrição vinculada para este endereço de e-mail, caso não tenha feito o vestibular é so acessar: https://uverse.in/uvest e se inscrever para o curso desejado. Ah!! você pode fazer tudo online, inclusive a prova :)'
             }
     else:
