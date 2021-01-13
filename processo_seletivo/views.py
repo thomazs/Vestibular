@@ -567,7 +567,7 @@ def consultaStatusAPI(request, cod, email):
                 'texto': 'Verifiquei aqui e notei que você não possui nenhuma inscrição vinculada para este endereço de e-mail, caso não tenha feito o vestibular é so acessar: https://uverse.in/uvest e se inscrever para o curso desejado. Ah!! você pode fazer tudo online, inclusive a prova :)'
             }
     else:
-        curso = [{'erro':'Código incorreto'}]
+        curso = {'texto':'Encontramos um erro ao verificar seus dados, por favor verifique o e-mail que você forneceu.'}
 
     response = HttpResponse(json.dumps(curso), content_type='text/json')
     response["Access-Control-Allow-Origin"] = '*'
