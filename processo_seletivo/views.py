@@ -543,19 +543,28 @@ def consultaStatusAPI(request, cod, email):
     if cod == codigo:
         dados = Inscricao.objects.filter(pessoa__email=email).first()
 
-        if dados.get_situacao_display() == 'Inscrito':
+        if dados.get_situacao_display():
+
+            if dados.get_situacao_display() == 'Inscrito':
+                curso = {
+                    'status': dados.get_situacao_display(),
+                    'curso': dados.curso.nome,
+                    'mensagem': 'Aguardando correção',
+                    'text': 'Você pode verificar o status da correção de sua prova a qualquer momento através do painel de controle do candidato, disponível em: https://uverse.in/uvest'
+                }
+            elif dados.get_situacao_display() == 'Aprovado':
+                curso = {
+                    'status': dados.get_situacao_display(),
+                    'curso': dados.curso.nome,
+                    'mensagem': dados.get_situacao_display(),
+                    'texto':'Parabéns... Você foi aprovado!! Você já pode ir até a U:verse para efetuar sua matrícula, nosso atendimento funciona das 14h às 18h, de segunda a sexta.'
+                }
+        else:
             curso = {
-                'status': dados.get_situacao_display(),
-                'curso': dados.curso.nome,
-                'mensagem': 'Aguardando correção',
-                'text': 'Você pode verificar o status da correção de sua prova a qualquer momento através do painel de controle do candidato, disponível em: https://uverse.in/uvest'
-            }
-        elif dados.get_situacao_display() == 'Aprovado':
-            curso = {
-                'status': dados.get_situacao_display(),
-                'curso': dados.curso.nome,
+                'status': 'Não encontrado',
+                'curso': 'Não encontrado',
                 'mensagem': dados.get_situacao_display(),
-                'texto':'Parabéns... Você foi aprovado!! Você já pode ir até a U:verse para efetuar sua matrícula, nosso atendimento funciona das 14h às 18h, de segunda a sexta.'
+                'texto': 'Verifiquei aqui e notei que você não possui nenhuma inscrição vinculada para este endereço de e-mail, caso não tenha feito o vestibular é so acessar: https://uverse.in/uvest e se inscrever para o curso desejado. Ah!! você pode fazer tudo online, inclusive a prova :)'
             }
     else:
         curso = [{'erro':'Código incorreto'}]
