@@ -555,7 +555,7 @@ def consultaStatusAPI(request, cod, email):
                 'status': dados.get_situacao_display(),
                 'curso': dados.curso.nome,
                 'mensagem': dados.get_situacao_display(),
-                'texto':'Agora que você foi aprovado, é necessário comparecer na instituição para efetivar sua matrícula. É importante que tenha em mãos todos os documentos para matrícula previstos no edital'
+                'texto':'Parabéns... Você foi aprovado!! Você já pode ir até a U:verse para efetuar sua matrícula, nosso atendimento funciona das 14h às 18h, de segunda a sexta.'
             }
     else:
         curso = [{'erro':'Código incorreto'}]
