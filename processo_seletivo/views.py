@@ -18,7 +18,7 @@ from processo_seletivo.models import Inscricao, Curso, EdicaoCurso
 from processo_seletivo.services import tag_segura_valida, cria_tag_segura, gera_cod_validacao, \
     envia_email_cadastro, valida_email, ativa_pessoa, loga_pessoa, envia_email_cadastroconcluido, pega_edicao_ativa, \
     envia_email_inscricaofeita, cria_perguntas_inscricao, pega_questao_responder, resposta_valida, responder_questao, \
-    prova_redirecionar_para, gravar_redacao, RespostaInscricao
+    prova_redirecionar_para, gravar_redacao, RespostaInscricao, envia_email_redacao
 
 
 def index(request):
@@ -469,9 +469,6 @@ def ativa_portador_diploma(request, codigo, status):
         return redirect('index')
 
 
-
-
-
 @login_required
 def aprovados_provapadrao(request):
     if request.user.is_staff:
@@ -485,26 +482,26 @@ def aprovados_provapadrao(request):
 
 
 def cursosJson(request, cod):
-
     codigo = '4b68f9fa5686f541bb53c1e77a78833a6536d84aeb80190e7e6d84eea376e8268df51ff87973147a4bec7f7130f25225b60c530d4e0be29259a4a42e934b8fe1'
     if cod == codigo:
-        cursos = [ {'id': i.id,
-                    'curso': i.curso.nome,
-                    'qtd_inscricoes': i.qtd_inscricoes,
-                    'vagas':i.qtd_vagas,
-                    } for i in EdicaoCurso.objects.annotate(qtd_inscricoes=Count('curso__cursoopcao_set')).order_by('-qtd_inscricoes')]
+        cursos = [{'id': i.id,
+                   'curso': i.curso.nome,
+                   'qtd_inscricoes': i.qtd_inscricoes,
+                   'vagas': i.qtd_vagas,
+                   } for i in EdicaoCurso.objects.annotate(qtd_inscricoes=Count('curso__cursoopcao_set')).order_by(
+            '-qtd_inscricoes')]
     else:
-        cursos = [{'erro':'Código incorreto'}]
+        cursos = [{'erro': 'Código incorreto'}]
 
     # teste = [ {'id': i.id, 'curso': i.curso.nome} for i in Inscricao.objects.all()]
 
-
-    response =  HttpResponse(json.dumps(cursos), content_type='text/json')
+    response = HttpResponse(json.dumps(cursos), content_type='text/json')
     response["Access-Control-Allow-Origin"] = '*'
     # response["Access-Control-Allow-Methods"] = 'GET'
     # response["Access-Control-Max-Age"] = '1000'
     # response["Access-Control-Allow-Headers"] = 'X-Requested-With, Content-Type'
     return response
+
 
 def cursosIndividualJson(request, cod_curso, cod):
     codigo = '4b68f9fa5686f541bb53c1e77a78833a6536d84aeb80190e7e6d84eea376e8268df51ff87973147a4bec7f7130f25225b60c530d4e0be29259a4a42e934b8fe1'
@@ -512,9 +509,9 @@ def cursosIndividualJson(request, cod_curso, cod):
     if cod == codigo:
         nao_fezredacao = Inscricao.objects.filter(curso_id=cod_curso, fez_redacao=False).count()
         matriculados = Inscricao.objects.filter(curso_id=cod_curso, situacao=31).count()
-        curso = [ { 'nao_redacao': nao_fezredacao, 'matriculados': matriculados}]
+        curso = [{'nao_redacao': nao_fezredacao, 'matriculados': matriculados}]
     else:
-        curso = [{'erro':'Código incorreto'}]
+        curso = [{'erro': 'Código incorreto'}]
 
     response = HttpResponse(json.dumps(curso), content_type='text/json')
     response["Access-Control-Allow-Origin"] = '*'
@@ -524,17 +521,12 @@ def cursosIndividualJson(request, cod_curso, cod):
     return response
 
 
-
-
-
 @login_required
 def afiliados(request):
     afiliado = Inscricao.objects.filter(afiliado__pessoa__usuario=request.user)
     ganhos = Inscricao.objects.filter(afiliado__pessoa__usuario=request.user, situacao=31).count() * 50
 
     return render(request, 'redacao/afiliados.html', locals())
-
-
 
 
 def consultaStatusAPI(request, cod, email):
@@ -557,7 +549,7 @@ def consultaStatusAPI(request, cod, email):
                     'status': dados.get_situacao_display(),
                     'curso': dados.curso.nome,
                     'mensagem': dados.get_situacao_display(),
-                    'texto':'Parabéns 👏👏👏... Você foi aprovado!! Já pode ir até a U:verse para efetuar sua matrícula, é importante ter em mãos todos os documentos previtos no edital, nosso atendimento funciona das 14h às 18h, de segunda a sexta.'
+                    'texto': 'Parabéns 👏👏👏... Você foi aprovado!! Já pode ir até a U:verse para efetuar sua matrícula, é importante ter em mãos todos os documentos previtos no edital, nosso atendimento funciona das 14h às 18h, de segunda a sexta.'
                 }
         else:
             curso = {
@@ -567,7 +559,8 @@ def consultaStatusAPI(request, cod, email):
                 'texto': 'Verifiquei aqui e notei que você não possui nenhuma inscrição vinculada para este endereço de e-mail, caso não tenha feito o vestibular é so acessar: https://uverse.in/uvest e se inscrever para o curso desejado. Ah!! você pode fazer tudo online, inclusive a prova :)'
             }
     else:
-        curso = {'texto':'Encontramos um erro ao verificar seus dados, por favor verifique o e-mail que você forneceu.'}
+        curso = {
+            'texto': 'Encontramos um erro ao verificar seus dados, por favor verifique o e-mail que você forneceu.'}
 
     response = HttpResponse(json.dumps(curso), content_type='text/json')
     response["Access-Control-Allow-Origin"] = '*'
@@ -577,45 +570,23 @@ def consultaStatusAPI(request, cod, email):
     return response
 
 
-
-
-@login_required
 def ajuste_nota(request):
-    if request.user.is_staff:
-        # arredondar nota para padrão uverse
-        # notas = Inscricao.objects.all()
-        # for i in notas:
-        #     if i.nota_redacao:
-        #         if i.nota_redacao > 200:
-        #             i.nota_redacao_p1 = (i.nota_redacao_p1 * 40) / 100
-        #             i.nota_redacao_p2 = (i.nota_redacao_p2 * 40) / 100
-        #             i.nota_redacao_p3 = (i.nota_redacao_p3 * 40) / 100
-        #             i.nota_redacao_p4 = (i.nota_redacao_p4 * 40) / 100
-        #             i.nota_redacao_p5 = (i.nota_redacao_p5 * 40) / 100
-        #             i.nota_redacao = i.nota_redacao_p1 + i.nota_redacao_p2 + i.nota_redacao_p3 + i.nota_redacao_p4 + i.nota_redacao_p5
-        #             i.save()
 
-        # lança as notas de prova e geral
-        # notas = Inscricao.objects.all()
-        # for i in notas:
-        #     if i.fez_redacao and i.fez_prova and i.nota_redacao:
-        #         if i.nota_geral is None and i.nota_prova is None:
-        #             pontos_prova = RespostaInscricao.objects.filter(inscricao=i, resposta__correta=True).aggregate(
-        #                 Sum('questao__pontos'))
-        #             i.nota_prova = pontos_prova['questao__pontos__sum']
-        #             i.nota_geral = i.nota_redacao + pontos_prova['questao__pontos__sum']
-        #             i.save()
+    inscricao = Inscricao.objects.filter(tipo_selecao=1, fez_redacao=False)
 
-        #
-        # aprovação de candidatos
-        # notas = Inscricao.objects.all()
-        # for i in notas:
-        #     if i.fez_redacao and i.fez_prova and i.nota_redacao:
-        #         if i.nota_geral >= 200:
-        #             i.situacao = 21
-        #         else:
-        #             i.situacao = 11
-        #
-        #         i.save()
+    arquivo = open("log_envios_redacao.txt", "a")
+    envios = list()
 
-        return render(request, 'ajuste-nota.html', locals())
+    for i in inscricao:
+       envia_email_redacao(i)
+       envios.append('\n')
+       envios.append(str(datetime.now())+'---')
+       envios.append(i.pessoa.email)
+
+    envios.append('\n')
+    envios.append(str(datetime.now())+'///////////////////////////////////////////////////')
+    arquivo.writelines(envios)
+
+
+
+    return render(request, 'ajuste-nota.html', locals())

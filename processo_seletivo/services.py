@@ -210,3 +210,10 @@ def prova_redirecionar_para(inscricao):
         return 'prova_redacao'
 
     return 'revisao_prova_online'
+
+def envia_email_redacao(inscricao):
+    assunto = 'Faltaram palavras ? 😰'
+    destinatarios = [inscricao.pessoa.email]
+    template = 'email_redacao_pendente.html'
+    contexto = {'inscricao': inscricao}
+    enviar_email(assunto, destinatarios, template, contexto=contexto)
