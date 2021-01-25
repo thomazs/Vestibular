@@ -212,7 +212,14 @@ def prova_redirecionar_para(inscricao):
     return 'revisao_prova_online'
 
 def envia_email_redacao(inscricao):
-    assunto = 'Faltaram palavras ? 😰'
+
+    assuntos = ['Faltaram palavras ? 😰',
+                'Temos um recado importante para você!!',
+                '😰 Conclua sua redação!',
+                ]
+
+    # assunto = 'Faltaram palavras ? 😰'
+    assunto = assuntos[random.randint(0, 2)]
     destinatarios = [inscricao.pessoa.email]
     template = 'email_redacao_pendente.html'
     contexto = {'inscricao': inscricao}
