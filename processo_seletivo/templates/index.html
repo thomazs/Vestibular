@@ -49,9 +49,10 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-lg btn-uverse flash-bang">Fazer login</button>
+                    <a class="btn btn-primary btn-lg btn-uverse flash-bang btn-texto" href="{% url 'reset_password' %}">Esqueceu sua senha?</a>
 
                     <hr>
-                    <p><strong><a href="{% url 'cadastro' %}">Não tem conta? Faça seu cadastro!</a></strong></p>
+                    <p><strong><a href="{% url 'cadastro' %}" style="color: #333">Não tem conta? Faça seu cadastro!</a></strong></p>
                 </form>
 
 
@@ -75,6 +76,15 @@
     </div>
 </section>
 
+
+
+<style>
+    .btn-texto{
+        border: none !important;
+    }
+    .btn-uverse{
+    }
+</style>
 
 </body>
 </html>
