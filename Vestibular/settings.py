@@ -13,8 +13,7 @@ SECRET_KEY = 'r3fg0=x5d$lpy3hb&l8n!a)s^hxa4a01+f$^ec%v^^itc76!!1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['172.17.1.144', '127.0.0.1', 'localhost']
-ALLOWED_HOSTS = ['172.17.1.144','https://uverse.in']
+ALLOWED_HOSTS = ['172.17.1.144', '127.0.0.1', 'localhost']
 
 # Application definition
 
