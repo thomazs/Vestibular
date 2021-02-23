@@ -39,7 +39,8 @@
                             <th scope="col">Nome</th>
                             <th scope="col">Dt. Inscricao</th>
                             <th scope="col">Curso</th>
-                            <th scope="col">Mensagem</th>
+                            <th scope="col">E-mail</th>
+                            <th scope="col">Telefone</th>
                         </tr>
                         </thead>
                         <tbody id="tabela">
@@ -48,9 +49,9 @@
                                 <th scope="row">{{ i.pessoa.nome }}</th>
                                 <td>{{ i.data_inclusao |date:"d/m/Y" }}</td>
                                 <td>{{ i.curso.nome }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-outline-success">Pagamento</button>
-                                </td>
+
+                                <td>{{ i.pessoa.email }}</td>
+                                <td>{{ i.pessoa.fone }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
