@@ -106,7 +106,7 @@
                 <div class="codigo_indicacao">
                     <h6>MEU LINK DE INDICAÇÃO</h6>
                     <hr>
-                    <h2 class="text-dark" style="font-weight: bold">https://{{ request.path }}/cadastro/{{ afiliado_dados.codigo }}</h2>
+                    <h2 class="text-dark" style="font-weight: bold">https://{{request.get_full_path  }}/cadastro/{{ afiliado_dados.codigo }}</h2>
                 </div>
         </div>
 
