@@ -1,0 +1,170 @@
+{% load humanize %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+<div class="col-12">
+    <nav class="navbar navbar-light bg-light" style="background: linear-gradient(90deg, #9cd116, #0AF6AE) !important">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" style="color: #fff; font-weight: bold">
+                {#                  <img src="https://uverse.com.vc/wp-content/themes/uverse/assets/images/logo-uverse.svg" alt="" width="30" height="24" class="d-inline-block align-top">#}
+                PAINEL DO AFILIADO
+            </a>
+
+            <div> <a href="{% url 'sair' %}" type="button" class="btn btn-light">Sair</a></div>
+        </div>
+    </nav>
+
+</div>
+<!-- Image and text -->
+
+
+<div class="container" style="padding-top:50px; padding-bottom: 20px;">
+    <div class="row">
+        <div class="col-12" style="color: #666666">
+            <h1>Olá, <strong>{{ request.user.first_name }}</strong></h1>
+            <h6>Seja bem vindo ao seu ambiente de afiliado, aqui você vai encontar tudo que precisa para divulgar e acompanhar seus ganhos.</h6>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="container">
+    <div class="row text-center">
+
+          <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <div style="text-align: right; font-size: 20px;" id="eye" onclick="oculta_valor()"><i
+                            class="bi bi-eye"></i></div>
+
+                    <h5 class="card-title">Visitas</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Quantidade de vistas</h6>
+                    <p class="card-text">
+                    <h3 style="font-weight: 800" id="ganhos">{{ afiliado_dados.visitas }}</h3>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <div style="text-align: right; font-size: 20px;" id="eye" data-toggle="modal"
+                         data-target="#modal_afiliados"><i
+                            class="bi bi-eye"></i></div>
+
+                    <h5 class="card-title">Indicados</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Meus indicados</h6>
+                    <p class="card-text">
+                    <h3 style="font-weight: 800" id="ganhos">{{ qtd_indicados }}</h3>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div style="text-align: right; font-size: 20px;" id="eye" onclick="oculta_valor()"><i
+                                class="bi bi-eye"></i></div>
+
+                        <h5 class="card-title">Indicados matriculados</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Minhas indicações convertidas</h6>
+                        <p class="card-text">
+                        <h3 style="font-weight: 800" id="ganhos">{{ ganhos | intword }}</h3>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+
+    <div class="row link-indicacao">
+        <div class="col-12 text-center">
+                <div class="codigo_indicacao">
+                    <h6>MEU LINK DE INDICAÇÃO</h6>
+                    <hr>
+                    <h2 class="text-dark" style="font-weight: bold">http://{{ request.get_host }}/cadastro/{{ afiliado_dados.codigo }}</h2>
+                </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<hr>
+
+
+<div class="container">
+        <div class="col-12">
+            {% include "afiliados/lista_indicados.html" %}
+        </div>
+</div>
+
+
+<style>
+    .codigo_indicacao {
+        padding: 20px 0;
+        border-radius: 10px;
+        background: #EEE;
+    }
+    .link-indicacao{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+    .card{
+        margin-bottom: 20px !important;
+    }
+</style>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal_afiliados" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Minhas indicações</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {#       listagem dos afiliados#}
+                {% include "afiliados/lista_indicados.html" %}
+                {#       listagem dos afiliados#}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

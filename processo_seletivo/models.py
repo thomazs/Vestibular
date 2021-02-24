@@ -140,7 +140,8 @@ class Inscricao(models.Model):
     data_inclusao = models.DateTimeField(auto_now_add=True)
     data_alteracao = models.DateTimeField(auto_now=True)
     situacao = models.IntegerField(default=1, choices=SITUACAO_INSCRICAO)
-    afiliado = models.ForeignKey('Afiliado', on_delete=models.RESTRICT, null=True, blank=True)
+    # afiliado = models.ForeignKey('Afiliado', on_delete=models.RESTRICT, null=True, blank=True)
+    afiliado = models.CharField('Afiliado', null=True, blank=True, max_length=100)
     def id_protegido(self):
         from processo_seletivo.services import cria_tag_segura
         return cria_tag_segura(str(self.id))
@@ -228,4 +229,5 @@ class Afiliado(models.Model):
 
     pessoa = models.ForeignKey(Pessoa, on_delete=models.RESTRICT)
     codigo = models.CharField('Código de indicação', blank=True, null=True, unique=True, max_length=50)
+    visitas = models.IntegerField('Visitas', blank=True, null=True)
 

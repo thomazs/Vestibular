@@ -1,0 +1,68 @@
+{% if indicados %}
+    <h1 style="color: #666666">Últimas indicações</h1>
+    <div class="container">
+    <div class="row">
+    <div class="col-12">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">NOME</th>
+            <th scope="col">DATA</th>
+            <th scope="col">CURSO</th>
+            <th scope="col">STATUS</th>
+        </tr>
+        </thead>
+        <tbody id="tabela">
+        {% for i in indicados %}
+            {% if i.situacao == 31 %}
+                <tr style="background: darkseagreen; font-size: 12px">
+
+                    <th>
+                        {{ i.pessoa.nome | upper | truncatewords:1 }}
+                    </th>
+                    <th>
+                        {{ i.data_inclusao|date:"d/m/Y" }}
+                    </th>
+                    <th>
+                        {% if i.curso %}
+                            {{ i.curso }}
+                        {% else %}
+                            <i class="bi bi-hourglass-split"></i>
+                        {% endif %}
+                    </th>
+
+                    <th style="font-size: 20px; text-align: center">
+                        <i class="bi bi-cash"></i>
+                    </th>
+                </tr>
+            {% else %}
+                <tr style="background:#f7f7f7; font-size: 12px">
+
+                    <th>
+                        {{ i.pessoa.nome | upper | truncatewords:1 }}
+                    </th>
+                    <th>
+                        {{ i.data_inclusao|date:"d/m/Y" }}
+                    </th>
+                    <th>
+                        {% if i.curso %}
+                            {{ i.curso }}
+                        {% else %}
+                            <i class="bi bi-hourglass-split"></i>
+                        {% endif %}
+                    </th>
+
+                    <th style="font-size: 20px; text-align: center">
+                        <i class="bi bi-hourglass-split"></i>
+                    </th>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <h5>Você não tem indicados</h5>
+{% endif %}
+</div>
+</div>
+</div>

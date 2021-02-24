@@ -38,6 +38,7 @@ class Pessoa(models.Model):
     data_cadastro = models.DateTimeField(auto_now_add=True)
     data_alteracao = models.DateTimeField(auto_now=True)
     data_ativacao = models.DateTimeField(editable=False, null=True, blank=True)
+    codigo_afiliado = models.CharField(null=True, blank=True, max_length=100)
 
     def __str__(self):
         return self.nome

@@ -14,7 +14,7 @@ from django.urls import reverse_lazy
 
 from instituicao.models import Pessoa
 from processo_seletivo.forms import LoginForm, FormCadastro, FormCompletaCadastro, FormInscricao, FormCorrigeRedacao
-from processo_seletivo.models import Inscricao, Curso, EdicaoCurso
+from processo_seletivo.models import Inscricao, Curso, EdicaoCurso, Afiliado
 from processo_seletivo.services import tag_segura_valida, cria_tag_segura, gera_cod_validacao, \
     envia_email_cadastro, valida_email, ativa_pessoa, loga_pessoa, envia_email_cadastroconcluido, pega_edicao_ativa, \
     envia_email_inscricaofeita, cria_perguntas_inscricao, pega_questao_responder, resposta_valida, responder_questao, \
@@ -36,6 +36,8 @@ def index(request):
     else:
         form = LoginForm()
 
+
+
     return render(request, 'index.html', locals())
 
 
@@ -47,7 +49,16 @@ def painel(request):
 
 
 @transaction.atomic
-def cadastro(request):
+def cadastro(request, id=None):
+
+    if id is not None:
+        sessao = request.session['afiliado_codigo'] = id
+        parceiro = Afiliado.objects.get(codigo=id)
+        parceiro.visitas = parceiro.visitas + 1
+        parceiro.save()
+    else:
+        sessao = None
+
     form = FormCadastro()
     if request.method == 'POST':
         print(request.POST)
@@ -55,10 +66,14 @@ def cadastro(request):
         if form.is_valid():
             pessoa = form.save(commit=False)
             pessoa.codvalidacao = gera_cod_validacao()
+            pessoa.codigo_afiliado = sessao
             pessoa.save()
             token = cria_tag_segura(pessoa.id)
             envia_email_cadastro(pessoa, token)
             return redirect('emailenviado', token=token)
+
+
+
 
     return render(request, 'cadastro.html', locals())
 
@@ -111,6 +126,7 @@ def mensagem(request, time_to_redirect=0):
 
 @transaction.atomic
 def concluir_cadastro(request, token):
+
     segura, valor = tag_segura_valida(token)
     if not segura:
         return redirect('index')
@@ -134,12 +150,14 @@ def concluir_cadastro(request, token):
             loga_pessoa(request, pessoa, form.cleaned_data['senha'])
             envia_email_cadastroconcluido(pessoa, form.cleaned_data['senha'])
             return redirect('faz_inscricao')
+
     return render(request, 'completa_cadastro.html', locals())
 
 
 @login_required(login_url=reverse_lazy('index'))
 @transaction.atomic()
 def faz_inscricao(request, id=None):
+
     pessoa = request.user.get_pessoa()
     inscricao = get_object_or_404(Inscricao, id=id) if id else None
     if inscricao and inscricao.pessoa_id != pessoa:
@@ -150,17 +168,18 @@ def faz_inscricao(request, id=None):
     form = FormInscricao(instance=inscricao, edicao=edicao)
     if request.method == 'POST':
         form = FormInscricao(request.POST, instance=inscricao, edicao=edicao)
+
         if form.is_valid():
             pinscricao = form.save(commit=False)
             pinscricao.curso_final = pinscricao.curso
             pinscricao.edicao = edicao
             pinscricao.pessoa = pessoa
+            pinscricao.afiliado = pessoa.codigo_afiliado
             pinscricao.save()
             cria_perguntas_inscricao(pinscricao)
             envia_email_inscricaofeita(pessoa, pinscricao)
             messages.success(request, 'Inscrição efetuada com sucesso!')
             return redirect('painel')
-
     return render(request, 'inscricao.html', locals())
 
 
@@ -486,6 +505,30 @@ def aprovados_provapadrao(request):
     return render(request, 'redacao/aprovados.html', locals())
 
 
+
+@login_required
+def inscricao_pendente(request):
+    if request.user.is_staff:
+
+        pessoas=list()
+
+        inscritos = Pessoa.objects.filter()
+
+        for i in inscritos:
+            nome = Inscricao.objects.filter(pessoa__email=i.email)
+            if nome:
+                pessoas.append('nome:'+i.nome)
+                pessoas.append('email:'+i.email)
+                print(pessoas)
+
+    else:
+        return redirect('index')
+
+    return render(request, 'redacao/inscricao_pendente.html', locals())
+
+
+
+
 def cursosJson(request, cod):
     codigo = '4b68f9fa5686f541bb53c1e77a78833a6536d84aeb80190e7e6d84eea376e8268df51ff87973147a4bec7f7130f25225b60c530d4e0be29259a4a42e934b8fe1'
     if cod == codigo:
@@ -528,10 +571,15 @@ def cursosIndividualJson(request, cod_curso, cod):
 
 @login_required
 def afiliados(request):
-    afiliado = Inscricao.objects.filter(afiliado__pessoa__usuario=request.user)
-    ganhos = Inscricao.objects.filter(afiliado__pessoa__usuario=request.user, situacao=31).count() * 50
+    afiliado_dados = Afiliado.objects.get(pessoa__usuario=request.user)
+    qtd_indicados = Inscricao.objects.filter(afiliado=afiliado_dados.codigo).count()
+    indicados = Inscricao.objects.filter(afiliado=afiliado_dados.codigo)
 
-    return render(request, 'redacao/afiliados.html', locals())
+
+
+    ganhos = Inscricao.objects.filter(afiliado=afiliado_dados.codigo, situacao=31).count()
+
+    return render(request, 'afiliados/afiliados.html', locals())
 
 
 def consultaStatusAPI(request, cod, email):
