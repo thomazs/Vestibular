@@ -54,8 +54,12 @@ def cadastro(request, id=None):
     if id is not None:
         sessao = request.session['afiliado_codigo'] = id
         parceiro = Afiliado.objects.get(codigo=id)
-        parceiro.visitas = parceiro.visitas + 1
-        parceiro.save()
+        if parceiro.visitas==None:
+            parceiro.visitas = 0
+            parceiro.save()
+        else:
+            parceiro.visitas = parceiro.visitas + 1
+            parceiro.save()
     else:
         sessao = None
 
