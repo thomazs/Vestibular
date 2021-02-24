@@ -61,7 +61,13 @@
                     <h5 class="card-title">Visitas</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Quantidade de vistas</h6>
                     <p class="card-text">
-                    <h3 style="font-weight: 800" id="ganhos">{{ afiliado_dados.visitas }}</h3>
+                    <h3 style="font-weight: 800" id="ganhos">
+                        {% if afiliado_dados.visitas == 'None' %}
+                        {{ afiliado_dados.visitas }}
+                        {% else %}
+                        ---
+                        {% endif %}
+                    </h3>
                     </p>
                 </div>
             </div>
@@ -106,7 +112,7 @@
                 <div class="codigo_indicacao">
                     <h6>MEU LINK DE INDICAÇÃO</h6>
                     <hr>
-                    <h2 class="text-dark" style="font-weight: bold">https://uvest.in/uvest/cadastro/{{ afiliado_dados.codigo }}</h2>
+                    <h2 class="text-dark" style="font-weight: bold">https://uverse.in/uvest/cadastro/{{ afiliado_dados.codigo }}</h2>
                 </div>
         </div>
 
