@@ -162,6 +162,11 @@ def concluir_cadastro(request, token):
 @transaction.atomic()
 def faz_inscricao(request, id=None):
 
+    verifica = Inscricao.objects.filter(pessoa=request.user.get_pessoa())
+    if verifica:
+        messages.error(request, 'O candidato já possui inscrição ativa')
+        return redirect('painel')
+
     pessoa = request.user.get_pessoa()
     inscricao = get_object_or_404(Inscricao, id=id) if id else None
     if inscricao and inscricao.pessoa_id != pessoa:
