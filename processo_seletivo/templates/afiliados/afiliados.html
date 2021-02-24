@@ -30,7 +30,13 @@
                 PAINEL DO AFILIADO
             </a>
 
-            <div> <a href="{% url 'sair' %}" type="button" class="btn btn-light">Sair</a></div>
+            <div>
+                <button type="button success" class="btn btn-light" data-toggle="modal" data-target="#modal-banner">
+                    Banner de divulgação
+                </button>
+                <a href="{% url 'sair' %}" type="button" class="btn btn-light">Sair</a>
+            </div>
+
         </div>
     </nav>
 
@@ -42,7 +48,8 @@
     <div class="row">
         <div class="col-12" style="color: #666666">
             <h1>Olá, <strong>{{ request.user.first_name }}</strong></h1>
-            <h6>Seja bem vindo ao seu ambiente de afiliado, aqui você vai encontar tudo que precisa para divulgar e acompanhar seus ganhos.</h6>
+            <h6>Seja bem vindo ao seu ambiente de afiliado, aqui você vai encontar tudo que precisa para divulgar e
+                acompanhar seus ganhos.</h6>
         </div>
     </div>
 
@@ -52,7 +59,7 @@
 <div class="container">
     <div class="row text-center">
 
-          <div class="col-4">
+        <div class="col-4">
             <div class="card">
                 <div class="card-body">
                     <div style="text-align: right; font-size: 20px;" id="eye" onclick="oculta_valor()"><i
@@ -62,12 +69,12 @@
                     <h6 class="card-subtitle mb-2 text-muted">Quantidade de vistas</h6>
                     <p class="card-text">
                     <h3 style="font-weight: 800" id="ganhos">
-{#                        {% if afiliado_dados.visitas == 'None' %}#}
-{#                        {{ afiliado_dados.visitas }}#}
-{#                        {% else %}#}
-{#                        ---#}
-{#                        {% endif %}#}
-                {{ afiliado_dados.visitas }}
+                        {#                        {% if afiliado_dados.visitas == 'None' %}#}
+                        {#                        {{ afiliado_dados.visitas }}#}
+                        {#                        {% else %}#}
+                        {#                        ---#}
+                        {#                        {% endif %}#}
+                        {{ afiliado_dados.visitas }}
                     </h3>
                     </p>
                 </div>
@@ -91,30 +98,31 @@
         </div>
 
 
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div style="text-align: right; font-size: 20px;" id="eye" onclick="oculta_valor()"><i
-                                class="bi bi-eye"></i></div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <div style="text-align: right; font-size: 20px;" id="eye" onclick="oculta_valor()"><i
+                            class="bi bi-eye"></i></div>
 
-                        <h5 class="card-title">Indicados matriculados</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Minhas indicações convertidas</h6>
-                        <p class="card-text">
-                        <h3 style="font-weight: 800" id="ganhos">{{ ganhos | intword }}</h3>
-                        </p>
-                    </div>
+                    <h5 class="card-title">Indicados matriculados</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Minhas indicações convertidas</h6>
+                    <p class="card-text">
+                    <h3 style="font-weight: 800" id="ganhos">{{ ganhos | intword }}</h3>
+                    </p>
                 </div>
             </div>
+        </div>
 
     </div>
 
     <div class="row link-indicacao">
         <div class="col-12 text-center">
-                <div class="codigo_indicacao">
-                    <h6>MEU LINK DE INDICAÇÃO</h6>
-                    <hr>
-                    <h2 class="text-dark" style="font-weight: bold">https://uverse.in/uvest/cadastro/{{ afiliado_dados.codigo }}</h2>
-                </div>
+            <div class="codigo_indicacao">
+                <h6>MEU LINK DE INDICAÇÃO</h6>
+                <hr>
+                <h2 class="text-dark" style="font-weight: bold">
+                    https://uverse.in/uvest/cadastro/{{ afiliado_dados.codigo }}</h2>
+            </div>
         </div>
 
     </div>
@@ -126,9 +134,9 @@
 
 
 <div class="container">
-        <div class="col-12">
-            {% include "afiliados/lista_indicados.html" %}
-        </div>
+    <div class="col-12">
+        {% include "afiliados/lista_indicados.html" %}
+    </div>
 </div>
 
 
@@ -138,40 +146,77 @@
         border-radius: 10px;
         background: #EEE;
     }
-    .link-indicacao{
+
+    .link-indicacao {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: row;
     }
-    .card{
+
+    .card {
         margin-bottom: 20px !important;
     }
 </style>
 
 
 <!-- Modal -->
-{#<div class="modal fade" id="modal_afiliados" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"#}
-{#     aria-hidden="true">#}
-{#    <div class="modal-dialog" role="document">#}
-{#        <div class="modal-content">#}
-{#            <div class="modal-header">#}
-{#                <h5 class="modal-title" id="exampleModalLabel">Minhas indicações</h5>#}
-{#                <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
-{#                    <span aria-hidden="true">&times;</span>#}
-{#                </button>#}
-{#            </div>#}
-{#            <div class="modal-body">#}
-                {#       listagem dos afiliados#}
-{#                {% include "afiliados/lista_indicados.html" %}#}
-                {#       listagem dos afiliados#}
-{#            </div>#}
-{#            <div class="modal-footer">#}
-{#                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}
+<div class="modal fade" id="modal-banner" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Minhas indicações</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                {#                banner#}
+                <div class="row" style="background: #eee; padding: 10px 5px; color: #666666; margin-bottom: 10px">
+                        <div class="col-4">
+                            <img src="https://docs.google.com/uc?id=1dyEp0MAukjF1tNGGsKQ3fJfiQ_PQ3WKQ" width="100%">
+                        </div>
+                        <div class="col-6 d-flex justify-content-center align-items-center">
+                                <h5>BANNER VERTICAL 300 x 300</h5>
+                        </div>
+
+                        <div class="col-12">
+                            <hr>
+                              <textarea class="form-control" style="text-align: left; font-size: 12px;"><a href="https://uverse.in/uvest/cadastro/{{ afiliado_dados.codigo }}" target="_blank"> <img src="https://docs.google.com/uc?id=1dyEp0MAukjF1tNGGsKQ3fJfiQ_PQ3WKQ"> </a> </textarea>
+                        </div>
+                </div>
+                {#                banner#}
+
+
+                 {#                banner#}
+                <div class="row" style="background: #eee; padding: 10px 5px; color: #666666; margin-bottom: 10px">
+                        <div class="col-4">
+                            <img src="https://docs.google.com/uc?id=1VTvaQsuJmS3iiLNcKuH2fXXdoQ0ZZRHb" width="100%">
+                        </div>
+                        <div class="col-6 d-flex justify-content-center align-items-center">
+                                <h5>BANNER HORIZONTAL 1000 x 200</h5>
+                        </div>
+
+                        <div class="col-12">
+                            <hr>
+                              <textarea class="form-control" style="text-align: left; font-size: 12px;"><a href="https://uverse.in/uvest/cadastro/{{ afiliado_dados.codigo }}" target="_blank"> <img src="https://docs.google.com/uc?id=1VTvaQsuJmS3iiLNcKuH2fXXdoQ0ZZRHb"> </a> </textarea>
+                        </div>
+                </div>
+                {#                banner#}
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>
