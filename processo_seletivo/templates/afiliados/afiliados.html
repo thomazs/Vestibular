@@ -62,11 +62,12 @@
                     <h6 class="card-subtitle mb-2 text-muted">Quantidade de vistas</h6>
                     <p class="card-text">
                     <h3 style="font-weight: 800" id="ganhos">
-                        {% if afiliado_dados.visitas == 'None' %}
-                        {{ afiliado_dados.visitas }}
-                        {% else %}
-                        ---
-                        {% endif %}
+{#                        {% if afiliado_dados.visitas == 'None' %}#}
+{#                        {{ afiliado_dados.visitas }}#}
+{#                        {% else %}#}
+{#                        ---#}
+{#                        {% endif %}#}
+                {{ afiliado_dados.visitas }}
                     </h3>
                     </p>
                 </div>
