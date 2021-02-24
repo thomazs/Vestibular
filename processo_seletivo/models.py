@@ -231,3 +231,4 @@ class Afiliado(models.Model):
     codigo = models.CharField('Código de indicação', blank=True, null=True, unique=True, max_length=50)
     visitas = models.IntegerField('Visitas', blank=True, null=True)
 
+# cpd
