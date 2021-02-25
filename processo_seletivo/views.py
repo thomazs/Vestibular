@@ -340,6 +340,8 @@ def acompanhamento(request):
         # calcula a meta minima de inscrições
         meta_minima = int((total_inscricao * 100) / metas['q'])
 
+        inscricao_afiliados = Inscricao.objects.filter(afiliado__isnull=False).count()
+
         redacao_pendente = Inscricao.objects.filter(fez_redacao=False, tipo_selecao=1).count()
         redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True,
                                                         tipo_selecao=1).count()
@@ -534,8 +536,6 @@ def inscricao_pendente(request):
         return redirect('index')
 
     return render(request, 'redacao/inscricao_pendente.html', locals())
-
-
 
 
 def cursosJson(request, cod):
