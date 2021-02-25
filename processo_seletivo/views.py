@@ -341,6 +341,7 @@ def acompanhamento(request):
         meta_minima = int((total_inscricao * 100) / metas['q'])
 
         inscricao_afiliados = Inscricao.objects.filter(afiliado__isnull=False).count()
+        afiliados = Afiliado.objects.all()
 
         redacao_pendente = Inscricao.objects.filter(fez_redacao=False, tipo_selecao=1).count()
         redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True,
