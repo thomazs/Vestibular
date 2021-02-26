@@ -234,5 +234,5 @@ class Afiliado(models.Model):
 
     @property
     def qtd_inscritos(self):
-        qtd_pessoas = Inscricao.objects.filter(pessoa__afiliado__codigo=self.codigo).count()
+        qtd_pessoas = Inscricao.objects.filter(afiliado=self.codigo).count()
         return qtd_pessoas
