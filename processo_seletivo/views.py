@@ -371,11 +371,6 @@ def acompanhamento_ti(request):
         redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=True, nota_redacao__isnull=True,
                                                         tipo_selecao=1).count()
         media = int((redacao_pendente * 100) / total_inscricao)
-
-
-
-
-
         return render(request, 'acompanhamento_ti.html', locals())
 
 
@@ -516,7 +511,15 @@ def aprovados_provapadrao(request):
 
     return render(request, 'redacao/aprovados.html', locals())
 
+@login_required
+def marcar_matriculado(request, id=None):
+    if request.user.is_staff:
+        inscritos = Inscricao.objects.get(id=id)
+        print(inscritos.situacao)
+        inscritos.situacao = '31'
+        inscritos.save()
 
+    return redirect('aprovados')
 
 @login_required
 def inscricao_pendente(request):

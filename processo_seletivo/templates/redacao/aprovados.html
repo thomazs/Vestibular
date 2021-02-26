@@ -41,6 +41,7 @@
                             <th scope="col">Curso</th>
                             <th scope="col">E-mail</th>
                             <th scope="col">Telefone</th>
+                            <th scope="col">Status</th>
                         </tr>
                         </thead>
                         <tbody id="tabela">
@@ -52,6 +53,7 @@
 
                                 <td>{{ i.pessoa.email }}</td>
                                 <td>{{ i.pessoa.fone }}</td>
+                                <td><a href="{% url 'marcar_matriculado' i.id %}" type="button" class="btn btn-success">Marcar como matriculado</a></td>
                             </tr>
                         {% endfor %}
                         </tbody>

@@ -23,7 +23,7 @@ from processo_seletivo.views import index, cadastro, painel, sair, emailenviado,
     prova_redacao, revisao_prova_redacao, prova_completa, \
     acompanhamento, acompanhamento_ti, corrige_redacao, redacao_pendente, inscricao_enem, portador_diploma, ajuste_nota, \
     csv_redacao_pendente, ativa_enem, aprovados_provapadrao, cursosJson, afiliados, ativa_portador_diploma, \
-    cursosIndividualJson, consultaStatusAPI, inscricao_pendente
+    cursosIndividualJson, consultaStatusAPI, inscricao_pendente, marcar_matriculado
 
 admin.site.site_header = 'Vestibular U:Verse'
 admin.site.site_title = 'VestU:Verse'
@@ -63,6 +63,7 @@ urlpatterns = [
     path('cursosIndividualJson/<cod_curso>/<cod>', cursosIndividualJson, name="cursosIndividualJson"),
     path('consultaStatusAPI/<cod>/<email>', consultaStatusAPI, name="consultaStatusAPI"),
     path('inscricao_pendente', inscricao_pendente, name="inscricao_pendente"),
+    path('marcar_matriculado/<id>', marcar_matriculado, name="marcar_matriculado"),
 
     path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
