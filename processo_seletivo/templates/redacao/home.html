@@ -4,7 +4,7 @@
 
 
 {% block content %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
     {% include "redacao/menu.html" %}
 
 
@@ -20,7 +20,7 @@
                         <h5 class="card-title"><span class="badge badge-light">Inscrições</span></h5>
                         <p class="card-text">
                         <h1 class="titulo">{{ total_inscricao }}</h1>
-{#                        <h1 class="titulo">{{ metas.q }}</h1>#}
+                        {#                        <h1 class="titulo">{{ metas.q }}</h1>#}
 
                         <hr>
                         <h6>Meta mínima de inscrições: <strong>({{ metas.q }})</strong></h6>
@@ -93,8 +93,8 @@
             </div>
             {#bloco1#}
 
-{#            afiliados#}
-             <div class="col-12" style="text-align: center">
+            {#            afiliados#}
+            <div class="col-12" style="text-align: center">
                 <div class="card bg-info text-white">
                     <div class="card-body">
                         <h5 class="card-title"><span class="badge badge-light">Afiliados</span></h5>
@@ -108,15 +108,23 @@
                         <h6>Afiliados cadastrados</h6>
                         <ul class="list-group" style="color: #666666">
 
-                        {% for i in afiliados %}
-                            <li class="list-group-item d-inline-flex bd-highlight align-items-center">
-                                <div class="flex-grow-1 bd-highlight"><h6>{{ i.pessoa.nome }}</h6></div>
-                                <div class="bd-highlight">
-                                    <a href="https://uverse.in/uvest/cadastro/{{ i.codigo }}" class="btn btn-secondary" target="_blank"><i class="bi bi-eye"></i>    Acessar link</a>
-
-                                </div>
-                            </li>
-                        {% endfor %}
+                            {% for i in afiliados %}
+                                <li class="list-group-item d-inline-flex bd-highlight align-items-center">
+                                    <div class="flex-grow-1 bd-highlight"><h6>{{ i.pessoa.nome }}</h6></div>
+                                    <div class="bd-highlight" style="padding: 0 20px;">
+                                        <button type="button" class="btn btn-success">
+                                            Indicados
+                                            <span class="badge badge-light">{{ i.qtd_inscritos }}</span>
+                                            <span class="sr-only">unread messages</span>
+                                        </button>
+                                    </div>
+                                    <div class="bd-highlight">
+                                        <a href="https://uverse.in/uvest/cadastro/{{ i.codigo }}"
+                                           class="btn btn-secondary" target="_blank"><i class="bi bi-eye"></i> Acessar
+                                            link</a>
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </ul>
 
 
@@ -126,13 +134,7 @@
             {#bloco1#}
 
 
-
-
-
         </div>
-
-
-
 
 
     </div>

@@ -232,4 +232,7 @@ class Afiliado(models.Model):
     codigo = models.CharField('Código de indicação', blank=True, null=True, unique=True, max_length=50)
     visitas = models.IntegerField('Visitas', blank=True, null=True)
 
-# cpd
+    @property
+    def qtd_inscritos(self):
+        qtd_pessoas = Inscricao.objects.filter(pessoa__afiliado__codigo=self.codigo).count()
+        return qtd_pessoas
