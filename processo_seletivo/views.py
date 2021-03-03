@@ -53,7 +53,10 @@ def cadastro(request, id=None):
 
     if id is not None:
         sessao = request.session['afiliado_codigo'] = id
-        parceiro = Afiliado.objects.get(codigo=id)
+        parceiro = Afiliado.objects.filter(codigo=id).first()
+        if not parceiro:
+            return redirect('cadastro')
+
         if parceiro.visitas==None:
             parceiro.visitas = 0
             parceiro.save()

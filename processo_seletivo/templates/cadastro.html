@@ -36,6 +36,13 @@
           <div class="col-sm poster flip-top">
             <h1 class="titulo">Vestibular U:verse</h1>
 
+            {% if parceiro %}
+                <div class="afiliado" style="background: #026d1d; color:#fff;padding: 5px;  font-size: 10px; text-align: center; border-radius: 5px;">
+                    Você esta sendo indicado por: {{ parceiro.pessoa.nome }}
+                </div>
+            {% endif %}
+
+
             {% if form.errors %}
                 {% for e in form.non_field_errors %}
                     <div class="alert alert-danger">{{ e }}</div>
