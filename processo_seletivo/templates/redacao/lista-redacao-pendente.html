@@ -57,7 +57,6 @@
                             <th scope="col">Nome</th>
                             <th scope="col">Dt. Inscricao</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Telefone</th>
                             <th scope="col">Mensagem</th>
                         </tr>
                         </thead>
@@ -70,8 +69,7 @@
                                         <span class="badge badge-pill badge-warning">(Treneiro)</span>{% endif %}
                                 </th>
                                 <td>{{ i.data_inclusao |date:"d/m/Y" }}</td>
-                                <td style="text-align: left">{{ i.pessoa.email }}</td>
-                                <td style="text-align: left">{{ i.pessoa.fone }}</td>
+                                <td style="text-align: left">{{ i.pessoa.email }}<br><span style="font-size: 10px;">{{ i.pessoa.fone }}</span></td>
                                 <td>
                                     <a href="https://wa.me/55{{ i.pessoa.fone }}?text=Olá, meu nome é {{ user.first_name|lower|capfirst }}, sou colaborador(a) U:verse. Estou entrando em contato para falar sobre a sua redação do vestibular U:verse...">
                                         {% if i.treineiro %}
