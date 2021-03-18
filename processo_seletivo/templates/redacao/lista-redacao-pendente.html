@@ -65,7 +65,7 @@
                         {% for i in sem_redacao %}
                             <tr {% if i.treineiro %}class="p-3 mb-2 bg-info text-white" {% endif %}>
                                 <th scope="row">
-                                    {{ i.pessoa.nome }}
+                                    {{ i.pessoa.nome }}<br><span style="font-size: 10px;">{{ i.curso }}</span>
                                     {% if i.treineiro %}
                                         <span class="badge badge-pill badge-warning">(Treneiro)</span>{% endif %}
                                 </th>
