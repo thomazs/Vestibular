@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'instituicao',
     'processo_seletivo',
     'django.contrib.humanize',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,9 @@ MEDIA_URL = '/media/'
 LOGIN_URL = '/uvest/admin/login'
 LOGIN_REDIRECT_URL = '/uvest/admin/login'
 FORCE_SCRIPT_NAME = '/uvest'
+
+
+
+TINYMCE_DEFAULT_CONFIG = {
+    "plugins": "image", #plugins
+}
