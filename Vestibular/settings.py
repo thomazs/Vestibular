@@ -142,3 +142,6 @@ FORCE_SCRIPT_NAME = '/uvest'
 TINYMCE_DEFAULT_CONFIG = {
     "plugins": "image", #plugins
 }
+
+TINYMCE_JS_URL = os.path.join(STATIC_URL, "path/to/tiny_mce/tiny_mce.js")
+TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, "path/to/tiny_mce")
