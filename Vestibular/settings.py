@@ -143,5 +143,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "plugins": "image", #plugins
 }
 
-TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
-TINYMCE_COMPRESSOR = False
+# TINYMCE_JS_URL = os.path.join(MEDIA_URL, "path/to/tiny_mce/tiny_mce.js")
+# TINYMCE_JS_ROOT = os.path.join(MEDIA_ROOT, "path/to/tiny_mce")
+
+
