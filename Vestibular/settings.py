@@ -142,3 +142,6 @@ FORCE_SCRIPT_NAME = '/uvest'
 TINYMCE_DEFAULT_CONFIG = {
     "plugins": "image", #plugins
 }
+
+TINYMCE_JS_URL = os.path.join("/uvest/django-tinymce/tiny_mce.min.js")
+TINYMCE_JS_ROOT = os.path.join("/uvest/django-tinymce/tiny_mce")
