@@ -186,7 +186,7 @@ class QuestaoProva(models.Model):
     edicao = models.ForeignKey(Edicao, on_delete=models.RESTRICT)
     disciplina = models.ForeignKey(Disciplina, on_delete=models.RESTRICT)
     # texto = models.TextField('Texto Questão')
-    texto = HTMLField('Texto Questão')
+    texto = HTMLField('Textos Questãos')
 
     tipoquestao = models.IntegerField(default=1, choices=TIPO_QUESTAO)
     pontos = models.DecimalField(default='1', max_digits=10, decimal_places=1)
