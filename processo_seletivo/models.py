@@ -5,6 +5,10 @@ from django.db import models
 from instituicao.models import Curso, Pessoa
 UserModel = get_user_model()
 
+from tinymce.models import HTMLField
+
+
+
 
 class Edicao(models.Model):
     class Meta:
@@ -148,6 +152,7 @@ class Inscricao(models.Model):
     data_alteracao = models.DateTimeField(auto_now=True)
     situacao = models.IntegerField(default=1, choices=SITUACAO_INSCRICAO)
     afiliado = models.CharField('Afiliado', null=True, blank=True, max_length=100)
+
     def id_protegido(self):
         from processo_seletivo.services import cria_tag_segura
         return cria_tag_segura(str(self.id))
@@ -180,7 +185,9 @@ class QuestaoProva(models.Model):
 
     edicao = models.ForeignKey(Edicao, on_delete=models.RESTRICT)
     disciplina = models.ForeignKey(Disciplina, on_delete=models.RESTRICT)
-    texto = models.TextField('Texto Questão')
+    # texto = models.TextField('Texto Questão')
+    texto = HTMLField('Texto Questão')
+
     tipoquestao = models.IntegerField(default=1, choices=TIPO_QUESTAO)
     pontos = models.DecimalField(default='1', max_digits=10, decimal_places=1)
 

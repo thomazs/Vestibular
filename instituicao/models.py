@@ -1,5 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+models.RESTRICT = models.PROTECT
+
+from tinymce.models import HTMLField
+content = HTMLField()
+
+
+
 
 UserModel = get_user_model()
 
