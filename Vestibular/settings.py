@@ -143,7 +143,5 @@ TINYMCE_DEFAULT_CONFIG = {
     "plugins": "image", #plugins
 }
 
-# TINYMCE_JS_URL = os.path.join(MEDIA_URL, "path/to/tiny_mce/tiny_mce.js")
-# TINYMCE_JS_ROOT = os.path.join(MEDIA_ROOT, "path/to/tiny_mce")
-
-
+TINYMCE_JS_URL = os.path.join(STATIC_URL, "tinymce/tiny_mce.min.js")
+TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, "tinymce/tiny_mce")
