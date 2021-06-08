@@ -61,6 +61,12 @@ class EdicaoCurso(models.Model):
         qtd_vagas = self.qtd_vagas
         return int(round(qtd_inscricoes * 100 // qtd_vagas, 0))
 
+
+    def qtd_inscricoes(self):
+        qtd_inscricoes = self.curso.cursoopcao_set.count()
+        qtd_vagas = self.qtd_vagas
+        return qtd_inscricoes
+
     @property
     def matriculados(self):
         qtd_matriculados = Inscricao.objects.filter(situacao=31, curso=self.curso, edicao=self.edicao).count()
