@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.db import models
-
+from django.utils.html import strip_tags
 from instituicao.models import Curso, Pessoa
 UserModel = get_user_model()
 
@@ -181,7 +181,7 @@ class QuestaoProva(models.Model):
         verbose_name_plural = 'questões da prova'
 
     def __str__(self):
-        return self.texto_curto
+        return strip_tags(self.texto_curto)
 
     edicao = models.ForeignKey(Edicao, on_delete=models.RESTRICT)
     disciplina = models.ForeignKey(Disciplina, on_delete=models.RESTRICT)
@@ -193,7 +193,7 @@ class QuestaoProva(models.Model):
 
     @property
     def texto_curto(self):
-        return self.texto[:50]
+        return strip_tags(self.texto)[:50]
 
 
 class RespostaQuestao(models.Model):
@@ -209,7 +209,7 @@ class RespostaQuestao(models.Model):
 
     @property
     def texto_curto(self):
-        return self.texto[:50]
+        return strip_tags(self.texto)[:50]
 
 
 class RespostaInscricao(models.Model):
