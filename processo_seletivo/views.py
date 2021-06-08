@@ -458,11 +458,10 @@ def inscricao_enem(request):
 @login_required
 def portador_diploma(request):
     if request.user.is_staff:
-        candidatos = Inscricao.objects.filter(tipo_selecao='2', situacao=1)
-        aprovados = Inscricao.objects.filter(tipo_selecao='2', situacao=21)
-        reprovados = Inscricao.objects.filter(tipo_selecao='2', situacao=13)
-
-
+        edicao_atual = pega_edicao_ativa()
+        candidatos = Inscricao.objects.filter(tipo_selecao='2', situacao=1, edicao=edicao_atual)
+        aprovados = Inscricao.objects.filter(tipo_selecao='2', situacao=21, edicao=edicao_atual)
+        reprovados = Inscricao.objects.filter(tipo_selecao='2', situacao=13, edicao=edicao_atual)
 
     else:
         return redirect('index')
