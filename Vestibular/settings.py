@@ -135,13 +135,15 @@ STATIC_ROOT = 'C:/xampp/htdocs/media'
 MEDIA_URL = '/media/'
 LOGIN_URL = '/uvest/admin/login'
 LOGIN_REDIRECT_URL = '/uvest/admin/login'
-FORCE_SCRIPT_NAME = 'uvest/'
+FORCE_SCRIPT_NAME = '/uvest/'
 
 
 
 TINYMCE_DEFAULT_CONFIG = {
-    "plugins": "image", #plugins
+    "plugins": "image link table", #plugins
 }
 
 TINYMCE_JS_URL = os.path.join("django-tinymce/tiny_mce.min.js")
 TINYMCE_JS_ROOT = os.path.join("django-tinymce/tiny_mce")
+TINYMCE_JS_URL = '/static/tinymce/tinymce.min.js'  # os.path.join("django-tinymce/tiny_mce.min.js")
+TINYMCE_JS_ROOT = 'C:/xampp/htdocs/media/tinymce/tinymce.min.js'  # os.path.join("django-tinymce/tiny_mce")
