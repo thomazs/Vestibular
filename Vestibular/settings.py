@@ -13,7 +13,7 @@ SECRET_KEY = 'r3fg0=x5d$lpy3hb&l8n!a)s^hxa4a01+f$^ec%v^^itc76!!1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.17.1.144', '127.0.0.1', 'localhost', 'uverse.in']
+ALLOWED_HOSTS = ['172.17.1.144', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -133,15 +133,16 @@ HOST_CURRENT = 'http://uverse.in'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'processo_seletivo', 'static', 'media')
 STATIC_ROOT = 'C:/xampp/htdocs/media'
 MEDIA_URL = '/media/'
-LOGIN_URL = '/uvest/admin/login/'
-LOGIN_REDIRECT_URL = '/uvest/admin/login/'
-FORCE_SCRIPT_NAME = '/uvest/'
-# USE_X_FORWARDED_HOST = True
+LOGIN_URL = '/uvest/admin/login'
+LOGIN_REDIRECT_URL = '/uvest/admin/login'
+FORCE_SCRIPT_NAME = 'uvest/'
+
 
 
 TINYMCE_DEFAULT_CONFIG = {
-    "plugins": "image", #plugins
+    "plugins": "image link ", #plugins
+    "contextmenu": "link image table"
 }
 
-TINYMCE_JS_URL = '/static/tinymce/tinymce.min.js'  # os.path.join("django-tinymce/tiny_mce.min.js")
-TINYMCE_JS_ROOT = 'C:/xampp/htdocs/media/tinymce/tinymce.min.js'  # os.path.join("django-tinymce/tiny_mce")
+TINYMCE_JS_URL = os.path.join("django-tinymce/tiny_mce.min.js")
+TINYMCE_JS_ROOT = os.path.join("django-tinymce/tiny_mce")
