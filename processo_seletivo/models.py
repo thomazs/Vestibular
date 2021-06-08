@@ -63,7 +63,7 @@ class EdicaoCurso(models.Model):
 
 
     def qtd_inscricoes(self):
-        qtd_inscricoes = Inscricao.objects.filter(edicao=self.edicao, curso=self.curso)
+        qtd_inscricoes = Inscricao.objects.filter(edicao=self.edicao, curso=self.curso).count()
         return qtd_inscricoes
 
     @property
