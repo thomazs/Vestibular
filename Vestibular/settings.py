@@ -140,7 +140,7 @@ FORCE_SCRIPT_NAME = 'uvest/'
 
 
 TINYMCE_DEFAULT_CONFIG = {
-    "plugins": "image link ", #plugins
+    "plugins": "image", #plugins
 }
 
 TINYMCE_JS_URL = os.path.join("django-tinymce/tiny_mce.min.js")
