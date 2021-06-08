@@ -384,10 +384,11 @@ def acompanhamento_ti(request):
 @login_required
 def corrige_redacao(request):
     if request.user.is_staff:
-        redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).first()
-        sem_redacao = Inscricao.objects.filter(fez_redacao='False', tipo_selecao=1)
-        corrigidas = Inscricao.objects.filter(corretor_redacao=request.user).count()
-        nao_corrigidas = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None).count()
+        edicao_atual = pega_edicao_ativa()
+        redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None, edicao = edicao_atual).first()
+        sem_redacao = Inscricao.objects.filter(fez_redacao='False', tipo_selecao=1, edicao = edicao_atual)
+        corrigidas = Inscricao.objects.filter(corretor_redacao=request.user, edicao = edicao_atual).count()
+        nao_corrigidas = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None, edicao = edicao_atual).count()
 
         pontos_prova = RespostaInscricao.objects.filter(inscricao=redacao, resposta__correta=True).aggregate(
             Sum('questao__pontos'))
