@@ -426,7 +426,8 @@ def corrige_redacao(request):
 @login_required
 def redacao_pendente(request):
     if request.user.is_staff:
-        sem_redacao = Inscricao.objects.filter(fez_redacao='False', tipo_selecao=1)
+        edicao_atual = pega_edicao_ativa()
+        sem_redacao = Inscricao.objects.filter(fez_redacao='False', tipo_selecao=1, edicao=edicao_atual)
 
     else:
         return redirect('index')
@@ -437,7 +438,8 @@ def redacao_pendente(request):
 @login_required
 def csv_redacao_pendente(request):
     if request.user.is_staff:
-        sem_redacao = Inscricao.objects.filter(fez_redacao='False', tipo_selecao=1)
+        edicao_atual = pega_edicao_ativa()
+        sem_redacao = Inscricao.objects.filter(fez_redacao='False', tipo_selecao=1, edicao=edicao_atual)
     else:
         return redirect('index')
     r = render(request, 'csv/redacao_pendente.html', locals(), content_type='text/plain')
@@ -448,7 +450,8 @@ def csv_redacao_pendente(request):
 @login_required
 def inscricao_enem(request):
     if request.user.is_staff:
-        candidatos = Inscricao.objects.filter(tipo_selecao='3', situacao=1)
+        edicao_atual = pega_edicao_ativa()
+        candidatos = Inscricao.objects.filter(tipo_selecao='3', situacao=1, edicao=edicao_atual)
     else:
         return redirect('index')
 
