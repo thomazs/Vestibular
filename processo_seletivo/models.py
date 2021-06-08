@@ -57,7 +57,7 @@ class EdicaoCurso(models.Model):
         return self.curso.nome
 
     def percentual_inscricoes(self):
-        qtd_inscricoes = self.curso.cursoopcao_set.count()
+        qtd_inscricoes = Inscricao.objects.filter(edicao=self.edicao, curso=self.curso).count()
         qtd_vagas = self.qtd_vagas
         return int(round(qtd_inscricoes * 100 // qtd_vagas, 0))
 
