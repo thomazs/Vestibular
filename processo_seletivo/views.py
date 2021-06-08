@@ -371,7 +371,7 @@ def acompanhamento_ti(request):
 
         matriculados = Inscricao.objects.filter(situacao=31, edicao=edicao_ativa).count()
         total_inscricao = Inscricao.objects.filter(treineiro=False, edicao=edicao_ativa).count()
-        cursos = EdicaoCurso.objects.annotate(qtd_inscricoes=Count('curso__cursoopcao_set')).order_by('-qtd_inscricoes')
+        cursos = EdicaoCurso.objects.annotate(edicao=edicao_ativa, qtd_inscricoes=Count('curso__cursoopcao_set')).order_by('-qtd_inscricoes')
         redacao_pendente = Inscricao.objects.filter(fez_redacao=False, tipo_selecao=1, edicao=edicao_ativa).count()
         redacao_naocorrigida = Inscricao.objects.filter(fez_redacao=False, nota_redacao__isnull=True,
                                                         tipo_selecao=1, edicao=edicao_ativa).count()
