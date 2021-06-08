@@ -135,7 +135,7 @@ STATIC_ROOT = 'C:/xampp/htdocs/media'
 MEDIA_URL = '/media/'
 LOGIN_URL = '/uvest/admin/login'
 LOGIN_REDIRECT_URL = '/uvest/admin/login'
-FORCE_SCRIPT_NAME = '/uvest/'
+FORCE_SCRIPT_NAME = 'uvest/'
 
 
 
