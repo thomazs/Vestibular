@@ -29,6 +29,10 @@ class Edicao(models.Model):
     prova_liberada = models.BooleanField(default=False)
     pagamento_liberado = models.BooleanField(default=False)
 
+    # instrucoes_redacao = HTMLField('Instruções para redação')
+    instrucoes_redacao = HTMLField('Textos Questãos')
+
+
     @property
     def ativo(self):
         return self.dt_ini_insc <= datetime.now() <= self.dt_fim_insc
@@ -141,7 +145,6 @@ class Inscricao(models.Model):
     nota_redacao_p4 = models.DecimalField('Nota Redação', null=True, blank=True, max_digits=13, decimal_places=3)
     nota_redacao_p5 = models.DecimalField('Nota Redação', null=True, blank=True, max_digits=13, decimal_places=3)
     nota_prova = models.DecimalField('Nota Prova', null=True, blank=True, max_digits=13, decimal_places=3)
-
     redacao = models.TextField('Redação', null=True, blank=True)
     corretor_redacao = models.ForeignKey(UserModel, null=True, blank=True, on_delete=models.RESTRICT)
 
