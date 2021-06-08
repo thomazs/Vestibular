@@ -30,7 +30,7 @@ class Edicao(models.Model):
     pagamento_liberado = models.BooleanField(default=False)
 
     # instrucoes_redacao = HTMLField('Instruções para redação')
-    instrucoes_redacao = HTMLField('Textos Questãos')
+    instrucoes_redacao = HTMLField('Instruções para redação')
 
 
     @property
