@@ -128,14 +128,14 @@ EMAIL_HOST_USER = "alertas@uverse.com.vc"
 EMAIL_HOST_PASSWORD = "AlertaFAAO2019!"
 
 # HOST_CURRENT = 'http://localhost:8000'
-HOST_CURRENT = 'http://uverse.in'
+HOST_CURRENT = 'http://uverse.in/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'processo_seletivo', 'static', 'media')
 STATIC_ROOT = 'C:/xampp/htdocs/media'
 MEDIA_URL = '/media/'
 LOGIN_URL = '/uvest/admin/login'
 LOGIN_REDIRECT_URL = '/uvest/admin/login'
-FORCE_SCRIPT_NAME = '/uvest/'
+FORCE_SCRIPT_NAME = '/uvest'
 
 
 
