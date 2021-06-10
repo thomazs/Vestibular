@@ -75,9 +75,9 @@ class RespostaInscricaoAdmin(admin.ModelAdmin):
 
 admin.site.register(RespostaInscricao, RespostaInscricaoAdmin)
 
-# class AfiliadoAdmin(admin.ModelAdmin):
-#     pass
-#     # list_display = ('pessoa__nome',)
-#     # search_fields = ('')
-#
-# admin.site.register(Afiliado, AfiliadoAdmin)
+class AfiliadoAdmin(admin.ModelAdmin):
+    pass
+    # list_display = ('pessoa__nome',)
+    # search_fields = ('')
+
+admin.site.register(Afiliado, AfiliadoAdmin)
