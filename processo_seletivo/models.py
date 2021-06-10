@@ -87,6 +87,16 @@ SITUACAO_INSCRICAO = (
     (31, 'Matriculado'),
 )
 
+FICOUSABENDO_INSCRICAO = (
+    (1, 'Google'),
+    (2, 'Rede Amazônica'),
+    (3, 'TV Gazeta'),
+    (4, 'Facebook'),
+    (5, 'Instagram'),
+    (6, 'Via Verde Shopping'),
+    (7, 'Outros'),
+)
+
 def comprovante_enem_upload_to(instance, filename):
     ext = filename.split('.')[-1]
     retorno = f'E{instance.edicao.pk}/comprovate_enem/P{instance.pessoa.pk}.{ext}'
@@ -160,6 +170,7 @@ class Inscricao(models.Model):
     data_alteracao = models.DateTimeField(auto_now=True)
     situacao = models.IntegerField(default=1, choices=SITUACAO_INSCRICAO)
     afiliado = models.CharField('Afiliado', null=True, blank=True, max_length=100)
+    publicidade = models.IntegerField('Como ficou sabendo do Vestibular', default=7, choices=FICOUSABENDO_INSCRICAO)
 
     def id_protegido(self):
         from processo_seletivo.services import cria_tag_segura
