@@ -179,6 +179,7 @@
         }else{
             if (total > 100) {
                 $('.modal-content').addClass('aprovado');
+                $('.modal-content').removeAttr('aprovado');
                 $('#nota-total').html("<span class=\'badge badge-success\'>" + total + " - APROVADO");
             } else {
                 $('.modal-content').addClass('reprovado');
