@@ -169,7 +169,7 @@ class Inscricao(models.Model):
     data_inclusao = models.DateTimeField(auto_now_add=True)
     data_alteracao = models.DateTimeField(auto_now=True)
     situacao = models.IntegerField(default=1, choices=SITUACAO_INSCRICAO)
-    afiliado = models.CharField('Afiliado', null=True, blank=True, max_length=100)
+    # afiliado = models.CharField('Afiliado', null=True, blank=True, max_length=100)
     publicidade = models.IntegerField('Como ficou sabendo do Vestibular', default=7, choices=FICOUSABENDO_INSCRICAO)
 
     def id_protegido(self):
