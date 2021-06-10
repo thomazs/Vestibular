@@ -45,6 +45,9 @@ def painel(request):
     if not request.user.is_authenticated:
         return redirect('index')
     edicao = pega_edicao_ativa()
+
+
+
     return render(request, 'painel.html', locals())
 
 

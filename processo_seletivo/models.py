@@ -250,20 +250,20 @@ class RespostaInscricao(models.Model):
         from processo_seletivo.services import cria_tag_segura
         return cria_tag_segura(self.id)
 
-class Afiliado(models.Model):
-    class Meta:
-        db_table = 'afiliados'
-        verbose_name = 'afiliado'
-        verbose_name_plural = 'afiliados'
-
-    def __str__(self):
-        return self.pessoa.nome
-
-    pessoa = models.ForeignKey(Pessoa, on_delete=models.RESTRICT)
-    codigo = models.CharField('Código de indicação', blank=True, null=True, unique=True, max_length=50)
-    visitas = models.IntegerField('Visitas', blank=True, null=True)
-
-    @property
-    def qtd_inscritos(self):
-        qtd_pessoas = Inscricao.objects.filter(afiliado=self.codigo).count()
-        return qtd_pessoas
+# class Afiliado(models.Model):
+#     class Meta:
+#         db_table = 'afiliados'
+#         verbose_name = 'afiliado'
+#         verbose_name_plural = 'afiliados'
+#
+#     def __str__(self):
+#         return self.pessoa.nome
+#
+#     pessoa = models.ForeignKey(Pessoa, on_delete=models.RESTRICT)
+#     codigo = models.CharField('Código de indicação', blank=True, null=True, unique=True, max_length=50)
+#     visitas = models.IntegerField('Visitas', blank=True, null=True)
+#
+#     @property
+#     def qtd_inscritos(self):
+#         qtd_pessoas = Inscricao.objects.filter(afiliado=self.codigo).count()
+#         return qtd_pessoas
