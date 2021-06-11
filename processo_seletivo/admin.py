@@ -36,7 +36,7 @@ class RespostaInscricaoTabular(admin.TabularInline):
 class InscricaoAdmin(admin.ModelAdmin):
     list_display = ('pessoa', 'edicao', 'curso', 'situacao')
     search_fields = ('pessoa__nome',)
-    list_filter = ('edicao__id__exact=2', 'curso', 'situacao', 'tipo_selecao')
+    list_filter = ('edicao', 'curso', 'situacao', 'tipo_selecao')
     inlines = (RespostaInscricaoTabular,)
 
 
