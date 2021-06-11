@@ -431,7 +431,7 @@ def corrige_redacao(request):
                     numero_sms = re.sub("[^0-9]", "", numero_sms)
 
 
-                    mensagem_sms = 'Parabens, voce foi aprovado no vestibular Uverse, dirija-se ate a instituiçao para garantir sua vaga.'
+                    mensagem_sms = 'Parabens, voce foi aprovado no vestibular Uverse, dirija-se ate a instituicao para garantir sua vaga.'
                     with urllib.request.urlopen("http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login="+login_sms+"&token="+token_sms+"&numero="+numero_sms+"&msg="+mensagem_sms+"") as url:
                         url = url.replace(" ", "")
                         s = url.read()
