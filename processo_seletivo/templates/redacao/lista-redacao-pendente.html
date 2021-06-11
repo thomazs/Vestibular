@@ -74,7 +74,7 @@
                                 <td>{{ i.data_inclusao |date:"d/m/Y" }}</td>
                                 <td style="text-align: left">{{ i.pessoa.email }}<br><span style="font-size: 10px;">{{ i.pessoa.fone }}</span></td>
                                 <td>
-                                    <a href="https://wa.me/55{{ i.pessoa.fone }}?text=Olá, meu nome é {{ user.first_name|lower|capfirst }}, sou colaborador(a) U:verse. Estou entrando em contato para falar sobre a sua redação do vestibular U:verse...">
+                                    <a href="https://api.whatsapp.com/send?phone=55{{ i.pessoa.fone }}?&text=Olá, meu nome é {{ user.first_name|lower|capfirst }}, sou colaborador(a) U:verse. Estou entrando em contato para falar sobre a sua redação do vestibular U:verse...">
                                         {% if i.treineiro %}
                                             <button type="button" class="btn btn-warning">WhatsApp</button>
                                         {% else %}
