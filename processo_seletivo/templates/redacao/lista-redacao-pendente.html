@@ -68,7 +68,7 @@
                                     {% if i.treineiro %}
                                         <span class="badge badge-pill badge-warning">(Treneiro)</span>
                                     {%else%}
-                                        <span class="badge badge-pill badge-succes">Inngresso via: {{i.tipo_selecao.get_gender_display }}</span>
+                                        <span class="badge badge-pill badge-succes">Inngresso via: {{i.tipo_selecao.display }}</span>
                                     {% endif %}
                                 </th>
                                 <td>{{ i.data_inclusao |date:"d/m/Y" }}</td>
