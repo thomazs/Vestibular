@@ -427,8 +427,8 @@ def corrige_redacao(request):
                     token_sms = '75c0320a62b207887cb59dc27ebddded'
                     numero_sms = post.pessoa.fone
 
-                    import re
-                    numero_sms = re.sub("[^0-9]", "", numero_sms)
+                    # import re
+                    # numero_sms = re.sub("[^0-9]", "", numero_sms)
 
 
                     mensagem_sms = 'Parabéns, você foi aprovado no vestibular U:verse, dirija-se até a instituição para garantir sua vaga.'
