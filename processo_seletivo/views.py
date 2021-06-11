@@ -517,9 +517,9 @@ def ativa_portador_diploma(request, codigo, status):
 @login_required
 def aprovados_provapadrao(request):
     if request.user.is_staff:
-        inscritos = Inscricao.objects.filter(situacao=21)
-        n_aprovados = Inscricao.objects.filter(situacao=21).count()
-
+        edicao_atual = pega_edicao_ativa()
+        inscritos = Inscricao.objects.filter(situacao=21, edicao=edicao_atual)
+        n_aprovados = Inscricao.objects.filter(situacao=21, edicao=edicao_atual).count()
     else:
         return redirect('index')
 
