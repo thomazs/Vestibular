@@ -433,6 +433,7 @@ def corrige_redacao(request):
 
                     mensagem_sms = 'Parabéns, você foi aprovado no vestibular U:verse, dirija-se até a instituição para garantir sua vaga.'
                     with urllib.request.urlopen("http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login="+login_sms+"&token="+token_sms+"&numero="+numero_sms+"&msg="+mensagem_sms+"") as url:
+                        url = url.replace(" ", "")
                         s = url.read()
                         print(s)
 
