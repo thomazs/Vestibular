@@ -422,12 +422,14 @@ def corrige_redacao(request):
                 if post.nota_geral >= 200:
                     # teste de sms
                     # !/usr/bin/python
-                    import urllib
+                    import urllib.request
                     login_sms = 'passos27'
                     token_sms = '75c0320a62b207887cb59dc27ebddded'
                     numero_sms = post.pessoa.fone
                     mensagem_sms = 'Parabéns, você foi aprovado no vestibular U:verse, dirija-se até a instituição para garantir sua vaga.'
-                    print (urllib.urlopen("http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login=",login_sms,"&token=",token_sms,"&numero=",numero_sms,"&msg=",mensagem_sms).read())
+                    with urllib.request.urlopen("http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login=",login_sms,"&token=",token_sms,"&numero=",numero_sms,"&msg=",mensagem_sms) as url:
+                        s = url.read()
+                        print(s)
 
                 return redirect('correcao')
         else:
