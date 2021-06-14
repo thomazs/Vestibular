@@ -2,7 +2,7 @@ from datetime import datetime
 from django.db.models import Avg, Count, Min, Sum
 from decimal import Decimal
 import json
-
+from urllib.parse import urlencode
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -419,23 +419,23 @@ def corrige_redacao(request):
 
                 messages.success(request, 'Nota salva com sucesso')
 
-                if post.nota_geral >= 200:
+                # if post.nota_geral >= 200:
                     # teste de sms
                     # !/usr/bin/python
-                    import urllib.request
-                    login_sms = 'passos27'
-                    token_sms = '75c0320a62b207887cb59dc27ebddded'
-                    numero_sms = post.pessoa.fone
+                    # import urllib.request
+					
 
-                    import re
-                    numero_sms = re.sub("[^0-9]", "", numero_sms)
+                    # login_sms = 'passos27'
+                    # token_sms = '75c0320a62b207887cb59dc27ebddded'
+                    # numero_sms = post.pessoa.fone
 
-
-                    mensagem_sms = 'Parabens, voce foi aprovado no vestibular Uverse, dirija-se ate a instituicao para garantir sua vaga.'
-                    with urllib.request.urlopen("http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login="+login_sms+"&token="+token_sms+"&numero="+numero_sms+"&msg="+mensagem_sms+"") as url:
-                        url = url.replace(" ", "")
-                        s = url.read()
-                        print(s)
+                    # import re
+                    # numero_sms = re.sub("[^0-9]", "", numero_sms)
+			
+                    # mensagem_sms = urlencode({ 'msg' : 'Parabéns '+post.pessoa.nome+', você foi aprovado no Vestibular U:verse, procure a Instituição ou acesse: https://trakto.link/uverse para saber mais.'})
+                    # with urllib.request.urlopen("http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login="+login_sms+"&token="+token_sms+"&numero="+numero_sms+"&"+mensagem_sms) as url:
+                        # s = url.read()
+                        # print(s)
 
                 return redirect('correcao')
         else:
