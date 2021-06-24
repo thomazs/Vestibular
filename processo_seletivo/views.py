@@ -36,8 +36,6 @@ def index(request):
     else:
         form = LoginForm()
 
-
-
     return render(request, 'index.html', locals())
 
 
@@ -46,21 +44,18 @@ def painel(request):
         return redirect('index')
     edicao = pega_edicao_ativa()
 
-
-
     return render(request, 'painel.html', locals())
 
 
 @transaction.atomic
 def cadastro(request, id=None):
-
     if id is not None:
         sessao = request.session['afiliado_codigo'] = id
         parceiro = Afiliado.objects.filter(codigo=id).first()
         if not parceiro:
             return redirect('cadastro')
 
-        if parceiro.visitas==None:
+        if parceiro.visitas == None:
             parceiro.visitas = 0
             parceiro.save()
         else:
@@ -81,9 +76,6 @@ def cadastro(request, id=None):
             token = cria_tag_segura(pessoa.id)
             envia_email_cadastro(pessoa, token)
             return redirect('emailenviado', token=token)
-
-
-
 
     return render(request, 'cadastro.html', locals())
 
@@ -136,7 +128,6 @@ def mensagem(request, time_to_redirect=0):
 
 @transaction.atomic
 def concluir_cadastro(request, token):
-
     segura, valor = tag_segura_valida(token)
     if not segura:
         return redirect('index')
@@ -167,7 +158,6 @@ def concluir_cadastro(request, token):
 @login_required(login_url=reverse_lazy('index'))
 @transaction.atomic()
 def faz_inscricao(request, id=None):
-
     verifica = Inscricao.objects.filter(pessoa=request.user.get_pessoa())
     if verifica:
         messages.error(request, 'O candidato já possui inscrição ativa')
@@ -342,7 +332,7 @@ def prova_completa(request):
 def acompanhamento(request):
     if request.user.is_superuser:
         edicao_atual = pega_edicao_ativa()
-        total_inscricao = Inscricao.objects.filter(treineiro=False, edicao = edicao_atual).count()
+        total_inscricao = Inscricao.objects.filter(treineiro=False, edicao=edicao_atual).count()
         metas = EdicaoCurso.objects.all().aggregate(q=Sum('qtd_vagas'))
         # calcula a meta minima de inscrições
         meta_minima = int((total_inscricao * 100) / metas['q'])
@@ -360,8 +350,10 @@ def acompanhamento(request):
         inscricao_enem_reprovados = Inscricao.objects.filter(tipo_selecao=3, situacao=13, edicao=edicao_atual).count()
 
         inscricao_portadordiploma = Inscricao.objects.filter(tipo_selecao=2, edicao=edicao_atual).count()
-        inscricao_portadordiploma_aprovados = Inscricao.objects.filter(tipo_selecao=2, situacao=21, edicao=edicao_atual).count()
-        inscricao_portadordiploma_reprovados = Inscricao.objects.filter(tipo_selecao=2, situacao=13, edicao=edicao_atual).count()
+        inscricao_portadordiploma_aprovados = Inscricao.objects.filter(tipo_selecao=2, situacao=21,
+                                                                       edicao=edicao_atual).count()
+        inscricao_portadordiploma_reprovados = Inscricao.objects.filter(tipo_selecao=2, situacao=13,
+                                                                        edicao=edicao_atual).count()
 
         return render(request, 'redacao/home.html', locals())
     else:
@@ -389,10 +381,10 @@ def acompanhamento_ti(request):
 def corrige_redacao(request):
     if request.user.is_staff:
         edicao_atual = pega_edicao_ativa()
-        redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None, edicao = edicao_atual).first()
-        sem_redacao = Inscricao.objects.filter(fez_redacao='False', tipo_selecao=1, edicao = edicao_atual)
-        corrigidas = Inscricao.objects.filter(corretor_redacao=request.user, edicao = edicao_atual).count()
-        nao_corrigidas = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None, edicao = edicao_atual).count()
+        redacao = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None, edicao=edicao_atual).first()
+        sem_redacao = Inscricao.objects.filter(fez_redacao='False', tipo_selecao=1, edicao=edicao_atual)
+        corrigidas = Inscricao.objects.filter(corretor_redacao=request.user, edicao=edicao_atual).count()
+        nao_corrigidas = Inscricao.objects.filter(fez_redacao='True', nota_redacao=None, edicao=edicao_atual).count()
 
         pontos_prova = RespostaInscricao.objects.filter(inscricao=redacao, resposta__correta=True).aggregate(
             Sum('questao__pontos'))
@@ -419,23 +411,21 @@ def corrige_redacao(request):
 
                 messages.success(request, 'Nota salva com sucesso')
 
-                # if post.nota_geral >= 200:
+                if post.nota_geral >= 200:
                     # teste de sms
                     # !/usr/bin/python
-                    # import urllib.request
-					
-
-                    # login_sms = 'passos27'
-                    # token_sms = '75c0320a62b207887cb59dc27ebddded'
-                    # numero_sms = post.pessoa.fone
-
-                    # import re
-                    # numero_sms = re.sub("[^0-9]", "", numero_sms)
-			
-                    # mensagem_sms = urlencode({ 'msg' : 'Parabéns '+post.pessoa.nome+', você foi aprovado no Vestibular U:verse, procure a Instituição ou acesse: https://trakto.link/uverse para saber mais.'})
-                    # with urllib.request.urlopen("http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login="+login_sms+"&token="+token_sms+"&numero="+numero_sms+"&"+mensagem_sms) as url:
-                        # s = url.read()
-                        # print(s)
+                    import urllib.request
+                    login_sms = 'passos27'
+                    token_sms = '75c0320a62b207887cb59dc27ebddded'
+                    numero_sms = post.pessoa.fone
+                    import re
+                    numero_sms = re.sub("[^0-9]", "", numero_sms)
+                    mensagem_sms = urlencode({
+                        'msg': 'VESTIBULAR U:VERSE: Parabéns! Você foi aprovado no Vestibular U:verse, procure a Instituição ou acesse: https://uverse.in/info para saber mais.'})
+                    with urllib.request.urlopen(
+                            "http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login=" + login_sms + "&token=" + token_sms + "&numero=" + numero_sms + "&" + mensagem_sms) as url:
+                        s = url.read()
+                        print(s)
 
                 return redirect('correcao')
         else:
@@ -544,6 +534,7 @@ def aprovados_provapadrao(request):
 
     return render(request, 'redacao/aprovados.html', locals())
 
+
 @login_required
 def marcar_matriculado(request, id=None):
     if request.user.is_staff:
@@ -554,19 +545,20 @@ def marcar_matriculado(request, id=None):
 
     return redirect('aprovados')
 
+
 @login_required
 def inscricao_pendente(request):
     if request.user.is_staff:
 
-        pessoas=list()
+        pessoas = list()
 
         inscritos = Pessoa.objects.filter()
 
         for i in inscritos:
             nome = Inscricao.objects.filter(pessoa__email=i.email)
             if nome:
-                pessoas.append('nome:'+i.nome)
-                pessoas.append('email:'+i.email)
+                pessoas.append('nome:' + i.nome)
+                pessoas.append('email:' + i.email)
                 print(pessoas)
 
     else:
@@ -621,8 +613,6 @@ def afiliados(request):
     qtd_indicados = Inscricao.objects.filter(afiliado=afiliado_dados.codigo).count()
     indicados = Inscricao.objects.filter(afiliado=afiliado_dados.codigo)
 
-
-
     ganhos = Inscricao.objects.filter(afiliado=afiliado_dados.codigo, situacao=31).count()
 
     return render(request, 'afiliados/afiliados.html', locals())
@@ -670,22 +660,19 @@ def consultaStatusAPI(request, cod, email):
 
 
 def ajuste_nota(request):
-
     inscricao = Inscricao.objects.filter(tipo_selecao=1, fez_redacao=False)
 
     arquivo = open("log_envios_redacao.txt", "a")
     envios = list()
 
     for i in inscricao:
-       envia_email_redacao(i)
-       envios.append('\n')
-       envios.append(str(datetime.now())+'---')
-       envios.append(i.pessoa.email)
+        envia_email_redacao(i)
+        envios.append('\n')
+        envios.append(str(datetime.now()) + '---')
+        envios.append(i.pessoa.email)
 
     envios.append('\n')
-    envios.append(str(datetime.now())+'///////////////////////////////////////////////////')
+    envios.append(str(datetime.now()) + '///////////////////////////////////////////////////')
     arquivo.writelines(envios)
-
-
 
     return render(request, 'ajuste-nota.html', locals())
