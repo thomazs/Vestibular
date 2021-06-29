@@ -17,4 +17,6 @@ Vestibular/settings.py
 
 /venv
 /venv2
+venv/
+venv2/
 
