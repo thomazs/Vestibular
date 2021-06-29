@@ -19,4 +19,5 @@ Vestibular/settings.py
 /venv2
 venv/
 venv2/
+instituicao/migrations/
 
