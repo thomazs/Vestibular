@@ -15,9 +15,10 @@ Vestibular/settings.py
 Vestibular/settings.py
 /editais/Escaner_preto03_0001.jpg
 
-/venv
-/venv2
+.venv
+env/
 venv/
+.venv2
 venv2/
 instituicao/migrations/
 
