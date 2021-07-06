@@ -20,5 +20,6 @@ env/
 venv/
 .venv2
 venv2/
+*venv
 instituicao/migrations/
 
