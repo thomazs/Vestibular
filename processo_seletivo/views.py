@@ -425,7 +425,10 @@ def corrige_redacao(request):
                     with urllib.request.urlopen(
                             "http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login=" + login_sms + "&token=" + token_sms + "&numero=" + numero_sms + "&" + mensagem_sms) as url:
                         s = url.read()
-                        print(s)
+
+				# mensagem_sms = urlencode({'msg': 'audio:aprovados_vestibular_uverse.wav'})
+				# with urllib.request.urlopen("http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login=" + login_sms + "&token=" + token_sms + "&numero=" + numero_sms + "&" + mensagem_sms) as url:
+					# a = url.read()
 
                 return redirect('correcao')
         else:
@@ -446,6 +449,17 @@ def redacao_pendente(request):
         return redirect('index')
 
     return render(request, 'redacao/lista-redacao-pendente.html', locals())
+
+
+def inscritos_por_processo(request):
+    if request.user.is_staff:
+        edicao_atual = pega_edicao_ativa()
+        inscritos = Inscricao.objects.filter(situacao=21)
+
+    else:
+        return redirect('index')
+
+    return render(request, 'relatorios/inscritos_por_processo.html', locals())
 
 
 @login_required
@@ -618,45 +632,45 @@ def afiliados(request):
     return render(request, 'afiliados/afiliados.html', locals())
 
 
-def consultaStatusAPI(request, cod, email):
-    codigo = '4b68f9fa5686f541bb53c1e77a78833a6536d84aeb80190e7e6d84eea376e8268df51ff87973147a4bec7f7130f25225b60c530d4e0be29259a4a42e934b8fe1'
-
-    if cod == codigo:
-        dados = Inscricao.objects.filter(pessoa__email=email).first()
-
-        if dados:
-
-            if dados.get_situacao_display() == 'Inscrito':
-                curso = {
-                    'status': dados.get_situacao_display(),
-                    'curso': dados.curso.nome,
-                    'mensagem': 'Aguardando correção',
-                    'text': 'Você pode verificar o status da correção de sua prova a qualquer momento através do painel de controle do candidato, disponível em: https://uverse.in/uvest'
-                }
-            elif dados.get_situacao_display() == 'Aprovado':
-                curso = {
-                    'status': dados.get_situacao_display(),
-                    'curso': dados.curso.nome,
-                    'mensagem': dados.get_situacao_display(),
-                    'texto': 'Parabéns 👏👏👏... Você foi aprovado!! Já pode ir até a U:verse para efetuar sua matrícula, é importante ter em mãos todos os documentos previtos no edital, nosso atendimento funciona das 14h às 18h, de segunda a sexta.'
-                }
-        else:
-            curso = {
-                'status': 'Não encontrado',
-                'curso': 'Não encontrado',
-                'mensagem': 'Dados não encontrados',
-                'texto': 'Verifiquei aqui e notei que você não possui nenhuma inscrição vinculada para este endereço de e-mail, caso não tenha feito o vestibular é so acessar: https://uverse.in/uvest e se inscrever para o curso desejado. Ah!! você pode fazer tudo online, inclusive a prova :)'
-            }
-    else:
-        curso = {
-            'texto': 'Encontramos um erro ao verificar seus dados, por favor verifique o e-mail que você forneceu.'}
-
-    response = HttpResponse(json.dumps(curso), content_type='text/json')
-    response["Access-Control-Allow-Origin"] = '*'
-    response["Access-Control-Allow-Methods"] = 'GET'
-    response["Access-Control-Max-Age"] = '1000'
-    response["Access-Control-Allow-Headers"] = 'X-Requested-With, Content-Type'
-    return response
+# def consultaStatusAPI(request, cod, email):
+#     codigo = '4b68f9fa5686f541bb53c1e77a78833a6536d84aeb80190e7e6d84eea376e8268df51ff87973147a4bec7f7130f25225b60c530d4e0be29259a4a42e934b8fe1'
+#
+#     if cod == codigo:
+# 	    edicao_atual = pega_edicao_ativa()
+#         dados = Inscricao.objects.filter(pessoa__email=email,edicao=edicao_atual).first()
+#
+#         if dados:
+#
+#             if dados.get_situacao_display() == 'Inscrito':
+#                 curso = {
+#                     'status': dados.get_situacao_display(),
+#                     'curso': dados.curso.nome,
+#                     'mensagem': 'Aguardando correção',
+#                     'text': 'Você pode verificar o status da correção de sua prova a qualquer momento através do painel de controle do candidato, disponível em: https://uverse.in/uvest'
+#                 }
+#             elif dados.get_situacao_display() == 'Aprovado':
+#                 curso = {
+#                     'status': dados.get_situacao_display(),
+#                     'curso': dados.curso.nome,
+#                     'mensagem': dados.get_situacao_display(),
+#                     'texto': 'Parabéns 👏👏👏... Você foi aprovado!! Já pode ir até a U:verse para efetuar sua matrícula, é importante ter em mãos todos os documentos previtos no edital, nosso atendimento funciona das 14h às 18h, de segunda a sexta.'
+#                 }
+#         else:
+#             curso = {
+#                 'status': 'Não encontrado',
+#                 'curso': 'Não encontrado',
+#                 'mensagem': 'Dados não encontrados',
+#                 'texto': 'Verifiquei aqui e notei que você não possui nenhuma inscrição vinculada para este endereço de e-mail, caso não tenha feito o vestibular é so acessar: https://uverse.in/uvest e se inscrever para o curso desejado. Ah!! você pode fazer tudo online, inclusive a prova :)'
+#             }
+#     else:
+#         curso = {'texto': 'Encontramos um erro ao verificar seus dados, por favor verifique o e-mail que você forneceu.'}
+#
+#     response = HttpResponse(json.dumps(curso), content_type='text/json')
+#     response["Access-Control-Allow-Origin"] = '*'
+#     response["Access-Control-Allow-Methods"] = 'GET'
+#     response["Access-Control-Max-Age"] = '1000'
+#     response["Access-Control-Allow-Headers"] = 'X-Requested-With, Content-Type'
+#     return response
 
 
 def ajuste_nota(request):

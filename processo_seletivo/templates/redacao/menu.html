@@ -36,7 +36,15 @@
                 &nbsp;Aprovados
             </li>
         </a>
+
+        <a href="{% url 'inscritos_por_processo' %}">
+            <li class="list-group-item d-flex justify-content-start align-items-center">
+                &nbsp;Aprovados/2021.1 <span class="badge badge-pill badge-warning">Novo</span>
+            </li>
+        </a>
         {% endif %}
+
+
 
      {% if request.user.is_superuser %}
         <a href="{% url 'correcao' %}">
