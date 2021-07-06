@@ -28,7 +28,7 @@ from processo_seletivo.views import index, cadastro, painel, sair, emailenviado,
 admin.site.site_header = 'Vestibular U:Verse'
 admin.site.site_title = 'VestU:Verse'
 admin.site.index_title = 'Sistema de Vestibular'
-# admin.sites.AdminSite.site_url = 'http://uverse.in/uvest/'
+admin.sites.AdminSite.site_url = 'http://uverse.in/uvest/'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
