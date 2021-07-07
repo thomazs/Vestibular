@@ -449,7 +449,7 @@ def redacao_pendente(request):
 
     return render(request, 'redacao/lista-redacao-pendente.html', locals())
 
-
+@login_required
 def inscritos_por_processo(request):
     if request.user.is_staff:
         if request.GET.get('ed') and request.GET.get('dt_inicio') and request.GET.get('dt_fim'):
