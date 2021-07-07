@@ -429,11 +429,6 @@ def corrige_redacao(request):
                     with urllib.request.urlopen(
                             "http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login=" + login_sms + "&token=" + token_sms + "&numero=" + numero_sms + "&" + mensagem_sms) as url:
                         s = url.read()
-
-				# mensagem_sms = urlencode({'msg': 'audio:aprovados_vestibular_uverse.wav'})
-				# with urllib.request.urlopen("http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login=" + login_sms + "&token=" + token_sms + "&numero=" + numero_sms + "&" + mensagem_sms) as url:
-					# a = url.read()
-
                 return redirect('correcao')
         else:
             form = FormCorrigeRedacao()
