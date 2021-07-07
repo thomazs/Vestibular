@@ -165,7 +165,6 @@
 
 <!--            acompanhar inscrições-->
 {% with i=user.get_inscricao_ativa %}
-{% for i in user.get_inscricoes %}
 <div class="col-12 container-passos">
     <ol class="progresso" data-steps="3">
         <li class="{% if not i.fez_redacao or not i.fez_prova %}active{%else%}done{%endif%}">
@@ -250,6 +249,5 @@
     </div>
 </div>
 
-{% endfor %}
 {% endwith %}
 <!--            acompanhar inscrições-->

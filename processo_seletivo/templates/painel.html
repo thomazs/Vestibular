@@ -22,7 +22,9 @@
 
 
     <span class="navbar-text">
-
+        <span style="font-weight: 400;color: #333333; text-transform: uppercase; padding-right: 20px;">
+            Fale conosco via WhatsApp: <strong>(68) 99234-6546</strong>
+        </span>
       <a href="{% url 'sair' %}" type="button" class="btn btn-danger btn-uverse-perigo">
           Sair
       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor"
@@ -58,7 +60,7 @@
             <!-- menu -->
             <div class="row">
 
-                {% if edicao %}
+                {% if inscricao_ativa %}
                 <a class="col-2 item-menu" target="_blank" href="{{ edicao.edital.url }}">
                     <h4>
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-earmark-text"
@@ -101,6 +103,7 @@
                 {% endif %}
                 {% endif %}
 
+
                 <!--                atendimento -->
                 <a href="https://chat.blip.ai/?appKey=dXZlcnNlMTo2N2Q1YWZlMS1iNWU5LTRjN2QtODk5Ni02MjhkNGI3NmRiNzA="
                    target="_blank" class="col-2 item-menu">
@@ -121,7 +124,14 @@
 
             <!-- menu -->
             <div class="row">
-                {% include "progresso-inscricao.html" %}
+                {% if inscricao_ativa %}
+                    {% include "progresso-inscricao.html" %}
+                {% else %}
+
+                    <h1>Você não tem inscrições ativas</h1>
+
+
+                {% endif %}
             </div>
 
         </div>
@@ -130,31 +140,36 @@
              style="background:#20c997;color:#fff; padding: 4%; text-align: center;">
 
 
+            {% if inscricao_ativa %}
+                <h6>MEUS CURSOS</h6>
+                {% with i=user.get_inscricao_ativa %}
 
-            <h6>MEUS CURSOS</h6>
-            {% with i=user.get_inscricao_ativa %}
-            {% for i in user.get_inscricoes %}
-            <div class="card-uverse flip-right {% if i.nota_geral >= 200 %}aprovado-vest{% endif %}">
-                <img src="{% static 'img/student.svg' %}">
-                <h4>
-                    {{ i.curso }}
-                </h4>
-                {{ i.edicao.nome }}
+                    <div class="card-uverse flip-right {% if i.nota_geral >= 200 %}aprovado-vest{% endif %}">
+                        <img src="{% static 'img/student.svg' %}">
+                        <h4>
+                            {{ i.curso }}
+                        </h4>
+                        {{ i.edicao.nome }}
 
-                {% if i.situacao == 21 %}
-                    <hr>
-                    <button type="button" class="btn btn-success" style="font-weight: 300">APROVADO</button>
-                {% elif i.situacao != 1 and i.situacao != 21 and i.situacao != 31 %}
-                    <hr>
-                    <button type="button" class="btn btn-warning" style="font-weight: 300">REPROVADO</button>
-                {% endif %}
-
-
-            </div>
+                        {% if i.situacao == 21 %}
+                            <hr>
+                            <button type="button" class="btn btn-success" style="font-weight: 300">APROVADO</button>
+                        {% elif i.situacao != 1 and i.situacao != 21 and i.situacao != 31 %}
+                            <hr>
+                            <button type="button" class="btn btn-warning" style="font-weight: 300">REPROVADO</button>
+                        {% endif %}
 
 
-            {% endfor %}
-            {% endwith %}
+                    </div>
+
+
+
+                {% endwith %}
+            {% else %}
+                <h3>Você não tem inscrições ativas</h3>
+                <a href="{% url 'faz_inscricao' %}" type="button" class="btn btn-warning" style="font-weight: 300">Realizar inscrição</a>
+
+            {%endif %}
 
         </div>
     </div>
@@ -165,6 +180,8 @@
     .aprovado-vest{
     }
 </style>
+
+
 
 
 </body>

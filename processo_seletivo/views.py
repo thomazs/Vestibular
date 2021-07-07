@@ -14,7 +14,7 @@ from django.urls import reverse_lazy
 
 from instituicao.models import Pessoa
 from processo_seletivo.forms import LoginForm, FormCadastro, FormCompletaCadastro, FormInscricao, FormCorrigeRedacao
-from processo_seletivo.models import Inscricao, Curso, EdicaoCurso, Afiliado
+from processo_seletivo.models import Inscricao, Curso, EdicaoCurso, Afiliado, Edicao
 from processo_seletivo.services import tag_segura_valida, cria_tag_segura, gera_cod_validacao, \
     envia_email_cadastro, valida_email, ativa_pessoa, loga_pessoa, envia_email_cadastroconcluido, pega_edicao_ativa, \
     envia_email_inscricaofeita, cria_perguntas_inscricao, pega_questao_responder, resposta_valida, responder_questao, \
@@ -43,6 +43,9 @@ def painel(request):
     if not request.user.is_authenticated:
         return redirect('index')
     edicao = pega_edicao_ativa()
+
+    inscricao_ativa = request.user.get_inscricao_ativa
+
 
     return render(request, 'painel.html', locals())
 
@@ -158,7 +161,8 @@ def concluir_cadastro(request, token):
 @login_required(login_url=reverse_lazy('index'))
 @transaction.atomic()
 def faz_inscricao(request, id=None):
-    verifica = Inscricao.objects.filter(pessoa=request.user.get_pessoa())
+    edicao_ativa = pega_edicao_ativa()
+    verifica = Inscricao.objects.filter(pessoa=request.user.get_pessoa(), edicao=edicao_ativa)
     if verifica:
         messages.error(request, 'O candidato já possui inscrição ativa')
         return redirect('painel')
@@ -453,8 +457,18 @@ def redacao_pendente(request):
 
 def inscritos_por_processo(request):
     if request.user.is_staff:
+        if request.GET.get('ed') and request.GET.get('dt_inicio') and request.GET.get('dt_fim'):
+            ed = request.GET.get('ed')
+            dt_inicio = request.GET.get('dt_inicio')
+            dt_fim = request.GET.get('dt_fim')
+
+            inscritos = Inscricao.objects.filter(situacao=21, edicao=ed, data_inclusao__gte=dt_inicio, data_inclusao__lte=dt_fim)
+        else:
+            inscritos = Inscricao.objects.filter(situacao=21)
+
         edicao_atual = pega_edicao_ativa()
-        inscritos = Inscricao.objects.filter(situacao=21)
+        edicoes = Edicao.objects.all().reverse()
+
 
     else:
         return redirect('index')

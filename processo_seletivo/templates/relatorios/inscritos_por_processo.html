@@ -5,89 +5,130 @@
 
 {% block content %}
 
-    {% include "redacao/menu.html" %}
+{% include "redacao/menu.html" %}
 
 
-    <div class="conteudo">
+<div class="conteudo">
 
 
-        <div class="row" style="margin-top: 50px;">
-            <div class="col-12 redacao enter-left-bounce">
-                <div class="row">
-                    <div class="row">
-                        <div class="col-10">
-                            <h1 class="titulo" style="color: #666666">Aprovados/edição</h1>
-                        </div>
-
-                        <div class="col-2">
-                        </div>
-                        <div class="col-12">
-                            <input class="form-control" id="busca" type="text"
-                                   placeholder="Nome, data, e-mail ou telefone..." style="width: 100%;">
-                        </div>
-
-                    </div>
-
-
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Dt. Inscricao</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Mensagem</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tabela">
-                        {% for i in inscritos %}
-                            <tr {% if i.treineiro %}class="p-3 mb-2 bg-info text-white" {% endif %}>
-                                <th scope="row" style="text-align: left">
-                                    <span class="badge badge-pill badge-warning">Edição: {{i.edicao }}</span><br>
-                                    {{ i.pessoa.nome }}<br><span style="font-size: 10px;">{{ i.curso }}</span>
-                                    {% if i.treineiro %}
-                                        <span class="badge badge-pill badge-warning">(Treneiro)</span>
-                                    {%else%}
-                                        <span class="badge badge-pill badge-info">Ingresso via: {{i.get_tipo_selecao_display }}</span>
-
-
-                                    {% endif %}
-                                </th>
-                                <td>{{ i.data_inclusao |date:"d/m/Y" }}</td>
-                                <td style="text-align: left">{{ i.pessoa.email }}<br><span style="font-size: 10px;">{{ i.pessoa.fone }}</span></td>
-                                <td>
-                                    <a href="https://api.whatsapp.com/send?phone=55{{ i.pessoa.fone }}?&text=Olá, meu nome é {{ user.first_name|lower|capfirst }}, sou colaborador(a) U:verse. Estou entrando em contato para falar sobre o vestibular U:verse...">
-                                        {% if i.treineiro %}
-                                            <button type="button" class="btn btn-warning">WhatsApp</button>
-                                        {% else %}
-                                            <button type="button" class="btn btn-sm btn-outline-success">WhatsApp
-                                            </button>
-                                        {% endif %}
-                                    </a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-
-
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-12 redacao enter-left-bounce">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="titulo" style="color: #666666">Aprovados/edição</h1>
                 </div>
 
             </div>
-
         </div>
 
-        <script>
-            $(document).ready(function () {
-                $("#busca").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#tabela tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
+    </div>
+
+    <div class="row" style="background: #f7f7f7">
+        <div class="col-12">
+            <form method="GET">
+                <div class="row align-items-center">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label>Data inicial</label>
+                            <input type="date" placeholder="Data inicial" class="form-control"
+                                   name="dt_inicio"
+                                   value="{{dt_inicio}}">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label>Data final</label>
+                            <input type="date" placeholder="Data final" class="form-control" name="dt_fim"
+                                   value="{{dt_fim}}">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>Processo seletivo</label>
+                            <select class="form-control" name="ed" required>
+
+                                {% for i in edicoes %}
+                                <option value="{{i.id}}">{{i.nome}}</option>
+                                {% endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-primary">Pesquisar</button>
+                    </div>
+                </div>
+
+
+
+            </form>
+
+        </div>
+    </div>
+
+
+    {%if inscritos %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Dt. Inscricao</th>
+            <th scope="col">Email</th>
+            <th scope="col">Mensagem</th>
+        </tr>
+        </thead>
+        <tbody id="tabela">
+        {% for i in inscritos %}
+        <tr {% if i.treineiro %}class="p-3 mb-2 bg-info text-white" {% endif %}>
+            <th scope="row" style="text-align: left">
+                <span class="badge badge-pill badge-warning">Edição: {{i.edicao }}</span><br>
+                {{ i.pessoa.nome }}<br><span style="font-size: 10px;">{{ i.curso }}</span>
+                {% if i.treineiro %}
+                <span class="badge badge-pill badge-warning">(Treneiro)</span>
+                {%else%}
+                <span class="badge badge-pill">Ingresso via: {{i.get_tipo_selecao_display }}</span>
+
+
+                {% endif %}
+            </th>
+            <td>{{ i.data_inclusao |date:"d/m/Y" }}</td>
+            <td style="text-align: left">{{ i.pessoa.email }}<br><span
+                    style="font-size: 10px;">{{ i.pessoa.fone }}</span>
+            </td>
+            <td>
+                <a href="https://api.whatsapp.com/send?phone=55{{ i.pessoa.fone }}?&text=Olá, meu nome é {{ user.first_name|lower|capfirst }}, sou colaborador(a) U:verse. Estou entrando em contato para falar sobre o vestibular U:verse...">
+                    {% if i.treineiro %}
+                    <button type="button" class="btn btn-warning">WhatsApp</button>
+                    {% else %}
+                    <button type="button" class="btn btn-sm btn-outline-success">WhatsApp
+                    </button>
+                    {% endif %}
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+
+    <div class="alert alert-danger" role="alert">
+        Não existem inscritos para os parâmetros selecionados
+    </div>
+
+    {% endif %}
+
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#busca").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tabela tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
-        </script>
-
-
+        });
+    });
+</script>
 
 
 {% endblock %}
