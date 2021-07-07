@@ -18,7 +18,8 @@ from processo_seletivo.models import Inscricao, Curso, EdicaoCurso, Afiliado, Ed
 from processo_seletivo.services import tag_segura_valida, cria_tag_segura, gera_cod_validacao, \
     envia_email_cadastro, valida_email, ativa_pessoa, loga_pessoa, envia_email_cadastroconcluido, pega_edicao_ativa, \
     envia_email_inscricaofeita, cria_perguntas_inscricao, pega_questao_responder, resposta_valida, responder_questao, \
-    prova_redirecionar_para, gravar_redacao, RespostaInscricao, envia_email_redacao
+    prova_redirecionar_para, gravar_redacao, RespostaInscricao, envia_email_redacao, envia_sms, ligacao
+
 
 
 def index(request):
@@ -416,19 +417,10 @@ def corrige_redacao(request):
                 messages.success(request, 'Nota salva com sucesso')
 
                 if post.nota_geral >= 200:
-                    # teste de sms
-                    # !/usr/bin/python
-                    import urllib.request
-                    login_sms = 'passos27'
-                    token_sms = '75c0320a62b207887cb59dc27ebddded'
-                    numero_sms = post.pessoa.fone
-                    import re
-                    numero_sms = re.sub("[^0-9]", "", numero_sms)
-                    mensagem_sms = urlencode({
-                        'msg': 'VESTIBULAR U:VERSE: Parabéns! Você foi aprovado no Vestibular U:verse, procure a Instituição ou acesse: https://uverse.in/info para saber mais.'})
-                    with urllib.request.urlopen(
-                            "http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login=" + login_sms + "&token=" + token_sms + "&numero=" + numero_sms + "&" + mensagem_sms) as url:
-                        s = url.read()
+
+                    sms = envia_sms(post.pessoa.fone)
+                    liga = ligacao(post.pessoa.fone)
+
                 return redirect('correcao')
         else:
             form = FormCorrigeRedacao()

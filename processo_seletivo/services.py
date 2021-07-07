@@ -224,3 +224,36 @@ def envia_email_redacao(inscricao):
     template = 'email_redacao_pendente.html'
     contexto = {'inscricao': inscricao}
     enviar_email(assunto, destinatarios, template, contexto=contexto)
+
+
+def envia_sms(fone):
+    # teste de sms
+    # !/usr/bin/python
+    from urllib.parse import urlencode
+    import urllib.request
+    login_sms = 'passos27'
+    token_sms = '75c0320a62b207887cb59dc27ebddded'
+    numero_sms = fone
+    import re
+    numero_sms = re.sub("[^0-9]", "", numero_sms)
+    mensagem_sms = urlencode({
+        'msg': 'VESTIBULAR U:VERSE: Parabéns! Você foi aprovado no Vestibular U:verse, procure a Instituição ou acesse: https://uverse.in/info para saber mais.'})
+    with urllib.request.urlopen(
+            "http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login=" + login_sms + "&token=" + token_sms + "&numero=" + numero_sms + "&" + mensagem_sms) as url:
+        s = url.read()
+
+def ligacao(fone):
+    # teste de sms
+    # !/usr/bin/python
+    from urllib.parse import urlencode
+    import urllib.request
+    login_sms = 'passos27'
+    token_sms = '75c0320a62b207887cb59dc27ebddded'
+    numero_sms = fone
+    import re
+    numero_sms = re.sub("[^0-9]", "", numero_sms)
+    mensagem_sms = urlencode({
+        'msg': 'audio:aprovados_vestibular_uverse.wav'})
+    with urllib.request.urlopen(
+            "http://painel.kingsms.com.br/kingsms/api.php?acao=sendsms&login=" + login_sms + "&token=" + token_sms + "&numero=" + numero_sms + "&" + mensagem_sms) as url:
+        lig_return = url.read()
